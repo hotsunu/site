@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mac 终端 4 周学习计划</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --text: #1d1d1f;
+    --muted: #6e6e73;
+    --line: #e5e5ea;
+    --blue: #185fa5;
+    --blue-soft: #e6f1fb;
+    --teal: #0f6e56;
+    --teal-soft: #e1f5ee;
+    --amber: #854f0b;
+    --amber-soft: #faeeda;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 80px; }
+  header { margin-bottom: 36px; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    color: var(--blue);
+    background: var(--blue-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  h1 { font-size: 32px; line-height: 1.25; margin: 0 0 10px; letter-spacing: -.02em; }
+  .lead { color: var(--muted); margin: 0; max-width: 620px; }
+  .progress-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 28px 0 36px;
+  }
+  .progress-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .progress-top strong { font-size: 15px; font-weight: 600; }
+  .progress-top span { font-size: 13px; color: var(--muted); }
+  .bar { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--blue); border-radius: 999px; transition: width .3s ease; }
+  .toolbar { margin-top: 14px; }
+  button {
+    font: inherit;
+    font-size: 13px;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 5px 12px;
+    cursor: pointer;
+  }
+  button:hover { color: var(--blue); border-color: var(--blue); }
+  section { margin-bottom: 28px; }
+  .week {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .week-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .badge {
+    flex: none;
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 13px; font-weight: 600;
+  }
+  .w1 .badge { background: var(--blue-soft); color: var(--blue); }
+  .w2 .badge { background: var(--teal-soft); color: var(--teal); }
+  .w3 .badge { background: var(--amber-soft); color: var(--amber); }
+  .w4 .badge { background: #f3eefc; color: #534ab7; }
+  .week-head h2 { font-size: 17px; margin: 0; font-weight: 600; }
+  .week-head p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+  .days { padding: 8px 24px 16px; }
+  .day { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: flex-start; }
+  .day:last-child { border-bottom: none; }
+  .day label { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; width: 100%; }
+  input[type="checkbox"] {
+    appearance: none;
+    flex: none;
+    width: 18px; height: 18px;
+    margin-top: 3px;
+    border: 1.5px solid #c7c7cc;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+  }
+  input[type="checkbox"]:checked { background: var(--blue); border-color: var(--blue); }
+  input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px; top: 2px;
+    width: 4px; height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .day-text { flex: 1; }
+  .day-name { font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
+  .day-task { font-size: 14px; }
+  input:checked ~ .day-text .day-task { text-decoration: line-through; color: var(--muted); }
+  code {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 1px 5px;
+  }
+  .note {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  h2.section-title { font-size: 18px; margin: 0 0 14px; font-weight: 600; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  .card h3 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
+  .card ul { margin: 0; padding-left: 18px; font-size: 13px; color: var(--muted); }
+  .card li { margin-bottom: 5px; }
+  .warn { border-color: #f0d5b5; background: #fffaf3; }
+  .warn h3 { color: var(--amber); }
+  footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  @media (max-width: 600px) {
+    .wrap { padding: 28px 16px 60px; }
+    h1 { font-size: 26px; }
+    .week-head, .days { padding-left: 16px; padding-right: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">4 周 · 每天 20–30 分钟</span>
+    <h1>Mac 终端学习计划</h1>
+    <p class="lead">从零开始掌握 macOS 终端：先认清位置和路径，再学会操作文件，最后用管道和脚本把重复工作自动化。勾选任务即可打卡，进度自动保存在本机浏览器。</p>
+  </header>
+
+  <div class="progress-card">
+    <div class="progress-top">
+      <strong>学习进度</strong>
+      <span id="progressText">0 / 20 天完成</span>
+    </div>
+    <div class="bar"><i id="progressBar"></i></div>
+    <div class="toolbar"><button id="resetBtn" type="button">重置全部打卡</button></div>
+  </div>
+
+  <section class="week w1">
+    <div class="week-head">
+      <div class="badge">第 1 周</div>
+      <div><h2>认识环境：搞清楚“我在哪”</h2><p>目标：不再害怕黑窗口，能自由跳转目录并查命令用法</p></div>
+    </div>
+    <div class="days">
+      <div class="day"><label><input type="checkbox" data-k="d1"><span class="day-text"><span class="day-name">Day 1</span><span class="day-task">打开终端（Command + 空格搜索“终端”），输入 <code>pwd</code>、<code>ls</code>、<code>whoami</code> 看输出</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d2"><span class="day-text"><span class="day-name">Day 2</span><span class="day-task">练习路径四件套：<code>.</code> <code>..</code> <code>~</code> <code>/</code>，用 <code>cd</code> 在目录间来回跳</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d3"><span class="day-text"><span class="day-name">Day 3</span><span class="day-task">用 <code>ls -la</code> 看懂权限、大小、隐藏文件；用 <code>open .</code> 在访达中打开当前目录</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d4"><span class="day-text"><span class="day-name">Day 4</span><span class="day-task">查手册：<code>man ls</code>、<code>man cd</code>，按 <code>q</code> 退出，学会读 NAME 和 OPTIONS</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d5"><span class="day-text"><span class="day-name">Day 5</span><span class="day-task">掌握效率键：<code>Tab</code> 补全、<code>↑</code> 历史、<code>Ctrl + A/E</code> 行首行尾、<code>Ctrl + L</code> 清屏</span></span></label></div>
+      <div class="note">本周验收：不看提示，能从任意目录回到 <code>~</code> 并列出桌面文件。</div>
+    </div>
+  </section>
+
+  <section class="week w2">
+    <div class="week-head">
+      <div class="badge">第 2 周</div>
+      <div><h2>操作文件：建、复制、移动、删除</h2><p>目标：在终端里安全管理文件，理解通配符与权限</p></div>
+    </div>
+    <div class="days">
+      <div class="day"><label><input type="checkbox" data-k="d6"><span class="day-text"><span class="day-name">Day 6</span><span class="day-task">在桌面建练习目录：<code>mkdir ~/Desktop/term-practice &amp;&amp; cd ~/Desktop/term-practice</code></span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d7"><span class="day-text"><span class="day-name">Day 7</span><span class="day-task">建文件并写入内容：<code>touch note.txt</code>、<code>echo "hello mac" &gt; note.txt</code>、<code>cat note.txt</code></span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d8"><span class="day-text"><span class="day-name">Day 8</span><span class="day-task">复制与移动：<code>cp note.txt copy.txt</code>、<code>mv copy.txt sub/</code>（先 <code>mkdir sub</code>）</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d9"><span class="day-text"><span class="day-name">Day 9</span><span class="day-task">通配符练习：<code>ls *.txt</code>、<code>ls ?ote.txt</code>；理解 <code>*</code> 和 <code>?</code> 的区别</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d10"><span class="day-text"><span class="day-name">Day 10</span><span class="day-task">安全删除：<code>rm copy.txt</code>、<code>rm -r sub</code>；删前先 <code>pwd</code> 和 <code>ls</code> 确认</span></span></label></div>
+      <div class="note">本周验收：只用终端在桌面创建一个包含 3 个文件的项目目录，再完整删除它。</div>
+    </div>
+  </section>
+
+  <section class="week w3">
+    <div class="week-head">
+      <div class="badge">第 3 周</div>
+      <div><h2>组合命令：管道、搜索与重定向</h2><p>目标：让多个命令协作，一次解决真实问题</p></div>
+    </div>
+    <div class="days">
+      <div class="day"><label><input type="checkbox" data-k="d11"><span class="day-text"><span class="day-name">Day 11</span><span class="day-task">内容搜索：<code>grep "hello" note.txt</code>，再加 <code>-i</code> 忽略大小写、<code>-n</code> 显示行号</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d12"><span class="day-text"><span class="day-name">Day 12</span><span class="day-task">找文件：<code>find . -name "*.md"</code>，理解 <code>.</code> 是搜索起点</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d13"><span class="day-text"><span class="day-name">Day 13</span><span class="day-task">管道：<code>ls -la | grep txt</code>，再试 <code>cat note.txt | wc -l</code> 数行数</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d14"><span class="day-text"><span class="day-name">Day 14</span><span class="day-task">重定向：<code>ls &gt; list.txt</code> 覆盖写，<code>ls &gt;&gt; list.txt</code> 追加写，区别要说清</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d15"><span class="day-text"><span class="day-name">Day 15</span><span class="day-task">综合实战：统计当前目录下 <code>.txt</code> 文件的行数总和</span></span></label></div>
+      <div class="note">本周验收：不打开访达，用命令找出桌面最近修改的 5 个文件。</div>
+    </div>
+  </section>
+
+  <section class="week w4">
+    <div class="week-head">
+      <div class="badge">第 4 周</div>
+      <div><h2>自动化：别名、脚本与 Git 入门</h2><p>目标：把重复操作固化成自己的工具</p></div>
+    </div>
+    <div class="days">
+      <div class="day"><label><input type="checkbox" data-k="d16"><span class="day-text"><span class="day-name">Day 16</span><span class="day-task">认识配置文件：<code>~/.zshrc</code>，用 <code>nano ~/.zshrc</code> 打开并安全退出</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d17"><span class="day-text"><span class="day-name">Day 17</span><span class="day-task">设置别名：<code>alias ll='ls -la'</code>，写入 <code>~/.zshrc</code> 后 <code>source ~/.zshrc</code></span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d18"><span class="day-text"><span class="day-name">Day 18</span><span class="day-task">写第一个脚本：<code>hello.sh</code>，输出当前时间和目录，用 <code>chmod +x</code> 赋予执行权限</span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d19"><span class="day-text"><span class="day-name">Day 19</span><span class="day-task">Git 基础：<code>git init</code>、<code>git status</code>、<code>git add .</code>、<code>git commit -m "init"</code></span></span></label></div>
+      <div class="day"><label><input type="checkbox" data-k="d20"><span class="day-text"><span class="day-name">Day 20</span><span class="day-task">复盘：整理自己的常用命令清单，把本周做的练习目录提交到 GitHub</span></span></label></div>
+      <div class="note">本周验收：写一个脚本，一键完成“进入项目目录 → 列出文件 → 显示 git 状态”。</div>
+    </div>
+  </section>
+
+  <h2 class="section-title">随身参考</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>安全底线</h3>
+      <ul>
+        <li><code>rm -rf</code> 前先 <code>pwd</code> 确认位置</li>
+        <li>不粘贴来路不明的命令，尤其带 <code>sudo</code></li>
+        <li>多用 <code>Tab</code> 补全，少手打路径</li>
+        <li>删除前先用 <code>ls</code> 看一眼目标</li>
+      </ul>
+    </div>
+    <div class="card warn">
+      <h3>危险命令清单</h3>
+      <ul>
+        <li><code>sudo rm -rf /</code> — 会毁掉系统</li>
+        <li><code>rm -rf ~</code> — 会清空家目录</li>
+        <li><code>chmod -R 777 /</code> — 破坏权限</li>
+        <li>看不懂的命令，先 <code>man</code> 再执行</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>继续深入</h3>
+      <ul>
+        <li><code>brew install tldr</code> — 命令实例手册</li>
+        <li><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener">The Missing Semester</a> — 免费命令行课程</li>
+        <li><a href="https://www.codecademy.com/learn/learn-the-command-line" target="_blank" rel="noopener">Codecademy CLI</a> — 交互式练习</li>
+        <li>iTerm2 + oh-my-zsh — 学完后再做个性化</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>学习计划生成于 2026-11-24 · 勾选状态保存在本机浏览器 localStorage，不会上传</footer>
+</div>
+
+<script>
+  var keys = [];
+  document.querySelectorAll('input[type="checkbox"][data-k]').forEach(function (el) { keys.push(el.dataset.k); });
+  var bar = document.getElementById('progressBar');
+  var text = document.getElementById('progressText');
+  function load() {
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem('macTerminalPlan') || '{}'); } catch (e) {}
+    var done = 0;
+    document.querySelectorAll('input[type="checkbox"][data-k]').forEach(function (el) {
+      el.checked = !!saved[el.dataset.k];
+      if (el.checked) done++;
+    });
+    bar.style.width = (done / keys.length * 100) + '%';
+    text.textContent = done + ' / ' + keys.length + ' 天完成';
+  }
+  function save() {
+    var data = {};
+    var done = 0;
+    document.querySelectorAll('input[type="checkbox"][data-k]').forEach(function (el) {
+      data[el.dataset.k] = el.checked;
+      if (el.checked) done++;
+    });
+    localStorage.setItem('macTerminalPlan', JSON.stringify(data));
+    bar.style.width = (done / keys.length * 100) + '%';
+    text.textContent = done + ' / ' + keys.length + ' 天完成';
+  }
+  document.querySelectorAll('input[type="checkbox"][data-k]').forEach(function (el) {
+    el.addEventListener('change', save);
+  });
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    if (confirm('确定要清空全部打卡记录吗？')) {
+      localStorage.removeItem('macTerminalPlan');
+      load();
+    }
+  });
+  load();
+</script>
+</body>
+</html>
