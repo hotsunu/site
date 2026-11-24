@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日工作日常 · 2026-11-23（周一）</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2430; --ink2:#4a5262; --ink3:#7b8494;
+    --line:#e6e9ef; --red:#c0392b; --redbg:#fdf0ee; --amber:#b26a00; --amberbg:#fff6e8;
+    --blue:#1c5fa8; --bluebg:#eef4fc; --green:#1d7a55; --greenbg:#ecf7f1;
+    --purple:#6b4bb5; --purplebg:#f2eefb; --grey:#5b6472; --greybg:#f1f3f6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 24px 64px}
+  header{background:linear-gradient(135deg,#ffffff 0%,#f0f4fa 100%);border:1px solid var(--line);
+         border-radius:16px;padding:28px 32px;margin-bottom:22px}
+  h1{margin:0 0 6px;font-size:28px;letter-spacing:.5px}
+  .sub{color:var(--ink2);font-size:14px}
+  .kpis{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+  .kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 16px;min-width:128px}
+  .kpi b{display:block;font-size:20px;line-height:1.3}
+  .kpi span{font-size:12px;color:var(--ink3)}
+  .kpi.urgent b{color:var(--red)}
+  .kpi.new{border-color:#cfe0f5;background:var(--bluebg)} .kpi.new b{color:var(--blue)}
+  .banner{background:var(--amberbg);border:1px solid #f0d9ad;border-left:4px solid var(--amber);
+          border-radius:10px;padding:14px 18px;margin-bottom:14px;font-size:13.5px;color:#6b4708}
+  .banner b{color:#8a5600}
+  .fresh{background:#eaf4ff;border:1px solid #bcd8f5;border-left:4px solid #1c5fa8;
+         border-radius:10px;padding:16px 20px;margin-bottom:14px;font-size:13.5px;color:#22456d}
+  .fresh b{color:#123e70}
+  .fresh ul{margin:8px 0 0;padding-left:20px;color:#274e78}
+  .carry{background:var(--bluebg);border:1px solid #cfe0f5;border-left:4px solid var(--blue);
+         border-radius:10px;padding:14px 18px;margin-bottom:24px;font-size:13.5px;color:#274e78}
+  .carry b{color:#123e70}
+  section{margin-bottom:30px}
+  h2{font-size:19px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+  h2 .num{display:inline-flex;width:26px;height:26px;border-radius:8px;align-items:center;justify-content:center;
+          font-size:13px;color:#fff;background:var(--ink)}
+  .lead{color:var(--ink3);font-size:13px;margin:0 0 14px 36px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+        box-shadow:0 1px 2px rgba(20,30,50,.03)}
+  .card.hot{border-left:4px solid var(--red)}
+  .card.brandnew{border-left:4px solid var(--blue);background:#fcfdff}
+  .card.warm{border-left:4px solid var(--amber)}
+  .card.svc{border-left:4px solid var(--blue)}
+  .card.care{border-left:4px solid var(--green)}
+  .card.admin{border-left:4px solid var(--purple)}
+  .card.calm{border-left:4px solid var(--grey)}
+  .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+  .name{font-weight:700;font-size:15.5px}
+  .tag{font-size:11px;padding:2px 8px;border-radius:20px;white-space:nowrap;font-weight:600}
+  .t-red{background:var(--redbg);color:var(--red)} .t-amber{background:var(--amberbg);color:var(--amber)}
+  .t-blue{background:var(--bluebg);color:var(--blue)} .t-green{background:var(--greenbg);color:var(--green)}
+  .t-purple{background:var(--purplebg);color:var(--purple)} .t-grey{background:var(--greybg);color:var(--grey)}
+  .why{font-size:12.5px;color:var(--ink3);background:#fafbfd;border-radius:8px;padding:8px 10px;margin:8px 0}
+  .why em{font-style:normal;color:var(--ink2)}
+  .why b{color:var(--ink2)}
+  ul{margin:6px 0 0;padding-left:18px;font-size:13.5px;color:var(--ink2)}
+  li{margin:3px 0}
+  .say{font-size:12.5px;color:var(--blue);margin-top:9px;padding-top:8px;border-top:1px dashed var(--line)}
+  .numline{font-size:12.5px;color:var(--ink2);background:#fafbfd;border-radius:8px;padding:8px 10px;margin:8px 0;line-height:1.7}
+  .numline b{color:var(--ink)}
+  .timeline{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .row{display:grid;grid-template-columns:104px 1fr;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:none}
+  .time{padding:12px 14px;background:#fafbfd;font-size:12.5px;font-weight:700;color:var(--ink2);
+        border-right:1px solid var(--line)}
+  .todo{padding:12px 16px;font-size:13.5px;color:var(--ink2)}
+  .todo b{color:var(--ink)}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);
+        border-radius:12px;overflow:hidden;font-size:13px}
+  th{background:#fafbfd;text-align:left;padding:10px 14px;color:var(--ink2);font-size:12.5px;
+     border-bottom:1px solid var(--line)}
+  td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .foot{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 22px;
+        font-size:12.5px;color:var(--ink3)}
+  .foot b{color:var(--ink2)}
+  @media print{body{background:#fff}.wrap{padding:0}.card,.timeline,table,header{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>每日工作日常 · 2026年11月23日 周一</h1>
+  <div class="sub">数据来源：保险客户经营台账_2026-11-15.xlsx（7 张表）＋ 原始「客户跟踪.numbers」深度解码的沟通速记（2026-04 ~ 10，最新 10/29，本次提取 240 段）＋ 11/17 新增的 4 位客户方案文件与魏振焕成套正式资料。<b>今日复核：源文件自 11/17 起无变化。</b></div>
+  <div class="kpis">
+    <div class="kpi new"><b>4 位</b><span>11/17 新增方案客户</span></div>
+    <div class="kpi"><b>20</b><span>台账建档客户</span></div>
+    <div class="kpi"><b>82</b><span>客户池待确认称呼</span></div>
+    <div class="kpi"><b>2</b><span>已成交团险待回访</span></div>
+    <div class="kpi urgent"><b>7 天</b><span>距 11 月底养老金窗口</span></div>
+    <div class="kpi urgent"><b>今天</b><span>11/22 杨老板定性后首个工作日</span></div>
+    <div class="kpi urgent"><b>2</b><span>逾期照会未闭环</span></div>
+  </div>
+</header>
+
+<div class="fresh">
+  <b>新一周开局。昨天是周末收尾日，今天周一把「周末谈的、约的、答应的」全部拉回工作节奏——兑现的继续推进，没约到的今天正式排进本周日历，别让意向在周末和工作日之间断掉。</b>
+  <ul>
+    <li><b>11/22 药店杨老板：今天是定性后的第一个工作日</b>——昨天有没有见、是不是 10/22 那位开药店的杨老板、属不属于笔误，今天必须有明确结论。<b>已见的</b>推进下一步（加微信、发资料、约本周面谈）；<b>没定或笔误的</b>当场标注、从待办摘掉，不再挂第八天；</li>
+    <li><b>把周末成果落成日历</b>：4 位新客户（魏振焕 / 王朝宇 / 王朝铭 / 魏传忠）、「几时签→下周」、10/9 三件套、小林建材「约老婆」——周末约到的时段今天逐一确认到岗，只说没约的今天工作日主动发一条定时间；</li>
+    <li>养老金「12 月前存入、次年 3 月抵税」<b>只剩约 7 天</b>，工作日恢复，今天起进最后冲刺——只挑关系到位的几位一对一提醒，不群发。</li>
+  </ul>
+</div>
+
+<div class="banner">
+  <b>先读这条：</b>沟通记录是从本地 Numbers 原始文件解出的速记/语音转写文本，<b>称呼与内容按表格行序推断，部分可能错位</b>；今天所有对客动作，请先对照自己的微信核对归属，<b>话术须由你本人确认后再发送</b>。实时微信/企微会话因系统策略未能读取，故<b>不含 10 月 29 日之后的线上对话</b>——11/17 那 4 位客户方案是否已发出、周末约的时间是否敲定、11/22 杨老板是否已经见面，只能你来确认。
+</div>
+
+<div class="carry">
+  <b>承接前七天（11/16–11/22）：</b>一直挂账的 4 项内部核实（沪安诚照会是否已被撤销 / 平海生效日 / 林总团意险 10-19 是否已续 / 天德建设确切到期日）若还没结论，<b>周一上午集中清掉</b>。「几时签→下周」、小林建材「下周约老婆」、11/22 药店杨老板这几条，若周末已发过消息今天<b>只轻追一次、别连发</b>。周末的定位是「兑现」，<b>周一的定位是「固化」——把口头意向变成日历上的确定时段，把拍脑袋的决定变成台账里的字段</b>。
+</div>
+
+<section>
+  <h2><span class="num">0</span>今日时间轴</h2>
+  <p class="lead">新周开局日：上午给 11/22 杨老板定性收口并清内部核实，白天把周末谈的意向落成日历时段，傍晚补台账、排本周。</p>
+  <div class="timeline">
+    <div class="row"><div class="time">08:30–09:00</div><div class="todo"><b>今日头号收口 · 11/22 杨老板</b>：翻出速记原文与自己的微信，确认昨天到底见没见、是否 10/22 那位开药店的杨老板、是否笔误；<b>给明确结论并执行</b>（已见→推进下一步；没定/笔误→标注摘掉）。同时补 4 项内部核实（沪安诚、平海、林总团意险、天德到期日）。</div></div>
+    <div class="row"><div class="time">09:00–10:30</div><div class="todo"><b>把周末的成果落成日历</b>：逐一确认 4 位新客户周末面谈是否兑现——<b>魏振焕</b>（整套资料逐页确认）／<b>王朝宇·王朝铭</b>（先确认亲属、能否同场）／<b>魏传忠</b>（核对被保险人与投保年龄）。没见成的今天定本周具体时段。</div></div>
+    <div class="row"><div class="time">10:30–12:00</div><div class="todo"><b>最强旧信号 · 定本周时段</b>：10/17「几时签→下周」、10/19 已签医疗险＋理财计划书、10/9 三件套「回去考虑」（高血压有时效）、小林建材 10/17「下周约老婆」——周末已轻追的今天给两个具体时间，别再问开放式「考虑得怎么样」。</div></div>
+    <div class="row"><div class="time">13:30–15:00</div><div class="todo"><b>养老金最后冲刺（7 天）</b>：挑 2–4 位关系最到位的，一对一发「账户记得月底前存进去」，<b>不群发、不再讲产品</b>。优先已在交行开户、讨论过税档的几位；跳过明确拒绝/家中有变的。下午顺带做保单检视已发计划书客户的轻追。</div></div>
+    <div class="row"><div class="time">15:00–16:30</div><div class="todo"><b>团险与照会攻坚（案头）</b>：信亨实业（5 人团险 10 月到期未闭环）、消防器材出口公司（高管商业保险补充咨询）、天德建设、沪安诚 / 平海照会补件核实。<b>两笔逾期照会今天必须给内部结论。</b></div></div>
+    <div class="row"><div class="time">16:30–17:00</div><div class="todo"><b>理赔与服务闭环（案头）</b>：吕光辉肠胃镜住院（缺出院小结）、吴水英烫伤、腾德乔敏、永晁两次保全批单回访、策勇发票口径核对。</div></div>
+    <div class="row"><div class="time">17:00–17:30</div><div class="todo"><b>纯联络感情（不谈业务）</b>：父亲离世的客户、姚瑾翊妈妈（外公术后）、俞婷（金山医院、家中变故）、高医生、许艳（转介绍人）。周一傍晚一条轻问候，为新一周的关系打底。</div></div>
+    <div class="row"><div class="time">17:30–18:30</div><div class="todo"><b>收尾 · 台账补录 + 排本周</b>：把 4 位新客户建行进去；补「最近沟通 / 下次跟进」两个缺失字段；<b>把今天固化的面谈写成可直接照做的本周排期</b>。</div></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">1</span>容易成交的客户对接</h2>
+  <p class="lead">按「资料齐备度 × 明确签约信号」排序。11/17 新增的 4 位排最前——周末若已面谈，今天做投保手续推进；若未见到，今天定本周时段。</p>
+  <div class="grid">
+
+    <div class="card brandnew">
+      <div class="top"><span class="name">魏振焕 ★ 今日第一优先</span><span class="tag t-blue">11/17 新增 · 资料最全</span></div>
+      <div class="why"><em>11/17 新建「友客户的健康管理伙伴-魏振焕」方案，且当天 13:43–14:35 生成了一整套正式资料：产品建议书（17 页）、重疾 20 万 28 年版（17 页）、重疾 30 万 28 年版（17 页）、医疗险（5 页）、意外险（4 页）。</em>资料做这么全，说明已经讲到很细的一步——这一位不是「发资料」，是<b>当面逐页确认、推向投保</b>。周末若已过一遍，今天直接进健康告知、受益人、缴费账户。</div>
+      <div class="numline"><b>方案要点</b>　方案一 盈如意 30 万基本保额（28 年缴）19,238.9 元/年；方案二 盈如意 20 万基本保额（28 年缴）12,825.9 元/年。小额医疗 720 元/年，意外身价 30 万；住院大额医疗「智选逸生 400 万/年 + 2 院外药 + 3 院外器械」1,058 元/年。文案写「20 万保额赔付 30 万 / 30 万保额赔付 45 万」。</div>
+      <ul>
+        <li>先确认：<b>哪一份是客户最终选定的档位</b>（20 万还是 30 万），资料是否已经交到客户手上。</li>
+        <li>以「上次给你的正式建议书有几处要当面核对」为由，<b>今天把本周 30 分钟定下来</b>，重点过健康告知、受益人、缴费账户。</li>
+        <li>注意两份重疾文件是不同保额版本，对客前自己先分清，别发错。</li>
+      </ul>
+      <div class="say">话术方向：不重讲产品，做「资料确认 + 办理手续协助」，把签约说成帮他省时间。若周末没见到，直接落一个本周的确定时段。</div>
+    </div>
+
+    <div class="card brandnew">
+      <div class="top"><span class="name">王朝宇 / 王朝铭（可能为亲属）</span><span class="tag t-blue">11/17 新增 · 双份方案</span></div>
+      <div class="why"><em>11/17 21:51 与 21:53 先后新建两份方案，结构几乎完全一致（盈如意 30 万 / 25 万两档，28 年缴），只保额档次与保费略有差异。名字高度相近，<b>极可能是兄弟或父子</b>，可考虑同场讲解。</em>周末若已确认亲属关系，今天可推进家庭单。</div>
+      <div class="numline"><b>王朝宇</b>　30 万档 11,603.6 元/年、25 万档 9,669.7 元/年；小额医疗 969.8 元/年，意外身价 20 万；智选逸生 400 万 553.3 元/年。<br><b>王朝铭</b>　30 万档 10,971 元/年、25 万档 9,142.8 元/年；小额医疗 1,036.3 元/年；智选逸生 400 万 1,190.8 元/年。</div>
+      <ul>
+        <li>先核对是否亲属、两人的<b>年龄与体况</b>（保费差异来自这些），再决定分开讲还是一起讲。</li>
+        <li>「储蓄返还型、轻/中症出险后保费豁免、65 岁前重症 150% 赔付」是方案里最打动人的一段，讲的时候把这段放前面。</li>
+        <li>若确为一家人，可做成家庭单一起推进；周末人齐是难得机会，工作日就约本周晚上或周末。</li>
+      </ul>
+      <div class="say">话术方向：「两份方案放一起看更清楚，这周你们要不要一起过一遍」。</div>
+    </div>
+
+    <div class="card brandnew">
+      <div class="top"><span class="name">魏传忠（中老年意外＋防癌医疗）</span><span class="tag t-blue">11/17 新增 · 投保资格待核</span></div>
+      <div class="why"><em>11/17 22:11 新建，结构与前面三位不同——<b>没有重疾</b>，是「意外＋医疗」组合：康爱无忧医疗险（只保癌症、0 元免赔额）1,599 元/年，守护长青中老年意外险 567 元/年（意外身价/全残 30 万、意外骨折 1 万、骨折住院 100 元/日、重症监护 300 元/日、意外医疗 1 万），另含体检、陪诊、住院护工等 6 项服务。备注还写「妈妈和爸生日一样、保费基本雷同」「大姑姐医疗险 2,990 元/年」。</em></div>
+      <ul>
+        <li><b>先确认被保险人到底是谁</b>：看备注像是在给父母一辈配置。守护长青是中老年意外险，<b>有投保年龄上限，务必核对实际年龄</b>，别逆流程。</li>
+        <li>「只保癌症」这一点要讲清楚，避免客户误以为是普通医疗险——这类误解最容易后续生纠纷。</li>
+        <li>体检、陪诊、护工这些服务是这类客户最在意的，讲方案时优先级高于保额。</li>
+      </ul>
+      <div class="say">话术方向：从「爸妈那边的意外和看病报销」切入，比讲产品名更贴他的关注点。</div>
+    </div>
+
+    <div class="card hot">
+      <div class="top"><span class="name">「几时签 → 下周」那位客户</span><span class="tag t-red">最强旧信号 · 承诺周已过</span></div>
+      <div class="why"><em>10/17 微信询问医疗险和意外险「几时签」，客户回复「下周」。全表最明确的成交承诺，已过去一个月仍无闭环。归属在「日铭建筑施工下包」组附近，需核对具体是谁。</em><b>周末若已发消息，今天只轻追一次、给两个具体时间。</b></div>
+      <ul>
+        <li>把两份计划重发一次，直接问「这周哪天方便，我陪你把资料一次填完」。</li>
+        <li>给两个具体时间，别再问开放式的「考虑得怎么样」。</li>
+      </ul>
+      <div class="say">话术方向：不催，只做「手续协助」——把签约说成帮他省时间。</div>
+    </div>
+
+    <div class="card hot">
+      <div class="top"><span class="name">10/19 已签医疗险的客户</span><span class="tag t-red">已成交 · 加保最近</span></div>
+      <div class="why"><em>10/19 确认签了「肺部和甲状腺除外」的医疗保险，同时给了 5×10 理财计划书；同日另聊「肺部实性结节 0.5，建议夫妻一起配基础医疗保障」。</em>已有承保事实＋未跟进的理财计划书，信任成本最低。</div>
+      <ul>
+        <li>先做承保后服务：确认除外责任是否理解、保单是否收到、就医时怎么用。</li>
+        <li>再问理财计划书看过没有，顺势约 20 分钟；配偶基础保障是自然延伸。</li>
+      </ul>
+      <div class="say">话术方向：以「保单服务回访」开场，理财放后半段。</div>
+    </div>
+
+    <div class="card hot">
+      <div class="top"><span class="name">10/9 健康三件套「回去考虑」客户</span><span class="tag t-red">体况有时效</span></div>
+      <div class="why"><em>10/9 碰面做了开门红重疾 30 万＋医疗＋意外三件套，客户说回去考虑，记录注明「已有高血压」；同日还建议换原医疗险、重疾从 15 万提到 30 万、补意外险。</em></div>
+      <ul>
+        <li>高血压可能随体况变化影响承保，拖越久越被动——本周把「先做健康告知确认」作为推进理由。</li>
+        <li>备好 15 万 → 30 万差额对照表 plus 新旧医疗险免赔额对比，约本周见。</li>
+      </ul>
+      <div class="say">话术方向：从「趁资料齐先把可承保范围确认下来」切入，别制造紧迫感。</div>
+    </div>
+
+    <div class="card hot">
+      <div class="top"><span class="name">小林建材（10/17 电话客户）</span><span class="tag t-red">口头上周 · 已逾期</span></div>
+      <div class="why"><em>10/17 电话聊重疾、医疗、意外，家里人在考虑但具体事项不清楚，客户说「下周有机会到奉贤约老婆出来一起」——「下周」已过去近一个月。</em></div>
+      <ul>
+        <li>问「上次说的到奉贤一起坐坐，这周哪天方便」，把模糊邀约变成具体时间。</li>
+        <li>备好夫妻两人保障缺口一页纸，面谈只讲重点。</li>
+      </ul>
+      <div class="say">话术方向：顺着客户自己提过的「约老婆一起」推进。</div>
+    </div>
+
+    <div class="card hot">
+      <div class="top"><span class="name">李陵（个人＋沪安诚团险联系人）</span><span class="tag t-red">台账最高优先级</span></div>
+      <div class="why"><em>阶段＝投保；3 份正式建议书：重疾 21,787.40 元/年、医疗 1,867 元/年、意外 719.55 元/年，最近节点 10/9；另有 2 套个人方案。同时是沪安诚团险联系人。</em></div>
+      <ul>
+        <li>约方案讲解，集中答复待确认问题（重疾构成、豁免、医疗责任）。</li>
+        <li>同一通电话同步沪安诚照会进度；照会状态须先内部核实，对客不作催单。</li>
+      </ul>
+      <div class="say">话术方向：个人方案放主位，团险照会作附带同步。</div>
+    </div>
+
+    <div class="card hot">
+      <div class="top"><span class="name">友先生（终身寿险分红型）</span><span class="tag t-red">单笔金额最大</span></div>
+      <div class="why"><em>正式建议书：基本保额 487,490 元，首年保费 100,000 元，6 年缴，保障终身；男 40 周岁，17 页。已有正式建议书但未见投保记录。</em></div>
+      <ul>
+        <li>先核实客户全名与唯一标识，再确认办理意向。</li>
+        <li>安排逐页讲解＋资料清单（受益人、缴费账户、健康/财务告知）。</li>
+      </ul>
+      <div class="say">话术方向：以「10 万级长期规划的条款要当面过一遍」约面谈，不在微信谈收益。</div>
+    </div>
+
+    <div class="card warm">
+      <div class="top"><span class="name">头道汤老板娘（到店窗口）</span><span class="tag t-amber">久未联系 · 本周补约</span></div>
+      <div class="why"><em>10/17 微信聊到很久不联系，现在店开在金融新街，叫「大唐辣妈绝技减肥」，当时已约时间到店里聊聊，未见后续。周末若没去成，<b>今天工作日主动把那次到店拜访定下来</b>。</em></div>
+      <ul><li>把欠下的那次到店拜访补上，定本周一个下午的具体时间。</li><li>先叙旧、看店，保险留到对方主动问。</li></ul>
+      <div class="say">话术方向：「路过金融新街，顺道去你店里坐坐」比约正式面谈更自然。</div>
+    </div>
+
+    <div class="card warm">
+      <div class="top"><span class="name">国药大药房老板娘（资源互换）</span><span class="tag t-amber">10/17 话题接口</span></div>
+      <div class="why"><em>10/17 在药店碰到，聊「有什么资源可以共用」，提到银行每年有额度给员工报销买补品。走「资源互换」话题续上。</em></div>
+      <ul><li>帮她想怎么把补品额度用起来，不谈保险。</li><li>与 11/22 药店杨老板一并核对是否同一人。</li></ul>
+    </div>
+
+    <div class="card warm">
+      <div class="top"><span class="name">1 月到期「小宝医疗＋意外换友邦」客户</span><span class="tag t-amber">窗口期已到</span></div>
+      <div class="why"><em>王渭华 10/8 聊到：1 月小宝的医疗险和意外险到期要换友邦；自己和老婆的重疾等工作稳定后再说；孩子教育金也会考虑。距到期约 6 周，正是提前比较的窗口。</em></div>
+      <ul><li>做新旧保单责任对照，标注「无缝衔接」的投保时间点。</li><li>只推进孩子这两张，成人重疾与教育金记到明年。</li></ul>
+    </div>
+
+    <div class="card warm">
+      <div class="top"><span class="name">10/12 保单检视已发计划书客户</span><span class="tag t-amber">待回复 · 轻追一次</span></div>
+      <div class="why"><em>邵静 10/12 做了保单检视，发现本人、老公、女儿医疗险和意外险分别买在支付宝，建议更换，已发「智选逸生 + 悦安益」计划书。</em></div>
+      <ul><li>问「计划书哪段看不明白，我圈出来讲」。</li><li>提供一页家庭三人保障对照，方便转给配偶。</li></ul>
+    </div>
+
+    <div class="card warm">
+      <div class="top"><span class="name">厉忠斌 / 沪安城（原医疗险更换）</span><span class="tag t-amber">10/9 建议待跟进</span></div>
+      <div class="why"><em>10/9 建议更换原医疗险、配意外险、提高重疾保额（原仅 15 万）；9/30 面聊已发现高血压风险，记「2027 年全家需要」。</em></div>
+      <ul><li>先确认体况是否变化、原医疗险是否已换，再谈提额。</li><li>注意合规，不逆流程。</li></ul>
+    </div>
+
+    <div class="card warm">
+      <div class="top"><span class="name">10/22 欧阳婷家庭 1+4 口</span><span class="tag t-amber">家庭单</span></div>
+      <div class="why"><em>10/22 和老婆欧阳婷见面，介绍 1+4 口的重疾、医疗、意外，以及身价险。</em></div>
+      <ul><li>先确认家庭预算与优先顺序。</li><li>本周约夫妻同场统一讲解，避免两边信息不一致。</li></ul>
+    </div>
+
+    <div class="card warm">
+      <div class="top"><span class="name">信亨实业（5 人团险）</span><span class="tag t-amber">到期替换 · 逾期未闭环</span></div>
+      <div class="why"><em>9/23 面聊：10 月到期，现买平安，5 人，意外 50 万、意外医疗 25 万、院外药 5000 赔 60%、猝死 10 万、住院补贴 50 元、488 元/人；当时说「回来做方案，对比一下」。已加老板娘微信。</em></div>
+      <ul><li>按 5 人、488 元/人做同口径对比方案。</li><li>先问「原来的保单现在续了没」。</li></ul>
+    </div>
+
+    <div class="card warm">
+      <div class="top"><span class="name">消防器材出口公司（约 20–30 人）</span><span class="tag t-amber">客户主动咨询</span></div>
+      <div class="why"><em>10/15 星巴克约见，公司做消防器材出口（欧洲、南非等），已推荐单位团体意外险，客户主动咨询「高管的商业保险补充」。</em>客户主动提问＝高意向。</div>
+      <ul><li>出两份：全员团意险＋高管补充医疗/意外。</li><li>参考 10/9「友邦 vs 平安团意险差异」那份对比。</li></ul>
+    </div>
+
+    <div class="card warm">
+      <div class="top"><span class="name">林总 / 天德建设（团险到期）</span><span class="tag t-amber">本月时限 · 今天问到确切日</span></div>
+      <div class="why"><em>10/16 曾提醒林总团体意外险续单时间大概 10/19；另记「天德建设 2026 年 11 月团体线到期」。两个时点都已到或临近，且无闭环。</em></div>
+      <ul><li>先查系统是否已续；未续则本周是补窗口。</li><li>问到确切到期日后按 7/3/1 天设提醒。</li></ul>
+    </div>
+
+    <div class="card warm">
+      <div class="top"><span class="name">日铭建筑施工下包 / 店铺财产险客户</span><span class="tag t-amber">微信未回 · 只追一次</span></div>
+      <div class="why"><em>10/17 微信聊店里财产险和第三方责任险，建议补齐本人和儿子的重疾、以及医疗险免赔额不足部分，微信未回；10/21 另一客户回复「最近忙还没顾上」。</em></div>
+      <ul><li>各发一条资料型消息（一页图说），不追问、不连发。</li><li>7 天无回复转入下月名单。</li></ul>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">2</span>需要联络感情的客户聊天</h2>
+  <p class="lead">这一类今天不谈产品、不发计划书。周一傍晚发一条轻问候或约个本周见面，让关系带着温度开启新一周。</p>
+  <div class="grid">
+
+    <div class="card care">
+      <div class="top"><span class="name">父亲刚离世的客户</span><span class="tag t-green">只慰问 · 零业务</span></div>
+      <div class="why"><em>10/26 微信问候父亲情况，被告知人已经走了——手术很成功，但肺部感染。</em>距今 3 周多，正是最需要被记得、又最不适合谈保险的时候。</div>
+      <ul><li>一条简短周一问候，不提任何保单、讲座、产品。</li><li>若涉及身故/理赔责任，等对方主动提起再协助。</li></ul>
+    </div>
+
+    <div class="card care">
+      <div class="top"><span class="name">俞婷（金山医院 / 家庭变故）</span><span class="tag t-green">情绪支持</span></div>
+      <div class="why"><em>2026 年 3 月老公突发疾病去世，之后一直聊家庭、孩子、公婆；10/5 提到房子 11 月交付、朗月 140 平大平层计划装修 10 万、孩子在石化读小学、明年博士毕业、副主任医师。</em>11 月正是她收房装修的忙碌节点。</div>
+      <ul><li>从「房子 11 月交付，装修准备得怎么样」切入。</li><li>不提保险、不提养老金，只做倾听。</li></ul>
+    </div>
+
+    <div class="card care">
+      <div class="top"><span class="name">姚瑾翊妈妈 / 增泽世贸</span><span class="tag t-green">家事关怀</span></div>
+      <div class="why"><em>10/12 聊到姚景翊外公在中山医院做脑肿瘤手术（肺癌转移）；增泽世贸 10/14 聊健康三件套和养老存钱，「关系很到位」。</em></div>
+      <ul><li>问一句老人恢复情况、家里忙不忙得过来。</li><li>增泽世贸按老朋友寒暄，业务留到对方主动开口。</li></ul>
+    </div>
+
+    <div class="card care">
+      <div class="top"><span class="name">公卫中心高医生 / 静心活动</span><span class="tag t-green">情绪支持</span></div>
+      <div class="why"><em>10/20 微信想约咖啡，高医生说「有事直接讲」；另有记录「家里发生了变故，工作又忙，目前没心思多想」。</em></div>
+      <ul><li>发一个不要求回复的轻量内容，注明「不用特意回」。</li><li>不追问变故、不提个人养老金。</li></ul>
+    </div>
+
+    <div class="card care">
+      <div class="top"><span class="name">许艳（关键转介绍人）</span><span class="tag t-green">人脉维护 · 最高价值</span></div>
+      <div class="why"><em>9/18 组局吃饭介绍龚幸洁认识；红马赢装潢七宝店是「许艳新签客户」，9/18 为其父母做了防癌险和守护常青计划书；10/22 还带许艳朋友见面。一个人带出多条线索。</em></div>
+      <ul><li>约个本周午饭或咖啡，只表达感谢、聊近况。</li><li>顺带问红马赢那份父母方案还有没有需要解释的。</li></ul>
+    </div>
+
+    <div class="card care">
+      <div class="top"><span class="name">刘加龙（冉浩实业老板）</span><span class="tag t-green">关系型长聊</span></div>
+      <div class="why"><em>10/6 见面长聊：2005 年到上海、2009 年开工厂，现厂房六千万、年产值约 8 亿，正在走码头手续（约 4 亩地、投资约 2000 万、建成后产值可达 20 亿）；儿子 2009 年生已工作、女儿金山中学高二。</em>聊得很深，属可长期经营的企业主。</div>
+      <ul><li>从「码头手续推进得怎么样」切入。</li><li>今天只维护关系，不谈团险也不谈个人方案。</li></ul>
+    </div>
+
+    <div class="card care">
+      <div class="top"><span class="name">大亭建筑老板 / 丁双双</span><span class="tag t-green">聊生活近况</span></div>
+      <div class="why"><em>大亭建筑 10/27 被调到浦东周浦、每三天回来一次弄狗，另记大额存款约 200 万；丁双双 10/22 聊给两个女儿存钱的计划、10/27 同样调浦东周浦。两条记录接近，注意核对是否同一人。</em></div>
+      <ul><li>从「周浦往返还适应吗、狗谁照顾」切入；存钱话题等他先提。</li><li>给女儿存钱只倾听，今天不推养老金产品。</li></ul>
+    </div>
+
+    <div class="card care">
+      <div class="top"><span class="name">黄彦辰妈妈 / 小马老师 / 锦溪古琴 / 王静</span><span class="tag t-green">兴趣与孩子话题</span></div>
+      <div class="why"><em>10/10 黄彦辰妈妈：孩子西林中学六年级、弟弟四年级已到崇明足球队全日制训练；小马老师聊教培转行；10/20 锦溪做古琴与传统文化、小朋友上哲学课；10/26 王静对宏观经济、外汇汇率、离岸金融感兴趣。</em></div>
+      <ul><li>按各自话题各发一条：孩子赛季 / 近况 / 古琴活动 / 一篇宏观文章。</li><li>小马老师属增员储备，今天只维护不推进。</li></ul>
+    </div>
+
+    <div class="card care">
+      <div class="top"><span class="name">陶雯雯（陶子）/ 乔敏 / 顾会计</span><span class="tag t-green">服务型关怀</span></div>
+      <div class="why"><em>9/23 民间小灶吴水英烫伤，本人手机已申请理赔；10/17 去腾德办理赔、和乔敏聊体检（中宏医疗险赔 90%），碰到兼职顾会计聊起保险和体检。</em></div>
+      <ul><li>问候恢复情况、理赔款是否到账，顺带确认还有没有单据要协助。</li><li>「理赔办得怎么样」比任何节日祝福都更能建立信任。</li></ul>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">3</span>其他今天要执行的内容</h2>
+  <p class="lead">合规时限、理赔闭环、台账补录——不产生即时业绩，但决定会不会掉单。新一周开局，是清挂账的最佳时点。</p>
+  <div class="grid">
+
+    <div class="card admin">
+      <div class="top"><span class="name">① 11/22 药店杨老板 · 定性后的执行</span><span class="tag t-red">今日必须收口</span></div>
+      <div class="why"><em>速记原文：<b>「年 11 月 22 日」＋「一个新朋友姓杨的老板，他们是开药店的，给我的建议是家门口的药店，早得倒闭、早关门损失少」</b>——昨天正是 11/22。10/22 记录里也出现「开药店老板」「杨盛暖」，两条极可能同一人。<b>昨天是定性日，今天是执行日。</b></em></div>
+      <ul>
+        <li>先看昨天的结论：已见——推进下一步（加微信、发资料、约本周面谈）；没定或笔误——标注清楚，从待办摘掉，不再挂第八天。</li>
+        <li>若昨天仍未定性，今天上午给最终答案：<b>见就定本周时间，不见就明确放弃</b>，别再让它占着待办位置。</li>
+      </ul>
+    </div>
+
+    <div class="card admin">
+      <div class="top"><span class="name">② 新客户补录台账（连续五天挂账）</span><span class="tag t-blue">数据缺口</span></div>
+      <div class="why">11/17 新建的 <b>王朝宇、王朝铭、魏振焕、魏传忠</b> 四份方案，在 11-15 台账里<b>一个都查不到</b>。11/19 首提、连续五天仍未补——如果不补录，本周的自动化照样会把他们漏掉。工作日恢复，<b>这是本周第一个整块时间</b>。</div>
+      <ul>
+        <li>在「客户总览」建 4 行：阶段＝方案，状态＝已出方案，来源文件＝对应 .pages，最近节点＝2026-11-17。</li>
+        <li>魏振焕补 5 份正式建议书/PDF 的关联；王朝宇与王朝铭标注「疑似亲属，待确认」；魏传忠标注「被保险人待确认，注意投保年龄」。</li>
+        <li>顺手把「下次跟进日期」填上（建议本周内），形成可持续节奏。</li>
+      </ul>
+    </div>
+
+    <div class="card admin">
+      <div class="top"><span class="name">③ 两笔逾期照会必须今日给结论</span><span class="tag t-red">合规最优先</span></div>
+      <ul>
+        <li><b>沪安诚</b>（P090926P03701456）：6/22 照会要求 7/22 前回复线上服务邮箱被占用，否则申请撤销；无闭环记录，<b>已逾期逾 4 个月</b>。先向保单服务流程核实是否已被撤销，再联系李陵，可提供盖章回复函协助，不作催单。</li>
+        <li><b>平海涂料</b>（P090926T02701353，联系人俞玉芳）：9/4 照会，全体被保险人有 9/5 期满的在保旅行险，需确认新单及全体被保险人生效日。已过 2 个多月。</li>
+      </ul>
+    </div>
+
+    <div class="card admin">
+      <div class="top"><span class="name">④ 个人养老金：只剩约 7 天</span><span class="tag t-red">11 月底窗口</span></div>
+      <div class="why"><em>规则：<b>12 月之前存入，次年 3 月才能抵扣</b>。从今天（11/23）到月底仅约 7 天，工作日恢复，今天是最后冲刺的第一天，过了再等一年。</em></div>
+      <ul>
+        <li>只挑 2–4 位关系最到位的，一对一发一条，<b>不群发、不再讲产品</b>，提醒「账户记得在月底前存进去」。</li>
+        <li>跳过：枫泾镇公务员（说意义不大）、公卫中心老师（家里变故）、科思创（不感兴趣）、比亚迪 4S 店（说不需要）。</li>
+        <li>可优先：金玥湾前租客（已在交行开户）、杨金/朱泾镇（讨论过 2400/12000 税档）、已开户但忘记理财的几位。</li>
+      </ul>
+    </div>
+
+    <div class="card admin">
+      <div class="top"><span class="name">⑤ 理赔与保全闭环</span><span class="tag t-blue">服务履约</span></div>
+      <ul>
+        <li><b>吕光辉</b>：10/5 陪诊金山医院做胃镜/肠镜/体检，10/10 拿到发票（总约 1 万、自付 500、医保账户约 2700），<b>出院小结未拿到</b>；今天补齐并确认报销进度。</li>
+        <li><b>吴水英烫伤</b>（陶子线）、<b>腾德乔敏</b>理赔：确认到账与材料齐全。</li>
+        <li><b>永晁消防</b>（G09240629A）：8/26、8/27 两次保全批单（1,924.52 / 1,268.40 元，新增被保险人 2 人）是否完成回访与归档。</li>
+        <li><b>策勇消防</b>（G09141419A）：6/30 发票 2,187.00 元与保单保费 5,162.00 元口径不一致，需核对并安排周年回访。</li>
+        <li>续期日历：2027-04-03（永晁）、2027-06-22（策勇），按到期前 7/3/1 天提醒。</li>
+      </ul>
+    </div>
+
+    <div class="card admin">
+      <div class="top"><span class="name">⑥ 历史台账补录（连续八天挂账）</span><span class="tag t-purple">补两个缺失字段</span></div>
+      <div class="why">台账<b>完全没有「最近联系日期」和「下次跟进日期」两列</b>，客户池 82 行跟进记录全是「碎片化无法还原」。但已从原始文件解出 4–10 月带日期的沟通内容——补完之后自动化才能按逾期自动排序。<b>11/16 首提至今已八天，连同新客户一起做完。</b></div>
+      <ul>
+        <li>把带明确日期的结论（10/17「下周签」、10/19 已签医疗险、10/9 三件套待考虑、9/23 信亨团险到期、10/16 林总 10/19 续单、10/8 小宝 1 月换友邦）补进「客户总览」下一步动作列。</li>
+        <li>为每位重点客户写下「下次跟进日期」。</li>
+      </ul>
+    </div>
+
+    <div class="card admin">
+      <div class="top"><span class="name">⑦ 身份归并与客户池去重</span><span class="tag t-purple">数据质量</span></div>
+      <ul>
+        <li>4 个临时标识待确认：<b>沈峰 / 金珊珊 / 顾弟弟9 / 赵女士46</b>。沈峰与金珊珊方案内容完全相同，确认前不宜对客约讲。</li>
+        <li>82 个称呼疑似同一人：<b>卫萍 ↔ 刘卫萍、蔡婷 ↔ 蔡婷婷、宋九明 ↔ 九明、陈培佩 ↔ 佩佩、腾德石材 ↔ 腾德</b>；客户池「李陵」需与总览建档李陵归并。</li>
+        <li>速记里「丁双双」与「大亭建筑老板」记录高度接近；「王朝宇 ↔ 王朝铭」「魏振焕 ↔ 魏传忠」也请一并核对亲属关系。</li>
+        <li>重复文件：客户跟踪.numbers 与 客户跟踪 2.numbers（内容相同）、张亚男.pages / .numbers、0040250992.pdf 三份、友先生建议书 1774226938 / 1774226941 两份。</li>
+      </ul>
+    </div>
+
+    <div class="card calm">
+      <div class="top"><span class="name">⑧ 本周不要打扰的名单</span><span class="tag t-grey">避免过度触达</span></div>
+      <div class="why">已明确拒绝或多次无回应，继续 push 只会损耗关系，本轮放到下月或明年到期时再联系。</div>
+      <ul>
+        <li>比亚迪 4S 店（9/30 明确「不需要」计划书）</li>
+        <li>速滑杨教练学员家长周辉（已配平安商业险，<b>明年到期</b>再推荐）</li>
+        <li>韩楚晴妈妈、莲盛泵业、长浩工程幕墙（10/26 财富讲座均被拒）</li>
+        <li>王思涵妈妈（孩子抑郁）、高朗化工（未回复）、杨老师（对保险不感兴趣）</li>
+        <li>何泽为表弟媳妇（安孕宝「没有太大意向」）、宣谨资质（备孕）、俞鑫（明确抵触）</li>
+      </ul>
+    </div>
+
+    <div class="card calm">
+      <div class="top"><span class="name">⑨ 增员 / 线索储备（只登记不推进）</span><span class="tag t-grey">长期经营</span></div>
+      <ul>
+        <li>妮妮/厂房租赁：增员测评已提交很不错，但本人犹豫；「如果不能做增员储备，可转成客户做存钱，打算给儿子存钱」——两条路都记下。</li>
+        <li>许艳朋友（全职妈妈、考证解决社保）、格思小马老师（教培转行）、人工智能协会（哥哥数学系 2026 届毕业、对协会工作感兴趣）。</li>
+        <li>团险空白线索：祝融/eta 消防未配团意险（沈梅）、二工区管委会工会互助保险、孵化器副总芳芳已拿到团意险条款视频（涉避嫌，谨慎）。</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">4</span>本周排期（今天定，照着做）</h2>
+  <table>
+    <tr><th style="width:160px">事项</th><th>内容</th><th style="width:110px">建议时点</th></tr>
+    <tr><td>11/22 杨老板</td><td>定性后的执行：已见的推进加微信/发资料/约本周面谈；没定或笔误的标注后从待办摘掉。<b>今天务必收口</b></td><td>今天上午</td></tr>
+    <tr><td>4 位新客户方案</td><td>魏振焕整套资料逐页确认；王朝宇/王朝铭确认亲属关系后同场讲；魏传忠核对被保险人年龄与投保资格。周末没见成的今天定本周时段</td><td>今天定 / 本周内</td></tr>
+    <tr><td>最强旧信号</td><td>「几时签→下周」、10/19 已签医疗险＋理财计划书、10/9 三件套高血压、小林建材「约老婆」——今天给两个具体时间，定进本周日历</td><td>今天上午</td></tr>
+    <tr><td>沈峰 / 金珊珊</td><td>先内部确认两份相同方案的归属与唯一标识，确认后再约讲解</td><td>本周内</td></tr>
+    <tr><td>张亚男家庭</td><td>核对张博平安福（7,704.58 元/年、重疾 19 万）等已有保单，与三套方案做缺口对照，约家庭统一讲解</td><td>本周约时间</td></tr>
+    <tr><td>黄懂东 / 孙燕 / 吴士龙 / 朱以兵 / 杜海钰 / 张忠鹰</td><td>均已出方案未投保，以「档位对照 / 预算确认」轻触达；朱以兵保费偏高（28,084~42,126 元/年）需先做取舍说明</td><td>本周各 1 次</td></tr>
+    <tr><td>养老金提醒</td><td>今天起最后冲刺，关系到位客户一对一提醒；月底前（≤11/30）对未存的做最后一次提醒</td><td>今天 / 月底前</td></tr>
+    <tr><td>高安建设</td><td>团险 2027 年 5 月左右提前联系；石丽婷计划明年备孕，已分享孕产医疗费用信息</td><td>记入 2027 日历</td></tr>
+    <tr><td>沪安诚 / 策勇消防</td><td>9/30 面聊发现高血压风险，曾建议「就医检查前先配医疗险和意外险」，并记「2027 年全家需要」</td><td>注意合规，勿逆流程</td></tr>
+  </table>
+</section>
+
+<div class="foot">
+  <b>数据来源与边界</b>　① <b>保险客户经营台账_2026-11-15.xlsx</b>：7 张工作表（客户视图 / 客户总览 20 行 / 个人方案明细 38 行 / 企业与团险 4 行 / 客户池名单 82 行 / 待确认与重复文件 13 行 / 说明 13 行），为 11-15 静态快照。② <b>客户跟踪.numbers</b>：解包 iWork 内部存储解出 4–10 月沟通速记（本次提取 240 段可读片段）；语音转写风格有错别字，<b>称呼与内容按行序推断、可能错位</b>。③ <b>11/17 新增文件</b>：王朝宇 / 王朝铭 / 魏振焕 / 魏传忠 四份 .pages 方案与魏振焕 5 份 PDF，均为本地文件预览与元数据读取，<b>不代表已发给客户、已投保或已承保</b>；方案中的产品责任与费率以有效正式资料及合同条款为准。④ 实时 IM/微信会话读取被系统策略阻断，故<b>不含 10 月 29 日之后的线上对话</b>；11/17 是否与客户见面、周末面谈是否敲定、11/22 杨老板是否已见，需本人确认。⑤ <b>今日复核：iCloud 原始资料自 11/17 起连续第七天无新增文件，台账与客户跟踪表未更新，故本期内容与前几日同源，仅按周一开局日更新倒计时与动作时点；今日核心变化是 11/22 杨老板由「昨天定性」进入「今天执行收口」。</b>⑥ 台账口径：最小必要字段，不含完整联系方式、证件号、银行卡、健康告知；<b>对客消息发送前须由代理人本人确认</b>；本安排不构成承保、收益或理赔结论。<br><br>
+  <b>本文件只读生成，未修改任何原始台账或客户档案。</b>
+</div>
+
+</div>
+</body>
+</html>
