@@ -1,0 +1,41 @@
+name: Update homepage directory
+
+# 每次推送到 main 分支、且 html 文件有变动时自动运行
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - 'generate_index.py'
+  workflow_dispatch:
+
+# 需要写权限，才能把重新生成的主页提交回仓库
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate index.html
+        run: python3 generate_index.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "主页无变化，跳过提交"
+          else
+            git commit -m "chore: 自动更新主页目录 [skip ci]"
+            git push
+          fi
