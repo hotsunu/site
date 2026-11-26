@@ -373,6 +373,22 @@
   @media (max-width: 560px) {
     .hero { display: none; }
   }
+
+  /* ===== 左右滑动切换 ===== */
+  .card-stage { touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+  .card-nav { flex-direction: column; align-items: center; gap: 8px; margin-top: 12px; }
+  .batch-bar { width: 100%; height: 4px; border-radius: 99px; background: var(--line); overflow: hidden; }
+  .batch-bar > i {
+    display: block; height: 100%; width: 0; border-radius: 99px;
+    background: var(--accent); transition: width .25s ease;
+  }
+  @keyframes slideFromRight { from { opacity: 0; transform: translateX(36px); } to { opacity: 1; transform: none; } }
+  @keyframes slideFromLeft { from { opacity: 0; transform: translateX(-36px); } to { opacity: 1; transform: none; } }
+  .flip-card.slide-next { animation: slideFromRight .24s cubic-bezier(.2,.8,.3,1); }
+  .flip-card.slide-prev { animation: slideFromLeft .24s cubic-bezier(.2,.8,.3,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .flip-card.slide-next, .flip-card.slide-prev { animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -480,11 +496,10 @@
   <section id="cardView" class="card-mode" aria-live="polite">
     <div class="card-stage"><div id="flipCard" class="flip-card"></div></div>
     <div class="card-nav">
-      <button id="prevCard" class="btn" type="button">上一个</button>
+      <div class="batch-bar" aria-hidden="true"><i id="batchBarFill"></i></div>
       <span id="cardProgress" class="progress-text"></span>
-      <button id="nextCard" class="btn" type="button">下一个</button>
     </div>
-    <p class="hint" style="text-align:center;margin-top:10px">点卡片或空格翻面 · 键盘 ← → 切换 · 本轮词量在「显示设置」</p>
+    <p class="hint" style="text-align:center;margin-top:10px">左右滑动切换单词 · 点卡片或空格翻面 · 键盘 ← → 也可切换</p>
   </section>
 
   <section id="manageView" class="panel" hidden>
@@ -1030,14 +1045,21 @@ function detailsHtml(w){
 let cardFlipped = false;
 let meaningShown = false;
 let batchDone = false;
+function setBatchBar(ratio){
+  const fill = $("#batchBarFill");
+  if (fill) fill.style.width = Math.round(Math.max(0, Math.min(1, ratio)) * 1000) / 10 + "%";
+}
+
 function renderCard(){
   const list = batchList();
+  $("#flipCard").classList.remove("slide-next", "slide-prev");
   if (!list.length) {
     $("#flipCard").innerHTML = '<div class="face front"><div class="front-head"><span class="tag">没有结果</span></div>' +
       '<div class="front-body"><p class="hint">当前筛选下没有单词</p>' +
       '<div class="front-actions"><button class="btn" type="button" data-clear-filter>清空筛选</button></div></div>' +
       '<div class="front-foot"></div></div>';
     $("#cardProgress").textContent = "0 / 0";
+    setBatchBar(0);
     return;
   }
   if (batchDone) {
@@ -1048,6 +1070,7 @@ function renderCard(){
       '<button class="btn" type="button" data-batch="next">下一批</button></div></div>' +
       '<div class="front-foot"><p class="tip">先复习这一轮，再进入下一批；词量可在「显示设置」里改。</p></div></div>';
     $("#cardProgress").textContent = "本轮 " + list.length + " / " + list.length + " · 已完成";
+    setBatchBar(1);
     $("#flipCard").classList.remove("is-flipped");
     save();
     return;
@@ -1081,6 +1104,7 @@ function renderCard(){
     '</div></div>' + back;
   $("#flipCard").classList.toggle("is-flipped", cardFlipped);
   $("#cardProgress").textContent = "本轮 " + (state.index + 1) + " / " + list.length + " · " + w.word;
+  setBatchBar((state.index + 1) / list.length);
   save();
 }
 
@@ -1297,6 +1321,7 @@ document.addEventListener("click", ev => {
 });
 
 $("#flipCard").addEventListener("click", ev => {
+  if (Date.now() < swipeGuard) return;
   if (ev.target.closest("button") || ev.target.closest(".hit")) {
     if (ev.target.closest(".hit")) return;
     return;
@@ -1307,8 +1332,54 @@ $("#flipCard").addEventListener("click", ev => {
 
 $("#studyMode").addEventListener("click", () => { state.mode = "study"; save(); renderAll(); });
 $("#manageMode").addEventListener("click", () => { state.mode = "manage"; save(); renderAll(); });
-$("#prevCard").addEventListener("click", () => { batchDone = false; state.index--; cardFlipped = false; renderCard(); });
-$("#nextCard").addEventListener("click", () => { batchDone = false; state.index++; cardFlipped = false; renderCard(); });
+/* 左右滑动切换：同时支持触摸滑动和鼠标拖拽 */
+let swipeGuard = 0;
+function slideTo(dir, animate){
+  const list = batchList();
+  if (!list.length) return;
+  if (batchDone) { batchDone = false; state.index = 0; }
+  const target = state.index + dir;
+  if (target < 0) { toast("已经是第一张"); return; }
+  if (target > list.length - 1) { toast("已经是最后一张"); return; }
+  state.index = target;
+  cardFlipped = false;
+  renderCard();
+  if (animate === false) return;
+  const card = $("#flipCard");
+  card.classList.remove("slide-next", "slide-prev");
+  void card.offsetWidth;
+  card.classList.add(dir > 0 ? "slide-next" : "slide-prev");
+}
+(function bindSwipe(){
+  const stage = document.querySelector(".card-stage");
+  if (!stage) return;
+  let start = null;
+  stage.addEventListener("pointerdown", ev => {
+    if (ev.target.closest("button, a, input, select, textarea")) return;
+    start = { x: ev.clientX, y: ev.clientY, t: Date.now(), id: ev.pointerId };
+  });
+  stage.addEventListener("pointermove", ev => {
+    if (!start || ev.pointerId !== start.id) return;
+    const dx = ev.clientX - start.x, dy = ev.clientY - start.y;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 6 && ev.cancelable) {
+      if (stage.hasPointerCapture && !stage.hasPointerCapture(ev.pointerId)) {
+        try { stage.setPointerCapture(ev.pointerId); } catch (e) {}
+      }
+    }
+  });
+  const finish = ev => {
+    if (!start || ev.pointerId !== start.id) { start = null; return; }
+    const dx = ev.clientX - start.x, dy = ev.clientY - start.y;
+    const dt = Date.now() - start.t;
+    start = null;
+    const isSwipe = Math.abs(dx) > 46 && Math.abs(dx) > Math.abs(dy) * 1.25 && dt < 800;
+    if (!isSwipe) return;
+    swipeGuard = Date.now() + 420;
+    slideTo(dx < 0 ? 1 : -1);
+  };
+  stage.addEventListener("pointerup", finish);
+  stage.addEventListener("pointercancel", () => { start = null; });
+})();
 $("#search").addEventListener("input", e => { state.query = e.target.value.trim(); state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
 $("#themeSelect").addEventListener("change", e => { state.theme = e.target.value; save(); applySettings(); });
 $("#accentPick").addEventListener("input", e => { state.accent = e.target.value; save(); applySettings(); });
@@ -1378,8 +1449,8 @@ $("#resetBtn").addEventListener("click", () => {
 document.addEventListener("keydown", ev => {
   if (ev.key === "Escape") { hidePopover(); $("#modal").hidden = true; }
   if (state.mode !== "study" || ev.target.matches("input,select,textarea")) return;
-  if (ev.key === "ArrowRight") { batchDone = false; state.index++; cardFlipped = false; renderCard(); }
-  if (ev.key === "ArrowLeft") { batchDone = false; state.index--; cardFlipped = false; renderCard(); }
+  if (ev.key === "ArrowRight") { slideTo(1, false); }
+  if (ev.key === "ArrowLeft") { slideTo(-1, false); }
   if (ev.key === " ") { ev.preventDefault(); cardFlipped = !cardFlipped; $("#flipCard").classList.toggle("is-flipped", cardFlipped); }
 });
 document.addEventListener("click", ev => {
