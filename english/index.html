@@ -154,7 +154,13 @@
   .front .ipa { font-size: 19px; }
   .front .zh { font-size: 19px; margin-top: 20px; }
   .front-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; }
-  .front .tip { color: var(--muted); font-size: 12px; margin-top: 16px; }
+  .inline-meaning {
+    margin-top: 14px; padding: 10px 16px; max-width: 100%;
+    background: var(--soft); border: 1px solid var(--line); border-radius: 10px;
+  }
+  .inline-zh { color: var(--accent); font-weight: 700; font-size: 18px; }
+  .inline-def { color: var(--muted); font-size: 13px; margin-top: 3px; }
+  .front .tip { color: var(--muted); font-size: 12px; margin-top: 14px; }
   .reveal-zh { color: var(--accent); font-weight: 700; font-size: 16px; }
   .back h3 { margin: 0 0 4px; font-size: 26px; }
   .back .ipa { margin-bottom: 14px; }
@@ -287,7 +293,7 @@
       <span id="cardProgress" class="progress-text"></span>
       <button id="nextCard" class="btn" type="button">下一个</button>
     </div>
-    <p class="hint" style="text-align:center;margin-top:10px">词义默认隐藏 · 点「显示词义」或卡片翻面查看 · 键盘 ← → 切换 · 空格翻面</p>
+    <p class="hint" style="text-align:center;margin-top:10px">词义默认隐藏 · 点「显示词义」在当前页展开中文解释 · 点击卡片翻页看完整内容 · 键盘 ← → 切换 · 空格翻面</p>
   </section>
 
   <section id="manageView" class="panel" hidden>
@@ -611,17 +617,18 @@ function detailsHtml(w){
   const lv = levelOf(w);
   const strength = lv < 0 ? 0 : Math.round((Math.min(lv,7) + 1) / 8 * 100);
   return '<div class="more">' +
+    '<div class="field"><span class="label">记忆安排 · ' + (lv < 0 ? "新词" : "第 " + (lv+1) + " 档 · 间隔 " + INTERVAL_TEXT[Math.min(lv,7)]) +
+      ' · ' + dueLabel(w) + '</span><div class="bar"><i style="width:' + strength + '%"></i></div>' + rateButtons(w) + '</div>' +
     (w.def ? '<div class="field"><span class="label">解释</span><p>' + esc(w.def) + '</p></div>' : '') +
     (w.ex ? '<div class="field"><span class="label">例句（点击划线生词看意思并听发音）</span><p class="example">' + exampleHtml(w.ex) + '</p>' +
       (w.exZh ? '<p class="trans">' + esc(w.exZh) + '</p>' : '') + '</div>' : '') +
     (w.ety ? '<div class="field"><span class="label">词源</span><p>' + esc(w.ety) + '</p></div>' : '') +
     (w.ext ? '<div class="field"><span class="label">扩展</span><p>' + esc(w.ext) + '</p></div>' : '') +
-    '<div class="field"><span class="label">记忆安排</span><p>' + (lv < 0 ? "还没开始学习" : "第 " + (lv+1) + " 档 · 间隔 " + INTERVAL_TEXT[Math.min(lv,7)]) +
-      ' · ' + dueLabel(w) + '</p><div class="bar"><i style="width:' + strength + '%"></i></div>' + rateButtons(w) + '</div>' +
     '</div>';
 }
 
 let cardFlipped = false;
+let meaningShown = false;
 function renderCard(){
   const list = filtered();
   if (!list.length) {
@@ -630,12 +637,14 @@ function renderCard(){
     return;
   }
   state.index = Math.max(0, Math.min(state.index, list.length - 1));
+  cardFlipped = false;
+  meaningShown = false;
   const w = list[state.index];
   const strength = levelOf(w) < 0 ? 0 : Math.round((Math.min(levelOf(w),7) + 1) / 8 * 100);
   const back = '<div class="face back">' +
     '<div class="wc-top"><span class="tag">' + esc(w.cat) + '</span><span class="level">' + dueLabel(w) + '</span></div>' +
     '<h3>' + esc(w.word) + ' <button class="btn small" type="button" data-say="' + esc(w.word) + '">发音</button>' +
-    '<button class="btn small ghost" type="button" data-hide>隐藏词义</button></h3>' +
+    '<button class="btn small ghost" type="button" data-hide>翻回正面</button></h3>' +
     '<div class="ipa">' + esc(w.ipa || "—") + '　<span class="reveal-zh">' + esc(w.zh) + '</span></div>' +
     '<div class="bar"><i style="width:' + strength + '%"></i></div>' +
     detailsHtml(w) + '</div>';
@@ -643,8 +652,10 @@ function renderCard(){
     '<div class="face front"><span class="tag">' + esc(w.cat) + '</span>' +
     '<div class="word">' + esc(w.word) + '</div><div class="ipa">' + esc(w.ipa || "—") + '</div>' +
     '<div class="front-actions"><button class="btn" type="button" data-say="' + esc(w.word) + '">听发音</button>' +
-    '<button class="btn primary" type="button" data-reveal>显示词义</button></div>' +
-    '<p class="tip">先自己回想词义，想好后再点「显示词义」</p></div>' + back;
+    '<button class="btn primary" type="button" data-reveal id="revealBtn">显示词义</button></div>' +
+    '<div id="inlineMeaning" class="inline-meaning" hidden><div class="inline-zh">' + esc(w.zh) + '</div>' +
+    (w.def ? '<div class="inline-def">' + esc(w.def) + '</div>' : '') + '</div>' +
+    '<p class="tip">先自己回想词义，点「显示词义」在当前页展开中文解释；点击卡片可翻页看完整内容</p></div>' + back;
   $("#flipCard").classList.toggle("is-flipped", cardFlipped);
   $("#cardProgress").textContent = (state.index + 1) + " / " + list.length + " · " + w.word;
   save();
@@ -797,7 +808,15 @@ document.addEventListener("click", ev => {
   if (cat) { state.category = cat.dataset.cat; save(); renderAll(); return; }
 
   const reveal = ev.target.closest("[data-reveal]");
-  if (reveal) { cardFlipped = true; $("#flipCard").classList.add("is-flipped"); return; }
+  if (reveal) {
+    const box = document.getElementById("inlineMeaning");
+    if (box) {
+      box.hidden = !box.hidden;
+      meaningShown = !box.hidden;
+      reveal.textContent = box.hidden ? "显示词义" : "隐藏词义";
+    }
+    return;
+  }
 
   const hide = ev.target.closest("[data-hide]");
   if (hide) { cardFlipped = false; $("#flipCard").classList.remove("is-flipped"); return; }
