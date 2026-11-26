@@ -28,12 +28,19 @@ SITE_DESC = "这是 hotsunu 的个人网站。下面列出了所有页面，点�
 TITLE_RE = re.compile(r"<title[^>]*>(.*?)</title>", re.I | re.S)
 
 
+def is_redirect_page(text: str) -> bool:
+    """跳转页不列入目录。"""
+    return 'http-equiv="refresh"' in text and "页面已迁移" in text
+
+
 def page_title(path: Path) -> str:
     """读取页面的 <title>，读不到就用文件名。"""
     try:
         text = path.read_text(encoding="utf-8", errors="ignore")
     except OSError:
         return path.stem
+    if is_redirect_page(text):
+        return ""
     matched = TITLE_RE.search(text)
     if matched:
         title = html.unescape(re.sub(r"\s+", " ", matched.group(1)).strip())
@@ -49,12 +56,19 @@ def build_sections() -> list[tuple[str, list[tuple[str, str]]]]:
         if not directory.is_dir() or directory.name in SKIP_DIRS or directory.name.startswith("."):
             continue
         pages = sorted(directory.glob("*.html"), key=lambda p: p.name.lower())
-        if not pages:
+        entries = []
+        for page in pages:
+            try:
+                text = page.read_text(encoding="utf-8", errors="ignore")
+            except OSError:
+                text = ""
+            if is_redirect_page(text):
+                continue
+            title = page_title(page)
+            if title:
+                entries.append((title, quote(page.relative_to(ROOT).as_posix())))
+        if not entries:
             continue
-        entries = [
-            (page_title(page), quote(page.relative_to(ROOT).as_posix()))
-            for page in pages
-        ]
         sections.append((directory.name, entries))
     return sections
 
