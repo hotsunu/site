@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dawn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>高中必考词汇 · 背诵卡片</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#2563eb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="单词卡">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<style>
+  :root {
+    --bg: #f5f7fb;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --text: #1d2230;
+    --muted: #6b7280;
+    --line: #e5e8ef;
+    --accent: #2563eb;
+    --soft: color-mix(in srgb, var(--accent) 10%, var(--surface));
+    --good: #15803d;
+    --warn: #b45309;
+    --bad: #b91c1c;
+    --shadow: 0 6px 24px rgba(31, 45, 80, .07);
+    --radius: 16px;
+  }
+  html[data-theme="mint"] {
+    --bg: #f2f9f5; --surface: #ffffff; --surface-2: #f4fbf7;
+    --text: #14251d; --muted: #5d7468; --line: #d8e9de;
+    --accent: #0f8a5f; --shadow: 0 6px 24px rgba(16, 90, 60, .08);
+  }
+  html[data-theme="sunset"] {
+    --bg: #fdf7f1; --surface: #ffffff; --surface-2: #fff9f3;
+    --text: #2b2118; --muted: #856c58; --line: #f0e0d0;
+    --accent: #c2620f; --shadow: 0 6px 24px rgba(120, 70, 20, .08);
+  }
+  html[data-theme="night"] {
+    --bg: #111725; --surface: #1a2233; --surface-2: #212b3e;
+    --text: #e8edf7; --muted: #9aa7be; --line: #334057;
+    --accent: #7aa2ff; --shadow: 0 8px 28px rgba(0, 0, 0, .3);
+    --good: #5bd19a; --warn: #f0b267; --bad: #ff8a8a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Segoe UI", sans-serif;
+    font-size: 15px; line-height: 1.65;
+  }
+  button, input, select { font: inherit; }
+  button { cursor: pointer; }
+  [hidden] { display: none !important; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 36px 20px 80px; }
+  .hero { margin-bottom: 22px; }
+  .eyebrow {
+    display: inline-block; font-size: 12px; font-weight: 600;
+    color: var(--accent); background: var(--soft);
+    padding: 4px 11px; border-radius: 999px; margin-bottom: 12px;
+  }
+  h1 { font-size: 30px; line-height: 1.25; margin: 0 0 8px; letter-spacing: -.02em; }
+  .lead { margin: 0; color: var(--muted); }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .stat {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 9px 15px; min-width: 106px; box-shadow: var(--shadow);
+  }
+  .stat b { display: block; font-size: 21px; line-height: 1.3; }
+  .stat span { font-size: 12px; color: var(--muted); }
+  .panel {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 20px 22px; margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .panel h2 { font-size: 16px; margin: 0 0 4px; }
+  .panel .hint { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+  .curve-layout { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(230px, 1fr); gap: 22px; align-items: center; }
+  .curve-layout svg { width: 100%; height: auto; display: block; }
+  .curve-notes { font-size: 13px; color: var(--muted); }
+  .curve-notes p { margin: 0 0 10px; }
+  .steps { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
+  .steps span {
+    background: var(--soft); color: var(--accent); border-radius: 7px;
+    padding: 3px 8px; font-size: 12px; font-weight: 600;
+  }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+  .search {
+    flex: 1 1 220px; min-width: 180px; padding: 10px 13px;
+    border: 1px solid var(--line); border-radius: 10px;
+    background: var(--surface); color: var(--text); outline: none;
+  }
+  .search:focus { border-color: var(--accent); }
+  select, .btn {
+    padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--surface); color: var(--text);
+  }
+  select:focus, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { filter: brightness(1.08); color: #fff; }
+  .btn.small { padding: 5px 10px; font-size: 12px; border-radius: 8px; }
+  .btn.ghost { background: transparent; }
+  .btn.danger { color: var(--bad); }
+  .seg { display: inline-flex; padding: 3px; background: var(--surface); border: 1px solid var(--line); border-radius: 11px; }
+  .seg button { border: 0; background: transparent; color: var(--muted); padding: 6px 13px; border-radius: 8px; }
+  .seg button.on { background: var(--soft); color: var(--accent); font-weight: 600; }
+  .color-pick { width: 38px; height: 38px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 18px; }
+  .chip {
+    border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+    padding: 5px 12px; border-radius: 999px; font-size: 13px;
+  }
+  .chip.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 14px; }
+  .word-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 17px 18px; box-shadow: var(--shadow); display: flex; flex-direction: column;
+  }
+  .wc-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .tag { font-size: 11px; color: var(--accent); background: var(--soft); border-radius: 6px; padding: 2px 8px; }
+  .level { font-size: 11px; color: var(--muted); }
+  .wc-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 8px; }
+  .wc-head h3 { font-size: 25px; margin: 0; letter-spacing: -.02em; }
+  .ipa { color: var(--muted); font-size: 14px; margin: 1px 0 8px; }
+  .zh { font-weight: 600; margin: 0 0 12px; }
+  .bar { height: 5px; border-radius: 99px; background: var(--line); overflow: hidden; margin-bottom: 12px; }
+  .bar > i { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
+  .more { border-top: 1px solid var(--line); padding-top: 12px; }
+  .field { margin-bottom: 12px; }
+  .field .label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .06em; margin-bottom: 3px; }
+  .field p { margin: 0; font-size: 14px; }
+  .example { font-size: 15px; line-height: 1.8; }
+  .hit {
+    color: var(--accent); border-bottom: 1px dashed var(--accent);
+    cursor: pointer; padding: 0 1px;
+  }
+  .hit:hover, .hit:focus-visible { background: var(--soft); outline: none; border-radius: 3px; }
+  .trans { color: var(--muted); font-size: 13px; margin-top: 3px !important; }
+  .rate { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .rate button { flex: 1 1 auto; font-size: 12px; }
+  .rate b { color: var(--bad); } .rate i { color: var(--warn); font-style: normal; } .rate em { color: var(--good); font-style: normal; }
+  .wc-actions { margin-top: auto; padding-top: 12px; display: flex; gap: 8px; align-items: center; }
+  .link { border: 0; background: transparent; color: var(--accent); padding: 4px 0; font-size: 13px; }
+  .empty { text-align: center; color: var(--muted); padding: 60px 20px; }
+  .card-mode { max-width: 720px; margin: 0 auto; }
+  .card-stage { perspective: 1200px; height: 400px; }
+  .flip-card {
+    position: relative; width: 100%; height: 100%; transform-style: preserve-3d;
+    transition: transform .55s cubic-bezier(.2,.7,.2,1); cursor: pointer;
+  }
+  .flip-card.is-flipped { transform: rotateY(180deg); }
+  .face {
+    position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+    box-shadow: var(--shadow); padding: 28px; overflow: auto;
+  }
+  .face.front { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .face.back { transform: rotateY(180deg); }
+  .front .word { font-size: 58px; font-weight: 700; letter-spacing: -.03em; margin: 12px 0 4px; }
+  .front .ipa { font-size: 19px; }
+  .front .zh { font-size: 19px; margin-top: 20px; }
+  .front-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; }
+  .inline-meaning {
+    margin-top: 14px; padding: 10px 16px; max-width: 100%;
+    background: var(--soft); border: 1px solid var(--line); border-radius: 10px;
+  }
+  .inline-zh { color: var(--accent); font-weight: 700; font-size: 18px; }
+  .inline-def { color: var(--muted); font-size: 13px; margin-top: 3px; }
+  .front .tip { color: var(--muted); font-size: 12px; margin-top: 14px; }
+  .reveal-zh { color: var(--accent); font-weight: 700; font-size: 16px; }
+  .back h3 { margin: 0 0 4px; font-size: 26px; }
+  .back .ipa { margin-bottom: 14px; }
+  .back .field { margin-bottom: 10px; }
+  .card-nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 14px; }
+  .progress-text { color: var(--muted); font-size: 13px; }
+  .manage-wrap { overflow-x: auto; margin-top: 8px; }
+  .manage-row {
+    display: grid; grid-template-columns: 1.1fr 1fr 1.5fr .7fr 1.1fr auto;
+    gap: 10px; align-items: center; min-width: 680px;
+    padding: 10px 8px; border-bottom: 1px solid var(--line); font-size: 14px;
+  }
+  .manage-row:last-child { border-bottom: 0; }
+  .manage-row.head { font-size: 12px; font-weight: 700; color: var(--muted); }
+  .manage-row .m-word { font-weight: 700; }
+  .manage-row .m-muted { color: var(--muted); font-size: 13px; }
+  .manage-row button { white-space: nowrap; }
+  #popover {
+    position: fixed; z-index: 50; width: 250px; padding: 14px 15px;
+    background: var(--surface); color: var(--text); border: 1px solid var(--line);
+    border-radius: 13px; box-shadow: 0 12px 36px rgba(10, 20, 40, .18);
+  }
+  #popover .pw { font-size: 19px; font-weight: 700; }
+  #popover .pi { color: var(--muted); font-size: 13px; }
+  #popover .pz { margin: 8px 0; font-weight: 600; }
+  #popover .pn { font-size: 12px; color: var(--muted); }
+  #popover .row { display: flex; gap: 8px; margin-top: 10px; }
+  #modal {
+    position: fixed; inset: 0; z-index: 60; background: rgba(15, 23, 42, .5);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-box {
+    width: min(560px, 100%); max-height: 90vh; overflow: auto;
+    background: var(--surface); border-radius: 18px; padding: 24px;
+    box-shadow: 0 20px 60px rgba(10, 20, 40, .25);
+  }
+  .modal-box h2 { margin: 0 0 14px; font-size: 19px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-grid label { font-size: 12px; color: var(--muted); }
+  .form-grid input, .form-grid select {
+    width: 100%; margin-top: 4px; padding: 8px 10px;
+    border: 1px solid var(--line); border-radius: 9px;
+    background: var(--surface); color: var(--text); outline: none;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+  #toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: var(--surface); padding: 9px 16px; border-radius: 99px;
+    font-size: 13px; opacity: 0; pointer-events: none; transition: .25s; z-index: 80; max-width: 90vw;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 34px; }
+  .install-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 14px; }
+  .install-note { color: var(--muted); font-size: 12px; }
+  #installModal {
+    position: fixed; inset: 0; z-index: 90; display: grid; place-items: center;
+    background: rgba(15, 23, 42, .45); padding: 20px;
+  }
+  #installModal .install-box {
+    width: min(430px, 100%); background: var(--surface); color: var(--text);
+    border: 1px solid var(--line); border-radius: 18px; padding: 22px;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, .22);
+  }
+  #installModal h2 { margin: 0 0 8px; font-size: 19px; }
+  #installModal p { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+  #installModal ol { margin: 0 0 18px; padding-left: 20px; }
+  #installModal li { margin: 7px 0; }
+  .install-actions { display: flex; justify-content: flex-end; }
+  @media (max-width: 720px) {
+    .curve-layout { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid .full { grid-column: auto; }
+    .wrap { padding: 24px 14px 60px; }
+    h1 { font-size: 25px; }
+    .card-stage { height: 430px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">高中英语 · 必考词汇</span>
+    <h1>528 个高中必考词，听见、读懂、记得住</h1>
+    <p class="lead">根据手写词表整理的高中必考词汇。先看到单词，自己回想词义；点「显示词义」后展开中文释义与提示，点卡片翻页可看例句。用「忘记 / 模糊 / 记住」按遗忘曲线安排复习，可自选每轮背诵量。增删词条请到「单词管理」。</p>
+    <div class="install-cta">
+      <button id="installBtn" class="btn small primary" type="button">安装到主屏幕</button>
+      <span class="install-note">添加到 iPhone 桌面后，可像 App 一样全屏打开，并支持离线使用</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="statTotal">528</b><span>当前词库</span></div>
+      <div class="stat"><b id="statDue">0</b><span>今日待复习</span></div>
+      <div class="stat"><b id="statNew">528</b><span>未学新词</span></div>
+      <div class="stat"><b id="statMastered">0</b><span>已掌握</span></div>
+    </div>
+  </header>
+
+  <section class="panel">
+    <h2>艾宾浩斯遗忘曲线</h2>
+    <p class="hint">学完不复习，记忆会快速衰减；每次「记住」都会把曲线拉回顶点，并延长下次复习间隔。</p>
+    <div class="curve-layout">
+      <div id="curveChart"></div>
+      <div class="curve-notes">
+        <p><b>记忆残留</b>：新学内容 1 天后大约只剩三分之一，因此第一次复习要来得早。</p>
+        <div class="steps"><span>10 分钟</span><span>1 天</span><span>2 天</span><span>4 天</span><span>7 天</span><span>15 天</span><span>30 天</span><span>60 天</span></div>
+        <p>卡片上按「忘记 / 模糊 / 记住」：忘记 → 10 分钟后重来；模糊 → 维持原间隔；记住 → 进入下一档。</p>
+        <p>卡片上的进度条就是当前记忆强度，颜色越满表示间隔越长。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <input id="search" class="search" type="search" placeholder="搜索单词、释义或音标…" aria-label="搜索单词">
+    <div class="seg" role="group" aria-label="显示模式">
+      <button id="studyMode" class="on" type="button">背单词</button>
+      <button id="manageMode" type="button">单词管理</button>
+    </div>
+    <label>配色
+      <select id="themeSelect" aria-label="配色主题">
+        <option value="dawn">晨光蓝</option>
+        <option value="mint">薄荷绿</option>
+        <option value="sunset">暖阳橙</option>
+        <option value="night">夜读深色</option>
+      </select>
+    </label>
+    <label>主题色 <input id="accentPick" class="color-pick" type="color" aria-label="自定义主题色"></label>
+    <label>口音
+      <select id="voiceSelect" aria-label="发音口音">
+        <option value="en-US">美音</option>
+        <option value="en-GB">英音</option>
+      </select>
+    </label>
+    <select id="sortSelect" aria-label="排序方式">
+      <option value="default">默认顺序</option>
+      <option value="alpha">按字母</option>
+      <option value="level">按掌握度</option>
+      <option value="due">按复习时间</option>
+    </select>
+    <button id="onlyDue" class="btn" type="button" aria-pressed="false">只看待复习</button>
+    <label>本轮词量
+      <select id="batchSelect" aria-label="本轮背诵量">
+        <option value="5">5 个</option>
+        <option value="10" selected>10 个</option>
+        <option value="20">20 个</option>
+        <option value="0">全部</option>
+      </select>
+    </label>
+    <button id="resetBtn" class="btn ghost" type="button">恢复默认</button>
+  </div>
+
+  <div id="chips" class="chips"></div>
+
+  <section id="cardView" class="card-mode" aria-live="polite">
+    <div class="card-stage"><div id="flipCard" class="flip-card"></div></div>
+    <div class="card-nav">
+      <button id="prevCard" class="btn" type="button">上一个</button>
+      <span id="cardProgress" class="progress-text"></span>
+      <button id="nextCard" class="btn" type="button">下一个</button>
+    </div>
+    <p class="hint" style="text-align:center;margin-top:10px">词义默认隐藏 · 点「显示词义」在当前页展开中文解释 · 点击卡片翻页看完整内容 · 本轮词量可在上方选择 · 键盘 ← → 切换 · 空格翻面</p>
+  </section>
+
+  <section id="manageView" class="panel" hidden>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px">
+      <div>
+        <h2>单词管理</h2>
+        <p class="hint">在这里添加或删除单词；删除后可用「恢复默认」找回。上方搜索与分类筛选同样生效。</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span id="manageCount" class="progress-text"></span>
+        <button id="manageAdd" class="btn primary" type="button">添加单词</button>
+      </div>
+    </div>
+    <div class="manage-wrap"><div id="manageList"></div></div>
+  </section>
+
+  <footer>词源为通俗整理，供学习参考 · 发音使用浏览器内置语音合成 · 数据保存在本机 localStorage</footer>
+</div>
+
+<div id="popover" hidden role="dialog" aria-label="生词释义"></div>
+
+<div id="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-label="添加单词">
+    <h2>添加自己的单词</h2>
+    <form id="addForm" class="form-grid">
+      <label>单词 *<input name="word" required maxlength="40" placeholder="例如 homework"></label>
+      <label>音标<input name="ipa" maxlength="60" placeholder="/ˈhəʊmwɜːk/"></label>
+      <label>中文意思 *<input name="zh" required maxlength="80" placeholder="家庭作业"></label>
+      <label>分类<select name="cat"><option value="自定义">自定义</option><option value="动词">动词</option><option value="名词">名词</option><option value="形容词">形容词</option><option value="副词">副词</option><option value="介词">介词</option><option value="短语">短语</option><option value="其他">其他</option></select></label>
+      <label class="full">解释<input name="def" maxlength="200" placeholder="这个单词怎么用"></label>
+      <label class="full">例句<input name="ex" maxlength="240" placeholder="I do my homework after school."></label>
+      <label class="full">例句翻译<input name="exZh" maxlength="240" placeholder="放学后我做家庭作业。"></label>
+      <label class="full">词源<input name="ety" maxlength="240" placeholder="这个词的来历"></label>
+      <label class="full">扩展<input name="ext" maxlength="240" placeholder="派生词、搭配等"></label>
+      <div class="modal-actions full">
+        <button id="cancelAdd" class="btn" type="button">取消</button>
+        <button class="btn primary" type="submit">保存单词</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="installModal" hidden>
+  <div class="install-box" role="dialog" aria-modal="true" aria-label="安装到主屏幕">
+    <h2>安装到手机主屏幕</h2>
+    <p>这个单词卡是免上架的网页 App，不需要 App Store 账号。</p>
+    <ol id="iosSteps" hidden>
+      <li>用 <b>Safari</b> 打开这个页面。</li>
+      <li>点底部中间的「分享」按钮（方框加向上箭头）。</li>
+      <li>选择「添加到主屏幕」。</li>
+      <li>确认名称后点「添加」，桌面就会出现「单词卡」图标。</li>
+    </ol>
+    <ol id="otherSteps">
+      <li>用 Chrome / Edge 打开这个页面。</li>
+      <li>点地址栏右侧的「安装」或菜单里的「安装应用」。</li>
+      <li>确认后即可从主屏幕或应用列表打开。</li>
+    </ol>
+    <div class="install-actions"><button id="closeInstall" class="btn primary" type="button">知道了</button></div>
+  </div>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+const BASE_WORDS = [
+  {id:"hs-1",word:"abandon",ipa:"/əbˈændən/",cat:"动词",zh:"放弃，舍弃",def:"（vt.）放弃，舍弃。",ex:"We should abandon it carefully.",exZh:"我们应当认真地放弃，舍弃。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.。"},
+  {id:"hs-2",word:"abnormal",ipa:"/æbnˈɔrməl/",cat:"形容词",zh:"反常的",def:"（adj.）反常的。",ex:"It looks very abnormal.",exZh:"它看起来非常反常的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.。"},
+  {id:"hs-3",word:"above",ipa:"/əbˈʌv/",cat:"介词",zh:"在…上面，多于，高于",def:"（prep.）在…上面，多于，高于。",ex:"It is above the desk.",exZh:"它在桌子在…上面，多于，高于。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：prep.。"},
+  {id:"hs-4",word:"aboard",ipa:"/əbˈɔrd/",cat:"副词",zh:"乘上车，上船",def:"（adv.）乘上车，上船。",ex:"He spoke aboard to me.",exZh:"他乘上车，上船地对我说话。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adv.。"},
+  {id:"hs-5",word:"abroad",ipa:"/əbrˈɔd/",cat:"副词",zh:"在国外",def:"（adv.）在国外。",ex:"He spoke abroad to me.",exZh:"他在国外地对我说话。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adv.。"},
+  {id:"hs-6",word:"absence",ipa:"/ˈæbsəns/",cat:"名词",zh:"缺席",def:"（n.）缺席。",ex:"This is a absence.",exZh:"这是一个缺席。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.。"},
+  {id:"hs-7",word:"absolute",ipa:"/ˈæbsəlˌut/",cat:"形容词",zh:"完全的",def:"（adj.）完全的。",ex:"It looks very absolute.",exZh:"它看起来非常完全的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.。"},
+  {id:"hs-8",word:"abstract",ipa:"/æbstrˈækt/",cat:"形容词",zh:"抽象的，概括",def:"（adj.n）抽象的，概括。",ex:"It looks very abstract.",exZh:"它看起来非常抽象的，概括。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.n。"},
+  {id:"hs-9",word:"academic",ipa:"/ˌækədˈɛmɪk/",cat:"形容词",zh:"学术的",def:"（adj）学术的。",ex:"It looks very academic.",exZh:"它看起来非常学术的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-10",word:"accent",ipa:"/əksˈɛnt/",cat:"名词",zh:"口音",def:"（n）口音。",ex:"This is a accent.",exZh:"这是一个口音。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-11",word:"access",ipa:"/ˈæksˌɛs/",cat:"动词",zh:"接近，进入，入口",def:"（n vt）接近，进入，入口。",ex:"We should access it carefully.",exZh:"我们应当认真地接近，进入，入口。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-12",word:"accommodate",ipa:"/əkˈɑmədˌeɪt/",cat:"动词",zh:"向…提供住处，容纳",def:"（vt）向…提供住处，容纳。",ex:"We should accommodate it carefully.",exZh:"我们应当认真地向…提供住处，容纳。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-13",word:"accommodation",ipa:"/əkˌɑmədˈeɪʃən/",cat:"名词",zh:"住处",def:"（n）住处。",ex:"This is a accommodation.",exZh:"这是一个住处。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-14",word:"accompany",ipa:"/əkˈʌmpəni/",cat:"动词",zh:"陪伴",def:"（vt）陪伴。",ex:"We should accompany it carefully.",exZh:"我们应当认真地陪伴。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-15",word:"accomplish",ipa:"/əkˈɑmplɪʃ/",cat:"动词",zh:"达到",def:"（vt）达到。",ex:"We should accomplish it carefully.",exZh:"我们应当认真地达到。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-16",word:"account",ipa:"/əkˈaʊnt/",cat:"动词",zh:"帐户，解释，记述，陈述",def:"（n vt）帐户，解释，记述，陈述。",ex:"We should account it carefully.",exZh:"我们应当认真地帐户，解释，记述，陈述。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-17",word:"accountant",ipa:"/əkˈaʊntənt/",cat:"名词",zh:"会计人员",def:"（n）会计人员。",ex:"This is a accountant.",exZh:"这是一个会计人员。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-18",word:"accurate",ipa:"/ˈækjɜət/",cat:"形容词",zh:"准确的",def:"（adj）准确的。",ex:"It looks very accurate.",exZh:"它看起来非常准确的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-19",word:"accuse",ipa:"/əkjˈuz/",cat:"动词",zh:"指控",def:"（vt）指控。",ex:"We should accuse it carefully.",exZh:"我们应当认真地指控。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-20",word:"accustomed",ipa:"/əkˈʌstəmd/",cat:"形容词",zh:"适应的，习惯的",def:"（adj）适应的，习惯的。",ex:"It looks very accustomed.",exZh:"它看起来非常适应的，习惯的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-21",word:"acid",ipa:"/ˈæsəd/",cat:"形容词",zh:"酸的",def:"（adj）酸的。",ex:"It looks very acid.",exZh:"它看起来非常酸的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-22",word:"acknowledge",ipa:"/æknˈɑlɪdʒ/",cat:"动词",zh:"告知收到，承认",def:"（vt）告知收到，承认。",ex:"We should acknowledge it carefully.",exZh:"我们应当认真地告知收到，承认。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-23",word:"acquire",ipa:"/əkwˈaɪɜ/",cat:"动词",zh:"取得",def:"（vt）取得。",ex:"We should acquire it carefully.",exZh:"我们应当认真地取得。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-24",word:"adapt",ipa:"/ədˈæpt/",cat:"动词",zh:"适应，改编",def:"（v）适应，改编。",ex:"We should adapt it carefully.",exZh:"我们应当认真地适应，改编。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-25",word:"add up to",ipa:"/æd ʌp tuː/",cat:"短语",zh:"总计",def:"（短语）总计。",ex:"Please learn the phrase \"add up to\".",exZh:"请记住短语“总计”。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：固定表达。"},
+  {id:"hs-26",word:"addict",ipa:"/ədˈɪkt/",cat:"动词",zh:"使入迷",def:"（vt n）使入迷。",ex:"We should addict it carefully.",exZh:"我们应当认真地使入迷。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt n。"},
+  {id:"hs-27",word:"address",ipa:"/ˈædrˌɛs/",cat:"动词",zh:"地址，演讲",def:"（n vt）地址，演讲。",ex:"We should address it carefully.",exZh:"我们应当认真地地址，演讲。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-28",word:"adequate",ipa:"/ˈædəkwət/",cat:"形容词",zh:"适当的，足够的",def:"（adj）适当的，足够的。",ex:"It looks very adequate.",exZh:"它看起来非常适当的，足够的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-29",word:"adjust",ipa:"/ədʒˈʌst/",cat:"动词",zh:"调节",def:"（v）调节。",ex:"We should adjust it carefully.",exZh:"我们应当认真地调节。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-30",word:"administration",ipa:"/ædmˌɪnɪstrˈeɪʃən/",cat:"名词",zh:"支配，经营，管理",def:"（n）支配，经营，管理。",ex:"This is a administration.",exZh:"这是一个支配，经营，管理。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-31",word:"admire",ipa:"/ædmˈaɪr/",cat:"动词",zh:"钦佩，赞美",def:"（vt）钦佩，赞美。",ex:"We should admire it carefully.",exZh:"我们应当认真地钦佩，赞美。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-32",word:"admission",ipa:"/ædmˈɪʃən/",cat:"名词",zh:"录用，入场券",def:"（n）录用，入场券。",ex:"This is a admission.",exZh:"这是一个录用，入场券。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-33",word:"admit",ipa:"/ədmˈɪt/",cat:"动词",zh:"准许，进入，承认",def:"（vt）准许，进入，承认。",ex:"We should admit it carefully.",exZh:"我们应当认真地准许，进入，承认。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-34",word:"adolescent",ipa:"/ˌædəlˈɛsənt/",cat:"形容词",zh:"青少年",def:"（n.adj）青少年。",ex:"It looks very adolescent.",exZh:"它看起来非常青少年。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-35",word:"adopt",ipa:"/ədˈɑpt/",cat:"动词",zh:"收养，通过",def:"（vt）收养，通过。",ex:"We should adopt it carefully.",exZh:"我们应当认真地收养，通过。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-36",word:"adventure",ipa:"/ædvˈɛntʃɜ/",cat:"名词",zh:"冒险",def:"（n）冒险。",ex:"This is a adventure.",exZh:"这是一个冒险。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-37",word:"advertise",ipa:"/ˈædvɜtˌaɪz/",cat:"动词",zh:"登广告",def:"（v）登广告。",ex:"We should advertise it carefully.",exZh:"我们应当认真地登广告。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-38",word:"advocate",ipa:"/ˈædvəkət/",cat:"动词",zh:"拥护，主张",def:"（vt）拥护，主张。",ex:"We should advocate it carefully.",exZh:"我们应当认真地拥护，主张。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-39",word:"affect",ipa:"/əfˈɛkt/",cat:"动词",zh:"打动，影响",def:"（vt）打动，影响。",ex:"We should affect it carefully.",exZh:"我们应当认真地打动，影响。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-40",word:"affection",ipa:"/əfˈɛkʃən/",cat:"名词",zh:"影响；喜爱",def:"（n）影响；喜爱。",ex:"This is a affection.",exZh:"这是一个影响；喜爱。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-41",word:"afford",ipa:"/əfˈɔrd/",cat:"动词",zh:"买得起，提供",def:"（vt）买得起，提供。",ex:"We should afford it carefully.",exZh:"我们应当认真地买得起，提供。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-42",word:"against",ipa:"/əgˈɛnst/",cat:"介词",zh:"反对，违反，对着",def:"（prep）反对，违反，对着。",ex:"It is against the desk.",exZh:"它在桌子反对，违反，对着。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：prep。"},
+  {id:"hs-43",word:"agency",ipa:"/ˈeɪdʒənsi/",cat:"名词",zh:"代理",def:"（n）代理。",ex:"This is a agency.",exZh:"这是一个代理。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-44",word:"aggressive",ipa:"/əgrˈɛsɪv/",cat:"形容词",zh:"侵犯的",def:"（adj）侵犯的。",ex:"It looks very aggressive.",exZh:"它看起来非常侵犯的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-45",word:"agriculture",ipa:"/ˈægrɪkˌʌltʃɜ/",cat:"名词",zh:"农业",def:"（n）农业。",ex:"This is a agriculture.",exZh:"这是一个农业。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-46",word:"agreeable",ipa:"/əgrˈiəbəl/",cat:"形容词",zh:"令人愉快的",def:"（adj）令人愉快的。",ex:"It looks very agreeable.",exZh:"它看起来非常令人愉快的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-47",word:"aid",ipa:"/ˈeɪd/",cat:"名词",zh:"帮助",def:"（n.v）帮助。",ex:"This is a aid.",exZh:"这是一个帮助。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-48",word:"aim",ipa:"/ˈeɪm/",cat:"动词",zh:"瞄准，目的",def:"（n.vt.vi）瞄准，目的。",ex:"We should aim it carefully.",exZh:"我们应当认真地瞄准，目的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt.vi。"},
+  {id:"hs-49",word:"air-conditioned",ipa:"/eə kənˈdɪʃənd/",cat:"形容词",zh:"有空调的",def:"（adj）有空调的。",ex:"It looks very air-conditioned.",exZh:"它看起来非常有空调的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-50",word:"airline",ipa:"/ˈɛrlˌaɪn/",cat:"名词",zh:"航线",def:"（n）航线。",ex:"This is a airline.",exZh:"这是一个航线。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-51",word:"album",ipa:"/ˈælbəm/",cat:"名词",zh:"相册",def:"（n）相册。",ex:"This is a album.",exZh:"这是一个相册。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-52",word:"alarm",ipa:"/əlˈɑrm/",cat:"动词",zh:"警报，惊恐",def:"（n.vt）警报，惊恐。",ex:"We should alarm it carefully.",exZh:"我们应当认真地警报，惊恐。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-53",word:"alcohol",ipa:"/ˈælkəhˌɑl/",cat:"名词",zh:"酒精",def:"（n）酒精。",ex:"This is a alcohol.",exZh:"这是一个酒精。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-54",word:"alert",ipa:"/əlˈɜt/",cat:"动词",zh:"警惕的",def:"（adj vt.n）警惕的。",ex:"We should alert it carefully.",exZh:"我们应当认真地警惕的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj vt.n。"},
+  {id:"hs-55",word:"alike",ipa:"/əlˈaɪk/",cat:"副词",zh:"一样的",def:"（adv）一样的。",ex:"He spoke alike to me.",exZh:"他一样的地对我说话。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adv。"},
+  {id:"hs-56",word:"allowance",ipa:"/əlˈaʊəns/",cat:"名词",zh:"津贴",def:"（n）津贴。",ex:"This is a allowance.",exZh:"这是一个津贴。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-57",word:"alter",ipa:"/ˈɔltɜ/",cat:"动词",zh:"改变",def:"（v）改变。",ex:"We should alter it carefully.",exZh:"我们应当认真地改变。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-58",word:"alternative",ipa:"/ɔltˈɜnətɪv/",cat:"形容词",zh:"交替的，选择性的",def:"（adj n）交替的，选择性的。",ex:"It looks very alternative.",exZh:"它看起来非常交替的，选择性的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj n。"},
+  {id:"hs-59",word:"amateur",ipa:"/ˈæmətˌɜ/",cat:"形容词",zh:"业余的，业余爱好者",def:"（n.adj）业余的，业余爱好者。",ex:"It looks very amateur.",exZh:"它看起来非常业余的，业余爱好者。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-60",word:"amaze",ipa:"/əmˈeɪz/",cat:"动词",zh:"使惊喜",def:"（vt）使惊喜。",ex:"We should amaze it carefully.",exZh:"我们应当认真地使惊喜。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-61",word:"ambition",ipa:"/æmbˈɪʃən/",cat:"名词",zh:"志向",def:"（n）志向。",ex:"This is a ambition.",exZh:"这是一个志向。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-62",word:"ambulance",ipa:"/ˈæmbjələns/",cat:"名词",zh:"救护车",def:"（n）救护车。",ex:"This is a ambulance.",exZh:"这是一个救护车。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-63",word:"amuse",ipa:"/əmjˈuz/",cat:"动词",zh:"娱乐",def:"（vt）娱乐。",ex:"We should amuse it carefully.",exZh:"我们应当认真地娱乐。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-64",word:"analysis",ipa:"/ənˈæləsəs/",cat:"名词",zh:"分析",def:"（n）分析。",ex:"This is a analysis.",exZh:"这是一个分析。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-65",word:"analyze",ipa:"/ˈænəlˌaɪz/",cat:"动词",zh:"分析",def:"（vt）分析。",ex:"We should analyze it carefully.",exZh:"我们应当认真地分析。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-66",word:"ancestor",ipa:"/ˈænsˌɛstɜ/",cat:"名词",zh:"祖先",def:"（n）祖先。",ex:"This is a ancestor.",exZh:"这是一个祖先。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-67",word:"angle",ipa:"/ˈæŋgəl/",cat:"名词",zh:"角度",def:"（n）角度。",ex:"This is a angle.",exZh:"这是一个角度。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-68",word:"ankle",ipa:"/ˈæŋkəl/",cat:"名词",zh:"踝",def:"（n）踝。",ex:"This is a ankle.",exZh:"这是一个踝。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-69",word:"anniversary",ipa:"/ˌænəvˈɜsɜi/",cat:"形容词",zh:"周年",def:"（n adj）周年。",ex:"It looks very anniversary.",exZh:"它看起来非常周年。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n adj。"},
+  {id:"hs-70",word:"annoy",ipa:"/ənˈɔɪ/",cat:"动词",zh:"打扰，使烦恼",def:"（vt）打扰，使烦恼。",ex:"We should annoy it carefully.",exZh:"我们应当认真地打扰，使烦恼。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-71",word:"annual",ipa:"/ˈænjuəl/",cat:"形容词",zh:"年刊",def:"（adj.n）年刊。",ex:"It looks very annual.",exZh:"它看起来非常年刊。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.n。"},
+  {id:"hs-72",word:"anxiety",ipa:"/æŋzˈaɪəti/",cat:"名词",zh:"忧虑",def:"（n）忧虑。",ex:"This is a anxiety.",exZh:"这是一个忧虑。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-73",word:"ape",ipa:"/ˈeɪp/",cat:"动词",zh:"模仿，类人猿",def:"（n.vt）模仿，类人猿。",ex:"We should ape it carefully.",exZh:"我们应当认真地模仿，类人猿。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-74",word:"apologize",ipa:"/əpˈɑlədʒˌaɪz/",cat:"动词",zh:"认错",def:"（vi）认错。",ex:"We should apologize it carefully.",exZh:"我们应当认真地认错。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-75",word:"apparent",ipa:"/əpˈɛrənt/",cat:"形容词",zh:"明显的",def:"（adj）明显的。",ex:"It looks very apparent.",exZh:"它看起来非常明显的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-76",word:"appeal",ipa:"/əpˈil/",cat:"动词",zh:"呼吁",def:"（vi n）呼吁。",ex:"We should appeal it carefully.",exZh:"我们应当认真地呼吁。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi n。"},
+  {id:"hs-77",word:"appetite",ipa:"/ˈæpətˌaɪt/",cat:"名词",zh:"食欲，欲望",def:"（n）食欲，欲望。",ex:"This is a appetite.",exZh:"这是一个食欲，欲望。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-78",word:"applaud",ipa:"/əplˈɔd/",cat:"动词",zh:"鼓掌",def:"（v）鼓掌。",ex:"We should applaud it carefully.",exZh:"我们应当认真地鼓掌。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-79",word:"appliance",ipa:"/əplˈaɪəns/",cat:"名词",zh:"器具",def:"（n）器具。",ex:"This is a appliance.",exZh:"这是一个器具。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-80",word:"applicant",ipa:"/ˈæplɪkənt/",cat:"名词",zh:"申请人",def:"（n）申请人。",ex:"This is a applicant.",exZh:"这是一个申请人。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-81",word:"application",ipa:"/ˌæpləkˈeɪʃən/",cat:"名词",zh:"应用",def:"（n）应用。",ex:"This is a application.",exZh:"这是一个应用。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-82",word:"apply",ipa:"/əplˈaɪ/",cat:"动词",zh:"应用",def:"（vt vi）应用。",ex:"We should apply it carefully.",exZh:"我们应当认真地应用。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt vi。"},
+  {id:"hs-83",word:"appoint",ipa:"/əpˈɔɪnt/",cat:"动词",zh:"约定，任命",def:"（vt）约定，任命。",ex:"We should appoint it carefully.",exZh:"我们应当认真地约定，任命。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-84",word:"appreciate",ipa:"/əprˈiʃiˌeɪt/",cat:"动词",zh:"为…表示感激，重视",def:"（vt）为…表示感激，重视。",ex:"We should appreciate it carefully.",exZh:"我们应当认真地为…表示感激，重视。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-85",word:"approach",ipa:"/əprˈoʊtʃ/",cat:"名词",zh:"靠近，方法",def:"（v n）靠近，方法。",ex:"We should approach it carefully.",exZh:"我们应当认真地靠近，方法。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v n。"},
+  {id:"hs-86",word:"appropriate",ipa:"/əprˈoʊpriət/",cat:"形容词",zh:"合适的",def:"（adj）合适的。",ex:"It looks very appropriate.",exZh:"它看起来非常合适的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-87",word:"approve",ipa:"/əprˈuv/",cat:"动词",zh:"批准，赞成",def:"（v）批准，赞成。",ex:"We should approve it carefully.",exZh:"我们应当认真地批准，赞成。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-88",word:"approximately",ipa:"/əprˈɑksəmətli/",cat:"副词",zh:"估计",def:"（adv）估计。",ex:"He spoke approximately to me.",exZh:"他估计地对我说话。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adv。"},
+  {id:"hs-89",word:"architect",ipa:"/ˈɑrkətˌɛkt/",cat:"名词",zh:"建筑师，设计师",def:"（n）建筑师，设计师。",ex:"This is a architect.",exZh:"这是一个建筑师，设计师。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-90",word:"architecture",ipa:"/ˈɑrkətˌɛktʃɜ/",cat:"名词",zh:"建筑学",def:"（n）建筑学。",ex:"This is a architecture.",exZh:"这是一个建筑学。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-91",word:"arctic",ipa:"/ˈɑrktɪk/",cat:"形容词",zh:"北极的",def:"（adj.n）北极的。",ex:"It looks very arctic.",exZh:"它看起来非常北极的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.n。"},
+  {id:"hs-92",word:"arise",ipa:"/ɜˈaɪz/",cat:"动词",zh:"上升，起因",def:"（vi）上升，起因。",ex:"We should arise it carefully.",exZh:"我们应当认真地上升，起因。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-93",word:"arithmetic",ipa:"/ˌɛrɪθmˈɛtɪk/",cat:"名词",zh:"计算",def:"（n）计算。",ex:"This is a arithmetic.",exZh:"这是一个计算。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-94",word:"arouse",ipa:"/ɜˈaʊz/",cat:"动词",zh:"唤醒，引起",def:"（vt.vi）唤醒，引起。",ex:"We should arouse it carefully.",exZh:"我们应当认真地唤醒，引起。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-95",word:"arrow",ipa:"/ˈæroʊ/",cat:"名词",zh:"箭",def:"（n）箭。",ex:"This is a arrow.",exZh:"这是一个箭。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-96",word:"arrange",ipa:"/ɜˈeɪndʒ/",cat:"动词",zh:"安排，整理",def:"（v）安排，整理。",ex:"We should arrange it carefully.",exZh:"我们应当认真地安排，整理。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-97",word:"arrest",ipa:"/ɜˈɛst/",cat:"动词",zh:"拘捕",def:"（vt.n）拘捕。",ex:"We should arrest it carefully.",exZh:"我们应当认真地拘捕。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-98",word:"artificial",ipa:"/ˌɑrtəfˈɪʃəl/",cat:"形容词",zh:"人造的",def:"（adj）人造的。",ex:"It looks very artificial.",exZh:"它看起来非常人造的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-99",word:"ashamed",ipa:"/əʃˈeɪmd/",cat:"形容词",zh:"惭愧的",def:"（adj）惭愧的。",ex:"It looks very ashamed.",exZh:"它看起来非常惭愧的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-100",word:"assemble",ipa:"/əsˈɛmbəl/",cat:"动词",zh:"集合",def:"（v）集合。",ex:"We should assemble it carefully.",exZh:"我们应当认真地集合。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-101",word:"assess",ipa:"/əsˈɛs/",cat:"动词",zh:"评价",def:"（vt）评价。",ex:"We should assess it carefully.",exZh:"我们应当认真地评价。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-102",word:"assign",ipa:"/əsˈaɪn/",cat:"动词",zh:"分配",def:"（vt）分配。",ex:"We should assign it carefully.",exZh:"我们应当认真地分配。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-103",word:"assist",ipa:"/əsˈɪst/",cat:"动词",zh:"协助",def:"（v.）协助。",ex:"We should assist it carefully.",exZh:"我们应当认真地协助。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v.。"},
+  {id:"hs-104",word:"associate",ipa:"/əsˈoʊsiət/",cat:"动词",zh:"使有联系",def:"（vt）使有联系。",ex:"We should associate it carefully.",exZh:"我们应当认真地使有联系。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-105",word:"assume",ipa:"/əsˈum/",cat:"动词",zh:"假定",def:"（vt）假定。",ex:"We should assume it carefully.",exZh:"我们应当认真地假定。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-106",word:"assure",ipa:"/əʃˈʊr/",cat:"动词",zh:"确保",def:"（vt）确保。",ex:"We should assure it carefully.",exZh:"我们应当认真地确保。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-107",word:"athlete",ipa:"/ˈæθlˌit/",cat:"名词",zh:"运动员",def:"（n）运动员。",ex:"This is a athlete.",exZh:"这是一个运动员。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-108",word:"attach",ipa:"/ətˈætʃ/",cat:"动词",zh:"附加",def:"（vi.vt）附加。",ex:"We should attach it carefully.",exZh:"我们应当认真地附加。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi.vt。"},
+  {id:"hs-109",word:"attempt",ipa:"/ətˈɛmpt/",cat:"动词",zh:"企图，试图",def:"（vt.n）企图，试图。",ex:"We should attempt it carefully.",exZh:"我们应当认真地企图，试图。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-110",word:"attend",ipa:"/ətˈɛnd/",cat:"动词",zh:"参加",def:"（v）参加。",ex:"We should attend it carefully.",exZh:"我们应当认真地参加。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-111",word:"audiovisual",ipa:"/ˌɔdioʊvˈɪʒuəl/",cat:"形容词",zh:"视听的",def:"（adj）视听的。",ex:"It looks very audiovisual.",exZh:"它看起来非常视听的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-112",word:"author",ipa:"/ˈɔθɜ/",cat:"名词",zh:"作者",def:"（n）作者。",ex:"This is a author.",exZh:"这是一个作者。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-113",word:"authority",ipa:"/əθˈɔrəti/",cat:"名词",zh:"权力，权威",def:"（n）权力，权威。",ex:"This is a authority.",exZh:"这是一个权力，权威。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-114",word:"automatic",ipa:"/ˌɔtəmˈætɪk/",cat:"形容词",zh:"自动的",def:"（adj）自动的。",ex:"It looks very automatic.",exZh:"它看起来非常自动的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-115",word:"available",ipa:"/əvˈeɪləbəl/",cat:"形容词",zh:"可利用的，可得到的",def:"（adj）可利用的，可得到的。",ex:"It looks very available.",exZh:"它看起来非常可利用的，可得到的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-116",word:"avenue",ipa:"/ˈævənˌu/",cat:"名词",zh:"大街",def:"（n）大街。",ex:"This is a avenue.",exZh:"这是一个大街。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-117",word:"awaken",ipa:"/əwˈeɪkən/",cat:"动词",zh:"唤醒",def:"（vt.vi）唤醒。",ex:"We should awaken it carefully.",exZh:"我们应当认真地唤醒。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-118",word:"award",ipa:"/əwˈɔrd/",cat:"动词",zh:"颁奖",def:"（vt.n）颁奖。",ex:"We should award it carefully.",exZh:"我们应当认真地颁奖。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-119",word:"aware",ipa:"/əwˈɛr/",cat:"形容词",zh:"意识到的",def:"（adj）意识到的。",ex:"It looks very aware.",exZh:"它看起来非常意识到的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-120",word:"awful",ipa:"/ˈɑfəl/",cat:"形容词",zh:"糟糕的",def:"（adj）糟糕的。",ex:"It looks very awful.",exZh:"它看起来非常糟糕的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-121",word:"awkward",ipa:"/ˈɑkwɜd/",cat:"形容词",zh:"尴尬的",def:"（adj）尴尬的。",ex:"It looks very awkward.",exZh:"它看起来非常尴尬的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-122",word:"back",ipa:"/bˈæk/",cat:"形容词",zh:"背，支持，后面的，向后",def:"（n v adj adv）背，支持，后面的，向后。",ex:"It looks very back.",exZh:"它看起来非常背，支持，后面的，向后。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n v adj adv。"},
+  {id:"hs-123",word:"background",ipa:"/bˈækgrˌaʊnd/",cat:"名词",zh:"背景",def:"（n）背景。",ex:"This is a background.",exZh:"这是一个背景。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-124",word:"backward",ipa:"/bˈækwɜd/",cat:"形容词",zh:"向后",def:"（adj.adv）向后。",ex:"It looks very backward.",exZh:"它看起来非常向后。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.adv。"},
+  {id:"hs-125",word:"bacteria",ipa:"/bæktˈɪriə/",cat:"名词",zh:"细菌",def:"（n）细菌。",ex:"This is a bacteria.",exZh:"这是一个细菌。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-126",word:"badminton",ipa:"/bˈædmˌɪntən/",cat:"名词",zh:"羽毛球",def:"（n）羽毛球。",ex:"This is a badminton.",exZh:"这是一个羽毛球。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-127",word:"baggage",ipa:"/bˈægədʒ/",cat:"名词",zh:"行李",def:"（n）行李。",ex:"This is a baggage.",exZh:"这是一个行李。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-128",word:"bakery",ipa:"/bˈeɪkɜi/",cat:"名词",zh:"面包店",def:"（n）面包店。",ex:"This is a bakery.",exZh:"这是一个面包店。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-129",word:"ban",ipa:"/bˈæn/",cat:"动词",zh:"禁止",def:"（vt. n）禁止。",ex:"We should ban it carefully.",exZh:"我们应当认真地禁止。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt. n。"},
+  {id:"hs-130",word:"band",ipa:"/bˈænd/",cat:"名词",zh:"乐队",def:"（n）乐队。",ex:"This is a band.",exZh:"这是一个乐队。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-131",word:"bandage",ipa:"/bˈændɪdʒ/",cat:"名词",zh:"绷带",def:"（n.v）绷带。",ex:"This is a bandage.",exZh:"这是一个绷带。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-132",word:"barbecue",ipa:"/bˈɑrbɪkjˌu/",cat:"动词",zh:"烧烤",def:"（n.vt）烧烤。",ex:"We should barbecue it carefully.",exZh:"我们应当认真地烧烤。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-133",word:"bare",ipa:"/bˈɛr/",cat:"形容词",zh:"秃的",def:"（adj）秃的。",ex:"It looks very bare.",exZh:"它看起来非常秃的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-134",word:"barrier",ipa:"/bˈæriɜ/",cat:"名词",zh:"栅栏",def:"（n）栅栏。",ex:"This is a barrier.",exZh:"这是一个栅栏。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-135",word:"behave",ipa:"/bɪhˈeɪv/",cat:"动词",zh:"表现",def:"（vi.vt）表现。",ex:"We should behave it carefully.",exZh:"我们应当认真地表现。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi.vt。"},
+  {id:"hs-136",word:"belief",ipa:"/bɪlˈif/",cat:"名词",zh:"相信",def:"（n）相信。",ex:"This is a belief.",exZh:"这是一个相信。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-137",word:"beard",ipa:"/bˈɪrd/",cat:"名词",zh:"胡须",def:"（n）胡须。",ex:"This is a beard.",exZh:"这是一个胡须。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-138",word:"be down with",ipa:"/biː daʊn wɪð/",cat:"短语",zh:"患…病",def:"（短语）患…病。",ex:"Please learn the phrase \"be down with\".",exZh:"请记住短语“患…病”。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：固定表达。"},
+  {id:"hs-139",word:"belt",ipa:"/bˈɛlt/",cat:"名词",zh:"带，皮带",def:"（n）带，皮带。",ex:"This is a belt.",exZh:"这是一个带，皮带。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-140",word:"bend",ipa:"/bˈɛnd/",cat:"动词",zh:"使弯曲",def:"（vt.vi n）使弯曲。",ex:"We should bend it carefully.",exZh:"我们应当认真地使弯曲。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi n。"},
+  {id:"hs-141",word:"benefit",ipa:"/bˈɛnəfɪt/",cat:"名词",zh:"有益，益处",def:"（n）有益，益处。",ex:"This is a benefit.",exZh:"这是一个有益，益处。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-142",word:"bet",ipa:"/bˈɛt/",cat:"名词",zh:"打赌",def:"（n.v）打赌。",ex:"This is a bet.",exZh:"这是一个打赌。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-143",word:"bind",ipa:"/bˈaɪnd/",cat:"动词",zh:"捆绑",def:"（vt）捆绑。",ex:"We should bind it carefully.",exZh:"我们应当认真地捆绑。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-144",word:"biology",ipa:"/baɪˈɑlədʒi/",cat:"名词",zh:"生物学",def:"（n）生物学。",ex:"This is a biology.",exZh:"这是一个生物学。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-145",word:"bite",ipa:"/bˈaɪt/",cat:"名词",zh:"叮，咬",def:"（v.n）叮，咬。",ex:"We should bite it carefully.",exZh:"我们应当认真地叮，咬。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v.n。"},
+  {id:"hs-146",word:"blame",ipa:"/blˈeɪm/",cat:"动词",zh:"指责",def:"（vt.n）指责。",ex:"We should blame it carefully.",exZh:"我们应当认真地指责。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-147",word:"blank",ipa:"/blˈæŋk/",cat:"形容词",zh:"空白的",def:"（n.adj）空白的。",ex:"It looks very blank.",exZh:"它看起来非常空白的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-148",word:"bleed",ipa:"/blˈid/",cat:"动词",zh:"出血",def:"（vi）出血。",ex:"We should bleed it carefully.",exZh:"我们应当认真地出血。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-149",word:"bless",ipa:"/blˈɛs/",cat:"动词",zh:"为…祝福",def:"（vt）为…祝福。",ex:"We should bless it carefully.",exZh:"我们应当认真地为…祝福。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-150",word:"block",ipa:"/blˈɑk/",cat:"动词",zh:"块，停驻；阻止，限制",def:"（n.vt）块，停驻；阻止，限制。",ex:"We should block it carefully.",exZh:"我们应当认真地块，停驻；阻止，限制。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-151",word:"bloom",ipa:"/blˈum/",cat:"动词",zh:"开花",def:"（vi.n）开花。",ex:"We should bloom it carefully.",exZh:"我们应当认真地开花。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi.n。"},
+  {id:"hs-152",word:"blow",ipa:"/blˈoʊ/",cat:"动词",zh:"吹，打击",def:"（v）吹，打击。",ex:"We should blow it carefully.",exZh:"我们应当认真地吹，打击。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-153",word:"board",ipa:"/bˈɔrd/",cat:"名词",zh:"木板",def:"（n）木板。",ex:"This is a board.",exZh:"这是一个木板。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-154",word:"boast",ipa:"/bˈoʊst/",cat:"动词",zh:"吹嘘",def:"（vi.n vt）吹嘘。",ex:"We should boast it carefully.",exZh:"我们应当认真地吹嘘。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi.n vt。"},
+  {id:"hs-155",word:"bonus",ipa:"/bˈoʊnəs/",cat:"名词",zh:"奖金",def:"（n）奖金。",ex:"This is a bonus.",exZh:"这是一个奖金。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-156",word:"boom",ipa:"/bˈum/",cat:"名词",zh:"繁荣",def:"（n）繁荣。",ex:"This is a boom.",exZh:"这是一个繁荣。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-157",word:"border",ipa:"/bˈɔrdɜ/",cat:"名词",zh:"边界",def:"（n v）边界。",ex:"This is a border.",exZh:"这是一个边界。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n v。"},
+  {id:"hs-158",word:"botanist",ipa:"/bˈɑtənɪst/",cat:"名词",zh:"植物学家",def:"（n）植物学家。",ex:"This is a botanist.",exZh:"这是一个植物学家。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-159",word:"bother",ipa:"/bˈɑðɜ/",cat:"动词",zh:"打扰",def:"（vt vi）打扰。",ex:"We should bother it carefully.",exZh:"我们应当认真地打扰。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt vi。"},
+  {id:"hs-160",word:"bounce",ipa:"/bˈaʊns/",cat:"动词",zh:"弹起",def:"（vi）弹起。",ex:"We should bounce it carefully.",exZh:"我们应当认真地弹起。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-161",word:"bow",ipa:"/bˈaʊ/",cat:"名词",zh:"弓",def:"（n）弓。",ex:"This is a bow.",exZh:"这是一个弓。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-162",word:"brake",ipa:"/brˈeɪk/",cat:"动词",zh:"刹车",def:"（n.vt）刹车。",ex:"We should brake it carefully.",exZh:"我们应当认真地刹车。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-163",word:"branch",ipa:"/brˈæntʃ/",cat:"动词",zh:"树枝，分支，分店",def:"（n vi.vt）树枝，分支，分店。",ex:"We should branch it carefully.",exZh:"我们应当认真地树枝，分支，分店。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vi.vt。"},
+  {id:"hs-164",word:"brand",ipa:"/brˈænd/",cat:"动词",zh:"商标",def:"（n.vt）商标。",ex:"We should brand it carefully.",exZh:"我们应当认真地商标。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-165",word:"breast",ipa:"/brˈɛst/",cat:"动词",zh:"胸部",def:"（n vt）胸部。",ex:"We should breast it carefully.",exZh:"我们应当认真地胸部。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-166",word:"breed",ipa:"/brˈid/",cat:"名词",zh:"产品，种类，产生",def:"（n.v）产品，种类，产生。",ex:"This is a breed.",exZh:"这是一个产品，种类，产生。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-167",word:"breeze",ipa:"/brˈiz/",cat:"名词",zh:"微风",def:"（n）微风。",ex:"This is a breeze.",exZh:"这是一个微风。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-168",word:"bribe",ipa:"/brˈaɪb/",cat:"动词",zh:"贿赂",def:"（n.vt）贿赂。",ex:"We should bribe it carefully.",exZh:"我们应当认真地贿赂。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-169",word:"bride",ipa:"/brˈaɪd/",cat:"名词",zh:"新娘",def:"（n）新娘。",ex:"This is a bride.",exZh:"这是一个新娘。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-170",word:"bridge",ipa:"/brˈɪdʒ/",cat:"动词",zh:"桥",def:"（n.vt）桥。",ex:"We should bridge it carefully.",exZh:"我们应当认真地桥。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-171",word:"brief",ipa:"/brˈif/",cat:"动词",zh:"简短的",def:"（adj n vt）简短的。",ex:"We should brief it carefully.",exZh:"我们应当认真地简短的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj n vt。"},
+  {id:"hs-172",word:"brilliant",ipa:"/brˈɪljənt/",cat:"形容词",zh:"极好的，杰出的",def:"（adj）极好的，杰出的。",ex:"It looks very brilliant.",exZh:"它看起来非常极好的，杰出的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-173",word:"broadcast",ipa:"/brˈɔdkˌæst/",cat:"名词",zh:"广播",def:"（v.n）广播。",ex:"We should broadcast it carefully.",exZh:"我们应当认真地广播。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v.n。"},
+  {id:"hs-174",word:"brow",ipa:"/brˈaʊ/",cat:"名词",zh:"眉毛",def:"（n）眉毛。",ex:"This is a brow.",exZh:"这是一个眉毛。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-175",word:"browse",ipa:"/brˈaʊz/",cat:"动词",zh:"浏览",def:"（v）浏览。",ex:"We should browse it carefully.",exZh:"我们应当认真地浏览。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-176",word:"brush",ipa:"/brˈʌʃ/",cat:"动词",zh:"刷子",def:"（n.vt）刷子。",ex:"We should brush it carefully.",exZh:"我们应当认真地刷子。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-177",word:"bubble",ipa:"/bˈʌbəl/",cat:"动词",zh:"气泡",def:"（n.vi）气泡。",ex:"We should bubble it carefully.",exZh:"我们应当认真地气泡。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vi。"},
+  {id:"hs-178",word:"budget",ipa:"/bˈʌdʒɪt/",cat:"名词",zh:"预算",def:"（n.v）预算。",ex:"This is a budget.",exZh:"这是一个预算。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-179",word:"buffet",ipa:"/bˈʌfət/",cat:"名词",zh:"自助餐",def:"（n）自助餐。",ex:"This is a buffet.",exZh:"这是一个自助餐。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-180",word:"bump",ipa:"/bˈʌmp/",cat:"动词",zh:"碰",def:"（vi）碰。",ex:"We should bump it carefully.",exZh:"我们应当认真地碰。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-181",word:"bunch",ipa:"/bˈʌntʃ/",cat:"名词",zh:"束",def:"（n）束。",ex:"This is a bunch.",exZh:"这是一个束。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-182",word:"burden",ipa:"/bˈɜdən/",cat:"动词",zh:"负荷",def:"（n.vt）负荷。",ex:"We should burden it carefully.",exZh:"我们应当认真地负荷。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-183",word:"bury",ipa:"/bˈɛri/",cat:"动词",zh:"掩埋",def:"（vt）掩埋。",ex:"We should bury it carefully.",exZh:"我们应当认真地掩埋。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-184",word:"butcher",ipa:"/bˈʊtʃɜ/",cat:"名词",zh:"屠夫",def:"（n）屠夫。",ex:"This is a butcher.",exZh:"这是一个屠夫。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-185",word:"cabbage",ipa:"/kˈæbədʒ/",cat:"名词",zh:"卷心菜",def:"（n）卷心菜。",ex:"This is a cabbage.",exZh:"这是一个卷心菜。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-186",word:"cabin",ipa:"/kˈæbən/",cat:"名词",zh:"小木屋",def:"（n）小木屋。",ex:"This is a cabin.",exZh:"这是一个小木屋。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-187",word:"cable",ipa:"/kˈeɪbəl/",cat:"形容词",zh:"电缆",def:"（n.adj）电缆。",ex:"It looks very cable.",exZh:"它看起来非常电缆。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-188",word:"cafeteria",ipa:"/kˌæfətˈɪriə/",cat:"名词",zh:"自助餐厅",def:"（n）自助餐厅。",ex:"This is a cafeteria.",exZh:"这是一个自助餐厅。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-189",word:"calculate",ipa:"/kˈælkjəlˌeɪt/",cat:"动词",zh:"计算",def:"（v）计算。",ex:"We should calculate it carefully.",exZh:"我们应当认真地计算。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-190",word:"calendar",ipa:"/kˈæləndɜ/",cat:"名词",zh:"日历",def:"（n）日历。",ex:"This is a calendar.",exZh:"这是一个日历。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-191",word:"campaign",ipa:"/kæmpˈeɪn/",cat:"动词",zh:"运动",def:"（n.vi）运动。",ex:"We should campaign it carefully.",exZh:"我们应当认真地运动。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vi。"},
+  {id:"hs-192",word:"cancel",ipa:"/kˈænsəl/",cat:"动词",zh:"取消",def:"（vt）取消。",ex:"We should cancel it carefully.",exZh:"我们应当认真地取消。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-193",word:"canal",ipa:"/kənˈæl/",cat:"名词",zh:"运河",def:"（n）运河。",ex:"This is a canal.",exZh:"这是一个运河。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-194",word:"candidate",ipa:"/kˈændədeɪt/",cat:"名词",zh:"候选人",def:"（n）候选人。",ex:"This is a candidate.",exZh:"这是一个候选人。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-195",word:"canteen",ipa:"/kæntˈin/",cat:"名词",zh:"食堂",def:"（n）食堂。",ex:"This is a canteen.",exZh:"这是一个食堂。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-196",word:"capable",ipa:"/kˈeɪpəbəl/",cat:"形容词",zh:"有能力的",def:"（adj）有能力的。",ex:"It looks very capable.",exZh:"它看起来非常有能力的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-197",word:"capture",ipa:"/kˈæptʃɜ/",cat:"名词",zh:"占领，俘虏",def:"（v n）占领，俘虏。",ex:"We should capture it carefully.",exZh:"我们应当认真地占领，俘虏。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v n。"},
+  {id:"hs-198",word:"cargo",ipa:"/kˈɑrgˌoʊ/",cat:"名词",zh:"货物",def:"（n）货物。",ex:"This is a cargo.",exZh:"这是一个货物。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-199",word:"carpenter",ipa:"/kˈɑrpəntɜ/",cat:"名词",zh:"木匠",def:"（n）木匠。",ex:"This is a carpenter.",exZh:"这是一个木匠。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-200",word:"carriage",ipa:"/kˈærɪdʒ/",cat:"名词",zh:"马车",def:"（n）马车。",ex:"This is a carriage.",exZh:"这是一个马车。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-201",word:"carve",ipa:"/kˈɑrv/",cat:"动词",zh:"切开，划分",def:"（vt）切开，划分。",ex:"We should carve it carefully.",exZh:"我们应当认真地切开，划分。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-202",word:"case",ipa:"/kˈeɪs/",cat:"名词",zh:"实例，情况",def:"（n）实例，情况。",ex:"This is a case.",exZh:"这是一个实例，情况。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-203",word:"cash",ipa:"/kˈæʃ/",cat:"动词",zh:"现金",def:"（n.vt）现金。",ex:"We should cash it carefully.",exZh:"我们应当认真地现金。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-204",word:"cast",ipa:"/kˈæst/",cat:"名词",zh:"扔，投，投射",def:"（v n）扔，投，投射。",ex:"We should cast it carefully.",exZh:"我们应当认真地扔，投，投射。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v n。"},
+  {id:"hs-205",word:"casual",ipa:"/kˈæʒəwəl/",cat:"形容词",zh:"偶然的",def:"（adj）偶然的。",ex:"It looks very casual.",exZh:"它看起来非常偶然的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-206",word:"catalogue",ipa:"/kˈætəlˌɔg/",cat:"名词",zh:"商品目录，把…编入目录",def:"（n.v）商品目录，把…编入目录。",ex:"This is a catalogue.",exZh:"这是一个商品目录，把…编入目录。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-207",word:"category",ipa:"/kˈætəgˌɔri/",cat:"名词",zh:"种类",def:"（n）种类。",ex:"This is a category.",exZh:"这是一个种类。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-208",word:"cause",ipa:"/kˈɑz/",cat:"动词",zh:"使发生，原因",def:"（vt.n）使发生，原因。",ex:"We should cause it carefully.",exZh:"我们应当认真地使发生，原因。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-209",word:"caution",ipa:"/kˈɑʃən/",cat:"名词",zh:"小心，警告",def:"（n.v）小心，警告。",ex:"This is a caution.",exZh:"这是一个小心，警告。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-210",word:"cease",ipa:"/sˈis/",cat:"名词",zh:"停止",def:"（v.n）停止。",ex:"We should cease it carefully.",exZh:"我们应当认真地停止。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v.n。"},
+  {id:"hs-211",word:"ceiling",ipa:"/sˈilɪŋ/",cat:"名词",zh:"天花板",def:"（n）天花板。",ex:"This is a ceiling.",exZh:"这是一个天花板。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-212",word:"celebrate",ipa:"/sˈɛləbrˌeɪt/",cat:"动词",zh:"庆祝",def:"（vt）庆祝。",ex:"We should celebrate it carefully.",exZh:"我们应当认真地庆祝。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-213",word:"cemetery",ipa:"/sˈɛmətˌɛri/",cat:"名词",zh:"墓地",def:"（n）墓地。",ex:"This is a cemetery.",exZh:"这是一个墓地。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-214",word:"ceremony",ipa:"/sˈɛrəmˌoʊni/",cat:"名词",zh:"仪式",def:"（n）仪式。",ex:"This is a ceremony.",exZh:"这是一个仪式。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-215",word:"certificate",ipa:"/sɜtˈɪfɪkət/",cat:"动词",zh:"证明",def:"（n.vt）证明。",ex:"We should certificate it carefully.",exZh:"我们应当认真地证明。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-216",word:"chain",ipa:"/tʃˈeɪn/",cat:"动词",zh:"链条",def:"（n vt）链条。",ex:"We should chain it carefully.",exZh:"我们应当认真地链条。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-217",word:"challenge",ipa:"/tʃˈæləndʒ/",cat:"动词",zh:"挑战",def:"（vt.vi n）挑战。",ex:"We should challenge it carefully.",exZh:"我们应当认真地挑战。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi n。"},
+  {id:"hs-218",word:"champion",ipa:"/tʃˈæmpiən/",cat:"形容词",zh:"冠军的",def:"（n adj）冠军的。",ex:"It looks very champion.",exZh:"它看起来非常冠军的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n adj。"},
+  {id:"hs-219",word:"channel",ipa:"/tʃˈænəl/",cat:"名词",zh:"海峡",def:"（n）海峡。",ex:"This is a channel.",exZh:"这是一个海峡。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-220",word:"character",ipa:"/kˈɛrɪktɜ/",cat:"名词",zh:"性质，人物，特色",def:"（n）性质，人物，特色。",ex:"This is a character.",exZh:"这是一个性质，人物，特色。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-221",word:"characteristic",ipa:"/kˌɛrəktɜˈɪstɪk/",cat:"形容词",zh:"特色，特征",def:"（n.adj）特色，特征。",ex:"It looks very characteristic.",exZh:"它看起来非常特色，特征。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-222",word:"charge",ipa:"/tʃˈɑrdʒ/",cat:"动词",zh:"主管，收费，充电",def:"（n vt）主管，收费，充电。",ex:"We should charge it carefully.",exZh:"我们应当认真地主管，收费，充电。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-223",word:"charity",ipa:"/tʃˈɛrɪti/",cat:"名词",zh:"慈善",def:"（n）慈善。",ex:"This is a charity.",exZh:"这是一个慈善。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-224",word:"chart",ipa:"/tʃˈɑrt/",cat:"名词",zh:"图表",def:"（n）图表。",ex:"This is a chart.",exZh:"这是一个图表。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-225",word:"chase",ipa:"/tʃˈeɪs/",cat:"名词",zh:"追逐",def:"（v.n）追逐。",ex:"We should chase it carefully.",exZh:"我们应当认真地追逐。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v.n。"},
+  {id:"hs-226",word:"check",ipa:"/tʃˈɛk/",cat:"名词",zh:"核对，支票，检查",def:"（v.n）核对，支票，检查。",ex:"We should check it carefully.",exZh:"我们应当认真地核对，支票，检查。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v.n。"},
+  {id:"hs-227",word:"chew",ipa:"/tʃˈu/",cat:"动词",zh:"咀嚼",def:"（vt）咀嚼。",ex:"We should chew it carefully.",exZh:"我们应当认真地咀嚼。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-228",word:"chief",ipa:"/tʃˈif/",cat:"形容词",zh:"首领，主要的",def:"（n.adj）首领，主要的。",ex:"It looks very chief.",exZh:"它看起来非常首领，主要的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-229",word:"chill",ipa:"/tʃˈɪl/",cat:"形容词",zh:"寒冷，冷",def:"（n.adj）寒冷，冷。",ex:"It looks very chill.",exZh:"它看起来非常寒冷，冷。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-230",word:"chimney",ipa:"/tʃˈɪmni/",cat:"名词",zh:"烟囱",def:"（n）烟囱。",ex:"This is a chimney.",exZh:"这是一个烟囱。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-231",word:"circle",ipa:"/sˈɜkəl/",cat:"动词",zh:"环绕，绕圈，旋转；圆，圆周，盘旋",def:"（vt.vi n vi.vt）环绕，绕圈，旋转；圆，圆周，盘旋。",ex:"We should circle it carefully.",exZh:"我们应当认真地环绕，绕圈，旋转；圆，圆周，盘旋。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi n vi.vt。"},
+  {id:"hs-232",word:"chip",ipa:"/tʃˈɪp/",cat:"名词",zh:"芯片，炸薯条",def:"（n）芯片，炸薯条。",ex:"This is a chip.",exZh:"这是一个芯片，炸薯条。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-233",word:"chop",ipa:"/tʃˈɑp/",cat:"动词",zh:"砍，劈",def:"（v）砍，劈。",ex:"We should chop it carefully.",exZh:"我们应当认真地砍，劈。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-234",word:"circular",ipa:"/sˈɜkjəlɜ/",cat:"形容词",zh:"环形的，循环的",def:"（adj）环形的，循环的。",ex:"It looks very circular.",exZh:"它看起来非常环形的，循环的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-235",word:"circumstance",ipa:"/sˈɜkəmstˌæns/",cat:"名词",zh:"情况，形势",def:"（n）情况，形势。",ex:"This is a circumstance.",exZh:"这是一个情况，形势。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-236",word:"citizen",ipa:"/sˈɪtəzən/",cat:"名词",zh:"公民",def:"（n）公民。",ex:"This is a citizen.",exZh:"这是一个公民。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-237",word:"civilian",ipa:"/səvˈɪljən/",cat:"形容词",zh:"平民的",def:"（n.adj）平民的。",ex:"It looks very civilian.",exZh:"它看起来非常平民的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-238",word:"civilization",ipa:"/sˌɪvəlɪzˈeɪʃən/",cat:"名词",zh:"文明，文化",def:"（n）文明，文化。",ex:"This is a civilization.",exZh:"这是一个文明，文化。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-239",word:"civilize",ipa:"/sˈɪvəlˌaɪz/",cat:"动词",zh:"使文明",def:"（vt）使文明。",ex:"We should civilize it carefully.",exZh:"我们应当认真地使文明。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-240",word:"claim",ipa:"/klˈeɪm/",cat:"动词",zh:"声称，要求",def:"（vt.vi）声称，要求。",ex:"We should claim it carefully.",exZh:"我们应当认真地声称，要求。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-241",word:"clap",ipa:"/klˈæp/",cat:"动词",zh:"拍手",def:"（vt.vi）拍手。",ex:"We should clap it carefully.",exZh:"我们应当认真地拍手。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-242",word:"classical",ipa:"/klˈæsɪkəl/",cat:"形容词",zh:"古典的",def:"（adj）古典的。",ex:"It looks very classical.",exZh:"它看起来非常古典的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-243",word:"classify",ipa:"/klˈæsəfˌaɪ/",cat:"动词",zh:"分类",def:"（vt）分类。",ex:"We should classify it carefully.",exZh:"我们应当认真地分类。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-244",word:"clay",ipa:"/klˈeɪ/",cat:"名词",zh:"泥土",def:"（n）泥土。",ex:"This is a clay.",exZh:"这是一个泥土。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-245",word:"clear",ipa:"/klˈɪr/",cat:"动词",zh:"清除，清楚的",def:"（vt adj adv）清除，清楚的。",ex:"We should clear it carefully.",exZh:"我们应当认真地清除，清楚的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt adj adv。"},
+  {id:"hs-246",word:"clerk",ipa:"/klˈɜk/",cat:"名词",zh:"职员",def:"（n）职员。",ex:"This is a clerk.",exZh:"这是一个职员。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-247",word:"click",ipa:"/klˈɪk/",cat:"名词",zh:"点击，咔哒声",def:"（n.v）点击，咔哒声。",ex:"This is a click.",exZh:"这是一个点击，咔哒声。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-248",word:"cliff",ipa:"/klˈɪf/",cat:"名词",zh:"悬崖",def:"（n）悬崖。",ex:"This is a cliff.",exZh:"这是一个悬崖。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-249",word:"climate",ipa:"/klˈaɪmət/",cat:"名词",zh:"气候",def:"（n）气候。",ex:"This is a climate.",exZh:"这是一个气候。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-250",word:"complaint",ipa:"/kəmplˈeɪnt/",cat:"名词",zh:"抱怨",def:"（n）抱怨。",ex:"This is a complaint.",exZh:"这是一个抱怨。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-251",word:"complete",ipa:"/kəmplˈit/",cat:"动词",zh:"完成，完全的",def:"（vt.adj）完成，完全的。",ex:"We should complete it carefully.",exZh:"我们应当认真地完成，完全的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.adj。"},
+  {id:"hs-252",word:"complex",ipa:"/kˈɑmplɛks/",cat:"形容词",zh:"组合的，复杂的",def:"（adj.n）组合的，复杂的。",ex:"It looks very complex.",exZh:"它看起来非常组合的，复杂的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.n。"},
+  {id:"hs-253",word:"complicated",ipa:"/kˈɑmpləkˌeɪtəd/",cat:"形容词",zh:"复杂的",def:"（adj）复杂的。",ex:"It looks very complicated.",exZh:"它看起来非常复杂的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-254",word:"compliment",ipa:"/kˈɑmpləmɛnt/",cat:"名词",zh:"赞美",def:"（n）赞美。",ex:"This is a compliment.",exZh:"这是一个赞美。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-255",word:"compose",ipa:"/kəmpˈoʊz/",cat:"动词",zh:"组成，构成",def:"（vt.vi）组成，构成。",ex:"We should compose it carefully.",exZh:"我们应当认真地组成，构成。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-256",word:"comprehensive",ipa:"/kˌɑmprihˈɛnsɪv/",cat:"形容词",zh:"综合的，理解的",def:"（adj）综合的，理解的。",ex:"It looks very comprehensive.",exZh:"它看起来非常综合的，理解的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-257",word:"compulsory",ipa:"/kəmpˈʌlsɜi/",cat:"形容词",zh:"义务的，强制的",def:"（adj.n）义务的，强制的。",ex:"It looks very compulsory.",exZh:"它看起来非常义务的，强制的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.n。"},
+  {id:"hs-258",word:"conceal",ipa:"/kənsˈil/",cat:"动词",zh:"隐藏",def:"（vt）隐藏。",ex:"We should conceal it carefully.",exZh:"我们应当认真地隐藏。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-259",word:"concentrate",ipa:"/kˈɑnsəntrˌeɪt/",cat:"动词",zh:"集中",def:"（v）集中。",ex:"We should concentrate it carefully.",exZh:"我们应当认真地集中。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-260",word:"concept",ipa:"/kˈɑnsɛpt/",cat:"名词",zh:"概念，观念",def:"（n）概念，观念。",ex:"This is a concept.",exZh:"这是一个概念，观念。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-261",word:"concern",ipa:"/kənsˈɜn/",cat:"动词",zh:"关心",def:"（n. vt）关心。",ex:"We should concern it carefully.",exZh:"我们应当认真地关心。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n. vt。"},
+  {id:"hs-262",word:"conclude",ipa:"/kənklˈud/",cat:"动词",zh:"结束",def:"（v）结束。",ex:"We should conclude it carefully.",exZh:"我们应当认真地结束。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-263",word:"conclusion",ipa:"/kənklˈuʒən/",cat:"名词",zh:"结论",def:"（n）结论。",ex:"This is a conclusion.",exZh:"这是一个结论。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-264",word:"concrete",ipa:"/kənkrˈit/",cat:"动词",zh:"混凝土",def:"（n vt）混凝土。",ex:"We should concrete it carefully.",exZh:"我们应当认真地混凝土。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-265",word:"condition",ipa:"/kəndˈɪʃən/",cat:"名词",zh:"环境，状况",def:"（n）环境，状况。",ex:"This is a condition.",exZh:"这是一个环境，状况。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-266",word:"conduct",ipa:"/kˈɑndəkt/",cat:"动词",zh:"管理，指挥",def:"（n vt）管理，指挥。",ex:"We should conduct it carefully.",exZh:"我们应当认真地管理，指挥。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-267",word:"conference",ipa:"/kˈɑnfɜəns/",cat:"名词",zh:"会议",def:"（n）会议。",ex:"This is a conference.",exZh:"这是一个会议。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-268",word:"confess",ipa:"/kənfˈɛs/",cat:"动词",zh:"承认，忏悔",def:"（vt）承认，忏悔。",ex:"We should confess it carefully.",exZh:"我们应当认真地承认，忏悔。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-269",word:"confidence",ipa:"/kˈɑnfədəns/",cat:"名词",zh:"信心",def:"（n）信心。",ex:"This is a confidence.",exZh:"这是一个信心。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-270",word:"confident",ipa:"/kˈɑnfədənt/",cat:"形容词",zh:"自信的",def:"（adj）自信的。",ex:"It looks very confident.",exZh:"它看起来非常自信的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-271",word:"confirm",ipa:"/kənfˈɜm/",cat:"动词",zh:"证明，确认",def:"（vt）证明，确认。",ex:"We should confirm it carefully.",exZh:"我们应当认真地证明，确认。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-272",word:"conflict",ipa:"/kˈɑnflɪkt/",cat:"动词",zh:"斗争，冲突",def:"（n. vi）斗争，冲突。",ex:"We should conflict it carefully.",exZh:"我们应当认真地斗争，冲突。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n. vi。"},
+  {id:"hs-273",word:"confuse",ipa:"/kənfjˈuz/",cat:"动词",zh:"使困惑",def:"（vt）使困惑。",ex:"We should confuse it carefully.",exZh:"我们应当认真地使困惑。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-274",word:"congestion",ipa:"/kəndʒˈɛstʃən/",cat:"名词",zh:"拥挤",def:"（n）拥挤。",ex:"This is a congestion.",exZh:"这是一个拥挤。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-275",word:"congratulation",ipa:"/kəngrˌætʃəlˈeɪʃən/",cat:"名词",zh:"祝贺",def:"（n）祝贺。",ex:"This is a congratulation.",exZh:"这是一个祝贺。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-276",word:"congress",ipa:"/kˈɑŋgrəs/",cat:"名词",zh:"国会，会议",def:"（n）国会，会议。",ex:"This is a congress.",exZh:"这是一个国会，会议。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-277",word:"connect",ipa:"/kənˈɛkt/",cat:"动词",zh:"连接",def:"（vt）连接。",ex:"We should connect it carefully.",exZh:"我们应当认真地连接。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-278",word:"conquer",ipa:"/kˈɑŋkɜ/",cat:"动词",zh:"攻克",def:"（vt）攻克。",ex:"We should conquer it carefully.",exZh:"我们应当认真地攻克。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-279",word:"conscience",ipa:"/kˈɑnʃəns/",cat:"名词",zh:"良心",def:"（n）良心。",ex:"This is a conscience.",exZh:"这是一个良心。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-280",word:"conscious",ipa:"/kˈɑnʃəs/",cat:"形容词",zh:"意识到的",def:"（adj）意识到的。",ex:"It looks very conscious.",exZh:"它看起来非常意识到的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-281",word:"consequence",ipa:"/kˈɑnsəkwəns/",cat:"名词",zh:"结果，后果，重要性",def:"（n）结果，后果，重要性。",ex:"This is a consequence.",exZh:"这是一个结果，后果，重要性。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-282",word:"consider",ipa:"/kənsˈɪdɜ/",cat:"动词",zh:"认为",def:"（vt）认为。",ex:"We should consider it carefully.",exZh:"我们应当认真地认为。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-283",word:"considerable",ipa:"/kənsˈɪdɜəbəl/",cat:"形容词",zh:"重大的",def:"（adj）重大的。",ex:"It looks very considerable.",exZh:"它看起来非常重大的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-284",word:"considerate",ipa:"/kənsˈɪdɜət/",cat:"形容词",zh:"体贴的",def:"（adj）体贴的。",ex:"It looks very considerate.",exZh:"它看起来非常体贴的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-285",word:"consist",ipa:"/kənsˈɪst/",cat:"动词",zh:"构成，在于",def:"（vi）构成，在于。",ex:"We should consist it carefully.",exZh:"我们应当认真地构成，在于。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-286",word:"constant",ipa:"/kˈɑnstənt/",cat:"形容词",zh:"不变的",def:"（adj）不变的。",ex:"It looks very constant.",exZh:"它看起来非常不变的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-287",word:"consult",ipa:"/kənsˈʌlt/",cat:"动词",zh:"请教",def:"（vt）请教。",ex:"We should consult it carefully.",exZh:"我们应当认真地请教。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-288",word:"consume",ipa:"/kənsˈum/",cat:"动词",zh:"消耗",def:"（vt.vi）消耗。",ex:"We should consume it carefully.",exZh:"我们应当认真地消耗。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-289",word:"contact",ipa:"/kˈɑntˌækt/",cat:"名词",zh:"联系",def:"（n.v）联系。",ex:"This is a contact.",exZh:"这是一个联系。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-290",word:"contain",ipa:"/kəntˈeɪn/",cat:"动词",zh:"包含",def:"（v）包含。",ex:"We should contain it carefully.",exZh:"我们应当认真地包含。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-291",word:"contemporary",ipa:"/kəntˈɛmpɜˌɛri/",cat:"形容词",zh:"当代的",def:"（adj）当代的。",ex:"It looks very contemporary.",exZh:"它看起来非常当代的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-292",word:"content",ipa:"/kˈɑntɛnt/",cat:"名词",zh:"目录",def:"（n）目录。",ex:"This is a content.",exZh:"这是一个目录。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-293",word:"contest",ipa:"/kˈɑntɛst/",cat:"名词",zh:"竞赛",def:"（n.v）竞赛。",ex:"This is a contest.",exZh:"这是一个竞赛。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-294",word:"context",ipa:"/kˈɑntɛkst/",cat:"名词",zh:"上下文",def:"（n）上下文。",ex:"This is a context.",exZh:"这是一个上下文。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-295",word:"continent",ipa:"/kˈɑntənənt/",cat:"名词",zh:"大陆",def:"（n）大陆。",ex:"This is a continent.",exZh:"这是一个大陆。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-296",word:"continue",ipa:"/kəntˈɪnju/",cat:"动词",zh:"继续",def:"（vt.vi）继续。",ex:"We should continue it carefully.",exZh:"我们应当认真地继续。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-297",word:"contract",ipa:"/kˈɑntrˌækt/",cat:"名词",zh:"合同",def:"（n v）合同。",ex:"This is a contract.",exZh:"这是一个合同。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n v。"},
+  {id:"hs-298",word:"contrary",ipa:"/kˈɑntrɛri/",cat:"名词",zh:"相反",def:"（n）相反。",ex:"This is a contrary.",exZh:"这是一个相反。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-299",word:"contrast",ipa:"/kˈɑntræst/",cat:"名词",zh:"对比",def:"（n.v）对比。",ex:"This is a contrast.",exZh:"这是一个对比。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-300",word:"contribute",ipa:"/kəntrˈɪbjut/",cat:"动词",zh:"贡献",def:"（vt）贡献。",ex:"We should contribute it carefully.",exZh:"我们应当认真地贡献。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-301",word:"contribution",ipa:"/kˌɑntrəbjˈuʃən/",cat:"名词",zh:"贡献",def:"（n）贡献。",ex:"This is a contribution.",exZh:"这是一个贡献。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-302",word:"control",ipa:"/kəntrˈoʊl/",cat:"动词",zh:"支配，控制",def:"（vt.n）支配，控制。",ex:"We should control it carefully.",exZh:"我们应当认真地支配，控制。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-303",word:"convenience",ipa:"/kənvˈinjəns/",cat:"名词",zh:"方便",def:"（n）方便。",ex:"This is a convenience.",exZh:"这是一个方便。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-304",word:"convey",ipa:"/kənvˈeɪ/",cat:"动词",zh:"运送",def:"（vt）运送。",ex:"We should convey it carefully.",exZh:"我们应当认真地运送。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-305",word:"convince",ipa:"/kənvˈɪns/",cat:"动词",zh:"确信，说服",def:"（vt）确信，说服。",ex:"We should convince it carefully.",exZh:"我们应当认真地确信，说服。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-306",word:"cooperate",ipa:"/koʊˈɑpɜˌeɪt/",cat:"动词",zh:"合作",def:"（vi）合作。",ex:"We should cooperate it carefully.",exZh:"我们应当认真地合作。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-307",word:"cope",ipa:"/kˈoʊp/",cat:"动词",zh:"竞争",def:"（vi）竞争。",ex:"We should cope it carefully.",exZh:"我们应当认真地竞争。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-308",word:"corner",ipa:"/kˈɔrnɜ/",cat:"动词",zh:"角落",def:"（n vt）角落。",ex:"We should corner it carefully.",exZh:"我们应当认真地角落。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-309",word:"corporation",ipa:"/kˌɔrpɜˈeɪʃən/",cat:"名词",zh:"公司，法人",def:"（n）公司，法人。",ex:"This is a corporation.",exZh:"这是一个公司，法人。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-310",word:"cosmetic",ipa:"/kɑzmˈɛtɪk/",cat:"形容词",zh:"化妆的",def:"（adj.n）化妆的。",ex:"It looks very cosmetic.",exZh:"它看起来非常化妆的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.n。"},
+  {id:"hs-311",word:"count",ipa:"/kˈaʊnt/",cat:"动词",zh:"数",def:"（v）数。",ex:"We should count it carefully.",exZh:"我们应当认真地数。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-312",word:"cover",ipa:"/kˈʌvɜ/",cat:"动词",zh:"覆盖",def:"（n vt）覆盖。",ex:"We should cover it carefully.",exZh:"我们应当认真地覆盖。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-313",word:"craft",ipa:"/krˈæft/",cat:"名词",zh:"工艺",def:"（n）工艺。",ex:"This is a craft.",exZh:"这是一个工艺。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-314",word:"crash",ipa:"/krˈæʃ/",cat:"动词",zh:"碰撞",def:"（n vi）碰撞。",ex:"We should crash it carefully.",exZh:"我们应当认真地碰撞。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vi。"},
+  {id:"hs-315",word:"crawl",ipa:"/krˈɔl/",cat:"动词",zh:"爬",def:"（vi n）爬。",ex:"We should crawl it carefully.",exZh:"我们应当认真地爬。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi n。"},
+  {id:"hs-316",word:"create",ipa:"/kriˈeɪt/",cat:"动词",zh:"创造",def:"（vt）创造。",ex:"We should create it carefully.",exZh:"我们应当认真地创造。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-317",word:"creative",ipa:"/kriˈeɪtɪv/",cat:"形容词",zh:"有创造力的",def:"（adj）有创造力的。",ex:"It looks very creative.",exZh:"它看起来非常有创造力的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-318",word:"credit",ipa:"/krˈɛdət/",cat:"名词",zh:"信用",def:"（n）信用。",ex:"This is a credit.",exZh:"这是一个信用。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-319",word:"crime",ipa:"/krˈaɪm/",cat:"名词",zh:"犯罪",def:"（n）犯罪。",ex:"This is a crime.",exZh:"这是一个犯罪。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-320",word:"criminal",ipa:"/krˈɪmənəl/",cat:"形容词",zh:"罪犯",def:"（n.adj）罪犯。",ex:"It looks very criminal.",exZh:"它看起来非常罪犯。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-321",word:"crisis",ipa:"/krˈaɪsəs/",cat:"名词",zh:"危机",def:"（n）危机。",ex:"This is a crisis.",exZh:"这是一个危机。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-322",word:"critic",ipa:"/krˈɪtɪk/",cat:"名词",zh:"评论家，批评",def:"（n）评论家，批评。",ex:"This is a critic.",exZh:"这是一个评论家，批评。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-323",word:"critical",ipa:"/krˈɪtɪkəl/",cat:"形容词",zh:"批评的，批判的",def:"（adj）批评的，批判的。",ex:"It looks very critical.",exZh:"它看起来非常批评的，批判的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-324",word:"criticism",ipa:"/krˈɪtɪsˌɪzəm/",cat:"名词",zh:"评价，批评",def:"（n）评价，批评。",ex:"This is a criticism.",exZh:"这是一个评价，批评。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-325",word:"criticize",ipa:"/krˈɪtɪsˌaɪz/",cat:"动词",zh:"批评，评论",def:"（v）批评，评论。",ex:"We should criticize it carefully.",exZh:"我们应当认真地批评，评论。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-326",word:"crown",ipa:"/krˈaʊn/",cat:"动词",zh:"王冠，加冕",def:"（n.vi）王冠，加冕。",ex:"We should crown it carefully.",exZh:"我们应当认真地王冠，加冕。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vi。"},
+  {id:"hs-327",word:"crucial",ipa:"/krˈuʃəl/",cat:"形容词",zh:"关键的",def:"（adj）关键的。",ex:"It looks very crucial.",exZh:"它看起来非常关键的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-328",word:"cruelty",ipa:"/krˈulti/",cat:"名词",zh:"残忍的",def:"（n）残忍的。",ex:"This is a cruelty.",exZh:"这是一个残忍的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-329",word:"crystal",ipa:"/krˈɪstəl/",cat:"形容词",zh:"水晶，晶莹",def:"（n.adj）水晶，晶莹。",ex:"It looks very crystal.",exZh:"它看起来非常水晶，晶莹。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-330",word:"cucumber",ipa:"/kjˈukəmbɜ/",cat:"名词",zh:"黄瓜",def:"（n）黄瓜。",ex:"This is a cucumber.",exZh:"这是一个黄瓜。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-331",word:"cultivate",ipa:"/kˈʌltəvˌeɪt/",cat:"动词",zh:"耕作",def:"（vt）耕作。",ex:"We should cultivate it carefully.",exZh:"我们应当认真地耕作。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-332",word:"cultural",ipa:"/kˈʌltʃɜəl/",cat:"形容词",zh:"文化的",def:"（adj）文化的。",ex:"It looks very cultural.",exZh:"它看起来非常文化的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-333",word:"curious",ipa:"/kjˈʊriəs/",cat:"形容词",zh:"好奇的",def:"（adj）好奇的。",ex:"It looks very curious.",exZh:"它看起来非常好奇的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-334",word:"current",ipa:"/kˈɜənt/",cat:"形容词",zh:"当前的，潮流",def:"（adj.n）当前的，潮流。",ex:"It looks very current.",exZh:"它看起来非常当前的，潮流。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.n。"},
+  {id:"hs-335",word:"curriculum",ipa:"/kɜˈɪkjələm/",cat:"名词",zh:"课程",def:"（n）课程。",ex:"This is a curriculum.",exZh:"这是一个课程。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-336",word:"curve",ipa:"/kˈɜv/",cat:"名词",zh:"曲线",def:"（n.v）曲线。",ex:"This is a curve.",exZh:"这是一个曲线。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-337",word:"custom",ipa:"/kˈʌstəm/",cat:"名词",zh:"习俗",def:"（n）习俗。",ex:"This is a custom.",exZh:"这是一个习俗。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-338",word:"customer",ipa:"/kˈʌstəmɜ/",cat:"名词",zh:"顾客",def:"（n）顾客。",ex:"This is a customer.",exZh:"这是一个顾客。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-339",word:"cute",ipa:"/kjˈut/",cat:"形容词",zh:"可爱的",def:"（adj）可爱的。",ex:"It looks very cute.",exZh:"它看起来非常可爱的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-340",word:"cycle",ipa:"/sˈaɪkəl/",cat:"动词",zh:"循环，自行车",def:"（n vi.vt）循环，自行车。",ex:"We should cycle it carefully.",exZh:"我们应当认真地循环，自行车。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vi.vt。"},
+  {id:"hs-341",word:"dam",ipa:"/dˈæm/",cat:"名词",zh:"水坝",def:"（n）水坝。",ex:"This is a dam.",exZh:"这是一个水坝。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-342",word:"damp",ipa:"/dˈæmp/",cat:"动词",zh:"潮湿的",def:"（vt.adj n）潮湿的。",ex:"We should damp it carefully.",exZh:"我们应当认真地潮湿的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.adj n。"},
+  {id:"hs-343",word:"dash",ipa:"/dˈæʃ/",cat:"动词",zh:"冲击",def:"（n vi）冲击。",ex:"We should dash it carefully.",exZh:"我们应当认真地冲击。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vi。"},
+  {id:"hs-344",word:"date",ipa:"/dˈeɪt/",cat:"动词",zh:"日期，约会",def:"（n vi.vt）日期，约会。",ex:"We should date it carefully.",exZh:"我们应当认真地日期，约会。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vi.vt。"},
+  {id:"hs-345",word:"dawn",ipa:"/dˈɔn/",cat:"动词",zh:"黎明",def:"（n.vi）黎明。",ex:"We should dawn it carefully.",exZh:"我们应当认真地黎明。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vi。"},
+  {id:"hs-346",word:"deadline",ipa:"/dˈɛdlˌaɪn/",cat:"名词",zh:"最后期限",def:"（n）最后期限。",ex:"This is a deadline.",exZh:"这是一个最后期限。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-347",word:"debate",ipa:"/dəbˈeɪt/",cat:"名词",zh:"辩论",def:"（n）辩论。",ex:"This is a debate.",exZh:"这是一个辩论。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-348",word:"debt",ipa:"/dˈɛt/",cat:"名词",zh:"欠款",def:"（n）欠款。",ex:"This is a debt.",exZh:"这是一个欠款。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-349",word:"decay",ipa:"/dɪkˈeɪ/",cat:"动词",zh:"衰退",def:"（n vi）衰退。",ex:"We should decay it carefully.",exZh:"我们应当认真地衰退。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vi。"},
+  {id:"hs-350",word:"deceive",ipa:"/dɪsˈiv/",cat:"动词",zh:"欺骗",def:"（vt）欺骗。",ex:"We should deceive it carefully.",exZh:"我们应当认真地欺骗。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-351",word:"decent",ipa:"/dˈisənt/",cat:"形容词",zh:"得体的",def:"（adj）得体的。",ex:"It looks very decent.",exZh:"它看起来非常得体的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-352",word:"decision",ipa:"/dɪsˈɪʒən/",cat:"名词",zh:"决定",def:"（n）决定。",ex:"This is a decision.",exZh:"这是一个决定。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-353",word:"declare",ipa:"/dɪklˈɛr/",cat:"动词",zh:"声明",def:"（vt）声明。",ex:"We should declare it carefully.",exZh:"我们应当认真地声明。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-354",word:"decline",ipa:"/dɪklˈaɪn/",cat:"名词",zh:"拒绝",def:"（v.n）拒绝。",ex:"We should decline it carefully.",exZh:"我们应当认真地拒绝。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v.n。"},
+  {id:"hs-355",word:"decorate",ipa:"/dˈɛkɜˌeɪt/",cat:"动词",zh:"装饰",def:"（v）装饰。",ex:"We should decorate it carefully.",exZh:"我们应当认真地装饰。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-356",word:"defend",ipa:"/dɪfˈɛnd/",cat:"动词",zh:"防御",def:"（vt）防御。",ex:"We should defend it carefully.",exZh:"我们应当认真地防御。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-357",word:"define",ipa:"/dɪfˈaɪn/",cat:"动词",zh:"明确，界定",def:"（vt）明确，界定。",ex:"We should define it carefully.",exZh:"我们应当认真地明确，界定。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-358",word:"delay",ipa:"/dɪlˈeɪ/",cat:"动词",zh:"延时",def:"（n vi.vt）延时。",ex:"We should delay it carefully.",exZh:"我们应当认真地延时。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vi.vt。"},
+  {id:"hs-359",word:"definite",ipa:"/dˈɛfənət/",cat:"形容词",zh:"明确的",def:"（adj）明确的。",ex:"It looks very definite.",exZh:"它看起来非常明确的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-360",word:"delegate",ipa:"/dˈɛləgˌeɪt/",cat:"名词",zh:"代表",def:"（n）代表。",ex:"This is a delegate.",exZh:"这是一个代表。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-361",word:"deliberate",ipa:"/dɪlˈɪbɜət/",cat:"形容词",zh:"深思的",def:"（adj）深思的。",ex:"It looks very deliberate.",exZh:"它看起来非常深思的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-362",word:"delete",ipa:"/dɪlˈit/",cat:"动词",zh:"删除",def:"（vt）删除。",ex:"We should delete it carefully.",exZh:"我们应当认真地删除。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-363",word:"delicate",ipa:"/dˈɛləkət/",cat:"形容词",zh:"纤细的",def:"（adj）纤细的。",ex:"It looks very delicate.",exZh:"它看起来非常纤细的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-364",word:"delight",ipa:"/dɪlˈaɪt/",cat:"动词",zh:"使高兴",def:"（vt.n）使高兴。",ex:"We should delight it carefully.",exZh:"我们应当认真地使高兴。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-365",word:"delivery",ipa:"/dɪlˈɪvɜi/",cat:"名词",zh:"投递",def:"（n）投递。",ex:"This is a delivery.",exZh:"这是一个投递。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-366",word:"demanding",ipa:"/dɪmˈændɪŋ/",cat:"形容词",zh:"费力的",def:"（adj）费力的。",ex:"It looks very demanding.",exZh:"它看起来非常费力的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-367",word:"democracy",ipa:"/dɪmˈɑkrəsi/",cat:"名词",zh:"民主",def:"（n）民主。",ex:"This is a democracy.",exZh:"这是一个民主。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-368",word:"demonstrate",ipa:"/dˈɛmənstrˌeɪt/",cat:"动词",zh:"论证",def:"（vt. vi）论证。",ex:"We should demonstrate it carefully.",exZh:"我们应当认真地论证。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt. vi。"},
+  {id:"hs-369",word:"dense",ipa:"/dˈɛns/",cat:"形容词",zh:"稠密的",def:"（adj）稠密的。",ex:"It looks very dense.",exZh:"它看起来非常稠密的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-370",word:"deny",ipa:"/dɪnˈaɪ/",cat:"动词",zh:"否认",def:"（vt）否认。",ex:"We should deny it carefully.",exZh:"我们应当认真地否认。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-371",word:"depend",ipa:"/dɪpˈɛnd/",cat:"动词",zh:"依靠",def:"（vi）依靠。",ex:"We should depend it carefully.",exZh:"我们应当认真地依靠。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-372",word:"dependent",ipa:"/dɪpˈɛndənt/",cat:"形容词",zh:"依靠的",def:"（adj）依靠的。",ex:"It looks very dependent.",exZh:"它看起来非常依靠的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-373",word:"deposit",ipa:"/dəpˈɑzɪt/",cat:"动词",zh:"沉淀",def:"（vi.vt n）沉淀。",ex:"We should deposit it carefully.",exZh:"我们应当认真地沉淀。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi.vt n。"},
+  {id:"hs-374",word:"depress",ipa:"/dɪprˈɛs/",cat:"动词",zh:"使抑郁",def:"（vt）使抑郁。",ex:"We should depress it carefully.",exZh:"我们应当认真地使抑郁。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-375",word:"describe",ipa:"/dɪskrˈaɪb/",cat:"动词",zh:"描述",def:"（vt）描述。",ex:"We should describe it carefully.",exZh:"我们应当认真地描述。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-376",word:"description",ipa:"/dɪskrˈɪpʃən/",cat:"名词",zh:"描述",def:"（n）描述。",ex:"This is a description.",exZh:"这是一个描述。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-377",word:"desert",ipa:"/dˈɛzɜt/",cat:"动词",zh:"沙漠",def:"（n.vt）沙漠。",ex:"We should desert it carefully.",exZh:"我们应当认真地沙漠。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-378",word:"deserve",ipa:"/dɪzˈɜv/",cat:"动词",zh:"应该",def:"（vt）应该。",ex:"We should deserve it carefully.",exZh:"我们应当认真地应该。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-379",word:"design",ipa:"/dɪzˈaɪn/",cat:"动词",zh:"设计",def:"（vt.n）设计。",ex:"We should design it carefully.",exZh:"我们应当认真地设计。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-380",word:"desire",ipa:"/dɪzˈaɪɜ/",cat:"动词",zh:"渴望，要求",def:"（vt.n）渴望，要求。",ex:"We should desire it carefully.",exZh:"我们应当认真地渴望，要求。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-381",word:"despair",ipa:"/dɪspˈɛr/",cat:"动词",zh:"绝望",def:"（vt.n）绝望。",ex:"We should despair it carefully.",exZh:"我们应当认真地绝望。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-382",word:"desperate",ipa:"/dˈɛsprɪt/",cat:"形容词",zh:"不顾一切的",def:"（adj）不顾一切的。",ex:"It looks very desperate.",exZh:"它看起来非常不顾一切的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-383",word:"despite",ipa:"/dɪspˈaɪt/",cat:"介词",zh:"尽管",def:"（prep）尽管。",ex:"It is despite the desk.",exZh:"它在桌子尽管。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：prep。"},
+  {id:"hs-384",word:"dessert",ipa:"/dɪzˈɜt/",cat:"名词",zh:"甜食",def:"（n）甜食。",ex:"This is a dessert.",exZh:"这是一个甜食。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-385",word:"destination",ipa:"/dˌɛstənˈeɪʃən/",cat:"名词",zh:"目的地",def:"（n）目的地。",ex:"This is a destination.",exZh:"这是一个目的地。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-386",word:"destruction",ipa:"/dɪstrˈʌkʃən/",cat:"名词",zh:"破坏",def:"（n）破坏。",ex:"This is a destruction.",exZh:"这是一个破坏。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-387",word:"detective",ipa:"/dɪtˈɛktɪv/",cat:"形容词",zh:"侦探",def:"（adj.n）侦探。",ex:"It looks very detective.",exZh:"它看起来非常侦探。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.n。"},
+  {id:"hs-388",word:"determination",ipa:"/dɪtˌɜmənˈeɪʃən/",cat:"名词",zh:"决心",def:"（n）决心。",ex:"This is a determination.",exZh:"这是一个决心。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-389",word:"determine",ipa:"/dətˈɜmən/",cat:"动词",zh:"决定",def:"（vt.vi）决定。",ex:"We should determine it carefully.",exZh:"我们应当认真地决定。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-390",word:"develop",ipa:"/dɪvˈɛləp/",cat:"动词",zh:"发展，开发",def:"（vt.vi）发展，开发。",ex:"We should develop it carefully.",exZh:"我们应当认真地发展，开发。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-391",word:"device",ipa:"/dɪvˈaɪs/",cat:"名词",zh:"装置",def:"（n）装置。",ex:"This is a device.",exZh:"这是一个装置。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-392",word:"devote",ipa:"/dɪvˈoʊt/",cat:"动词",zh:"奉献",def:"（vt）奉献。",ex:"We should devote it carefully.",exZh:"我们应当认真地奉献。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-393",word:"diagnose",ipa:"/dˌaɪəgnˈoʊs/",cat:"动词",zh:"诊断病情",def:"（vt）诊断病情。",ex:"We should diagnose it carefully.",exZh:"我们应当认真地诊断病情。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-394",word:"dialect",ipa:"/dˈaɪəlˌɛkt/",cat:"名词",zh:"方言，口音",def:"（n）方言，口音。",ex:"This is a dialect.",exZh:"这是一个方言，口音。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-395",word:"differ",ipa:"/dˈɪfɜ/",cat:"动词",zh:"相异",def:"（vi）相异。",ex:"We should differ it carefully.",exZh:"我们应当认真地相异。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-396",word:"digest",ipa:"/daɪdʒˈɛst/",cat:"动词",zh:"吸收",def:"（vi.n）吸收。",ex:"We should digest it carefully.",exZh:"我们应当认真地吸收。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi.n。"},
+  {id:"hs-397",word:"digital",ipa:"/dˈɪdʒətəl/",cat:"形容词",zh:"数字的",def:"（adj）数字的。",ex:"It looks very digital.",exZh:"它看起来非常数字的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-398",word:"dignity",ipa:"/dˈɪgnəti/",cat:"名词",zh:"尊严",def:"（n）尊严。",ex:"This is a dignity.",exZh:"这是一个尊严。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-399",word:"diligent",ipa:"/dˈɪlɪdʒənt/",cat:"形容词",zh:"勤奋的",def:"（adj）勤奋的。",ex:"It looks very diligent.",exZh:"它看起来非常勤奋的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-400",word:"dim",ipa:"/dˈɪm/",cat:"形容词",zh:"暗淡的",def:"（adj）暗淡的。",ex:"It looks very dim.",exZh:"它看起来非常暗淡的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-401",word:"dinosaur",ipa:"/dˈaɪnəsˌɔr/",cat:"名词",zh:"恐龙",def:"（n）恐龙。",ex:"This is a dinosaur.",exZh:"这是一个恐龙。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-402",word:"dip",ipa:"/dˈɪp/",cat:"动词",zh:"浸",def:"（vt）浸。",ex:"We should dip it carefully.",exZh:"我们应当认真地浸。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-403",word:"diploma",ipa:"/dɪplˈoʊmɑ/",cat:"名词",zh:"毕业文凭，奖状，证书",def:"（n）毕业文凭，奖状，证书。",ex:"This is a diploma.",exZh:"这是一个毕业文凭，奖状，证书。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-404",word:"diplomat",ipa:"/dˈɪpləmˌæt/",cat:"名词",zh:"外交官",def:"（n）外交官。",ex:"This is a diplomat.",exZh:"这是一个外交官。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-405",word:"disagreeable",ipa:"/dˌɪsəgrˈiəbəl/",cat:"形容词",zh:"反感的，不愉快的，难相处的",def:"（adj）反感的，不愉快的，难相处的。",ex:"It looks very disagreeable.",exZh:"它看起来非常反感的，不愉快的，难相处的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-406",word:"disappear",ipa:"/dˌɪsəpˈɪr/",cat:"动词",zh:"消失",def:"（vi）消失。",ex:"We should disappear it carefully.",exZh:"我们应当认真地消失。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-407",word:"disappoint",ipa:"/dˌɪsəpˈɔɪnt/",cat:"动词",zh:"使失望",def:"（vt）使失望。",ex:"We should disappoint it carefully.",exZh:"我们应当认真地使失望。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-408",word:"disapprove",ipa:"/dˌɪsəprˈuv/",cat:"动词",zh:"不赞成",def:"（v）不赞成。",ex:"We should disapprove it carefully.",exZh:"我们应当认真地不赞成。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-409",word:"discipline",ipa:"/dˈɪsəplən/",cat:"动词",zh:"纪律，训练，惩罚",def:"（vt. n）纪律，训练，惩罚。",ex:"We should discipline it carefully.",exZh:"我们应当认真地纪律，训练，惩罚。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt. n。"},
+  {id:"hs-410",word:"discount",ipa:"/dɪskˈaʊnt/",cat:"动词",zh:"折扣",def:"（vt.vi n）折扣。",ex:"We should discount it carefully.",exZh:"我们应当认真地折扣。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi n。"},
+  {id:"hs-411",word:"discourage",ipa:"/dɪskˈɜɪdʒ/",cat:"动词",zh:"阻止，使泄气",def:"（vt）阻止，使泄气。",ex:"We should discourage it carefully.",exZh:"我们应当认真地阻止，使泄气。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-412",word:"dismiss",ipa:"/dɪsmˈɪs/",cat:"动词",zh:"解雇，解散",def:"（vt vi）解雇，解散。",ex:"We should dismiss it carefully.",exZh:"我们应当认真地解雇，解散。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt vi。"},
+  {id:"hs-413",word:"disorder",ipa:"/dɪsˈɔrdɜ/",cat:"名词",zh:"混乱",def:"（n）混乱。",ex:"This is a disorder.",exZh:"这是一个混乱。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-414",word:"display",ipa:"/dɪsplˈeɪ/",cat:"名词",zh:"展示",def:"（n.v）展示。",ex:"This is a display.",exZh:"这是一个展示。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-415",word:"dissolve",ipa:"/dɪzˈɑlv/",cat:"动词",zh:"使溶解",def:"（v）使溶解。",ex:"We should dissolve it carefully.",exZh:"我们应当认真地使溶解。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-416",word:"distant",ipa:"/dˈɪstənt/",cat:"形容词",zh:"远的",def:"（adj）远的。",ex:"It looks very distant.",exZh:"它看起来非常远的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-417",word:"distinct",ipa:"/dɪstˈɪŋkt/",cat:"形容词",zh:"不同的",def:"（adj）不同的。",ex:"It looks very distinct.",exZh:"它看起来非常不同的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-418",word:"distinguish",ipa:"/dɪstˈɪŋgwɪʃ/",cat:"动词",zh:"区分",def:"（vt）区分。",ex:"We should distinguish it carefully.",exZh:"我们应当认真地区分。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-419",word:"distract",ipa:"/dɪstrˈækt/",cat:"动词",zh:"转移注意力",def:"（vt）转移注意力。",ex:"We should distract it carefully.",exZh:"我们应当认真地转移注意力。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-420",word:"distribute",ipa:"/dɪstrˈɪbjut/",cat:"动词",zh:"分发",def:"（vt）分发。",ex:"We should distribute it carefully.",exZh:"我们应当认真地分发。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-421",word:"disturb",ipa:"/dɪstˈɜb/",cat:"动词",zh:"扰乱",def:"（vt）扰乱。",ex:"We should disturb it carefully.",exZh:"我们应当认真地扰乱。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-422",word:"divide",ipa:"/dɪvˈaɪd/",cat:"动词",zh:"分开",def:"（vt）分开。",ex:"We should divide it carefully.",exZh:"我们应当认真地分开。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-423",word:"divorce",ipa:"/dɪvˈɔrs/",cat:"动词",zh:"离婚",def:"（vt vi.n）离婚。",ex:"We should divorce it carefully.",exZh:"我们应当认真地离婚。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt vi.n。"},
+  {id:"hs-424",word:"dizzy",ipa:"/dˈɪzi/",cat:"形容词",zh:"头晕的",def:"（adj）头晕的。",ex:"It looks very dizzy.",exZh:"它看起来非常头晕的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-425",word:"document",ipa:"/dˈɑkjəmɛnt/",cat:"名词",zh:"文书",def:"（n）文书。",ex:"This is a document.",exZh:"这是一个文书。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-426",word:"domestic",ipa:"/dəmˈɛstɪk/",cat:"形容词",zh:"国内的",def:"（adj）国内的。",ex:"It looks very domestic.",exZh:"它看起来非常国内的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-427",word:"dominant",ipa:"/dˈɑmənənt/",cat:"形容词",zh:"支配的",def:"（adj）支配的。",ex:"It looks very dominant.",exZh:"它看起来非常支配的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-428",word:"dominate",ipa:"/dˈɑmənˌeɪt/",cat:"动词",zh:"支配",def:"（vt.vi）支配。",ex:"We should dominate it carefully.",exZh:"我们应当认真地支配。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-429",word:"donate",ipa:"/dˈoʊnˌeɪt/",cat:"动词",zh:"捐赠",def:"（vt）捐赠。",ex:"We should donate it carefully.",exZh:"我们应当认真地捐赠。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-430",word:"doubt",ipa:"/dˈaʊt/",cat:"动词",zh:"怀疑",def:"（vt.n）怀疑。",ex:"We should doubt it carefully.",exZh:"我们应当认真地怀疑。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-431",word:"dozen",ipa:"/dˈʌzən/",cat:"名词",zh:"一打",def:"（n）一打。",ex:"This is a dozen.",exZh:"这是一个一打。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-432",word:"draft",ipa:"/drˈæft/",cat:"名词",zh:"草稿",def:"（n.v）草稿。",ex:"This is a draft.",exZh:"这是一个草稿。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-433",word:"drag",ipa:"/drˈæg/",cat:"动词",zh:"拖拉",def:"（vt.vi）拖拉。",ex:"We should drag it carefully.",exZh:"我们应当认真地拖拉。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-434",word:"drain",ipa:"/drˈeɪn/",cat:"名词",zh:"排水",def:"（n.v）排水。",ex:"This is a drain.",exZh:"这是一个排水。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.v。"},
+  {id:"hs-435",word:"dramatic",ipa:"/drəmˈætɪk/",cat:"形容词",zh:"戏剧性的",def:"（adj）戏剧性的。",ex:"It looks very dramatic.",exZh:"它看起来非常戏剧性的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-436",word:"dress",ipa:"/drˈɛs/",cat:"动词",zh:"连衣裙",def:"（n vt.vi）连衣裙。",ex:"We should dress it carefully.",exZh:"我们应当认真地连衣裙。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt.vi。"},
+  {id:"hs-437",word:"drift",ipa:"/drˈɪft/",cat:"动词",zh:"漂流",def:"（vi n）漂流。",ex:"We should drift it carefully.",exZh:"我们应当认真地漂流。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi n。"},
+  {id:"hs-438",word:"drip",ipa:"/drˈɪp/",cat:"动词",zh:"滴下",def:"（vi.n）滴下。",ex:"We should drip it carefully.",exZh:"我们应当认真地滴下。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi.n。"},
+  {id:"hs-439",word:"drown",ipa:"/drˈaʊn/",cat:"动词",zh:"淹没",def:"（v）淹没。",ex:"We should drown it carefully.",exZh:"我们应当认真地淹没。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-440",word:"due",ipa:"/dˈu/",cat:"形容词",zh:"到期的",def:"（adj）到期的。",ex:"It looks very due.",exZh:"它看起来非常到期的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-441",word:"dump",ipa:"/dˈʌmp/",cat:"动词",zh:"扔下",def:"（vt）扔下。",ex:"We should dump it carefully.",exZh:"我们应当认真地扔下。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-442",word:"dusk",ipa:"/dˈʌsk/",cat:"名词",zh:"黄昏",def:"（n）黄昏。",ex:"This is a dusk.",exZh:"这是一个黄昏。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-443",word:"dye",ipa:"/dˈaɪ/",cat:"动词",zh:"染料",def:"（n vt.vi）染料。",ex:"We should dye it carefully.",exZh:"我们应当认真地染料。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt.vi。"},
+  {id:"hs-444",word:"dynasty",ipa:"/dˈaɪnəsti/",cat:"名词",zh:"朝代，王朝",def:"（n）朝代，王朝。",ex:"This is a dynasty.",exZh:"这是一个朝代，王朝。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-445",word:"earnest",ipa:"/ˈɜnɪst/",cat:"形容词",zh:"认真的",def:"（adj）认真的。",ex:"It looks very earnest.",exZh:"它看起来非常认真的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-446",word:"ease",ipa:"/ˈiz/",cat:"动词",zh:"安逸，减轻",def:"（n vt）安逸，减轻。",ex:"We should ease it carefully.",exZh:"我们应当认真地安逸，减轻。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n vt。"},
+  {id:"hs-447",word:"ecology",ipa:"/ɪkˈɑlədʒi/",cat:"名词",zh:"生态",def:"（n）生态。",ex:"This is a ecology.",exZh:"这是一个生态。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-448",word:"economic",ipa:"/ˌɛkənˈɑmɪk/",cat:"形容词",zh:"经济的",def:"（adj）经济的。",ex:"It looks very economic.",exZh:"它看起来非常经济的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-449",word:"economical",ipa:"/ˌɛkənˈɑmɪkəl/",cat:"形容词",zh:"节约的",def:"（adj）节约的。",ex:"It looks very economical.",exZh:"它看起来非常节约的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-450",word:"economy",ipa:"/ɪkˈɑnəmi/",cat:"名词",zh:"经济",def:"（n）经济。",ex:"This is a economy.",exZh:"这是一个经济。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-451",word:"economics",ipa:"/ˌɛkənˈɑmɪks/",cat:"名词",zh:"经济学",def:"（n）经济学。",ex:"This is a economics.",exZh:"这是一个经济学。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-452",word:"ecosystem",ipa:"/ˈikoʊsˌɪstəm/",cat:"名词",zh:"生态系统",def:"（n）生态系统。",ex:"This is a ecosystem.",exZh:"这是一个生态系统。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-453",word:"edge",ipa:"/ˈɛdʒ/",cat:"名词",zh:"边缘",def:"（n）边缘。",ex:"This is a edge.",exZh:"这是一个边缘。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-454",word:"edit",ipa:"/ˈɛdət/",cat:"动词",zh:"编辑",def:"（vt）编辑。",ex:"We should edit it carefully.",exZh:"我们应当认真地编辑。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-455",word:"editorial",ipa:"/ˌɛdətˈɔriəl/",cat:"形容词",zh:"社论的",def:"（adj.n）社论的。",ex:"It looks very editorial.",exZh:"它看起来非常社论的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj.n。"},
+  {id:"hs-456",word:"elect",ipa:"/ɪlˈɛkt/",cat:"动词",zh:"选举",def:"（vt）选举。",ex:"We should elect it carefully.",exZh:"我们应当认真地选举。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-457",word:"electrician",ipa:"/ɪlɛktrˈɪʃən/",cat:"名词",zh:"电工",def:"（n）电工。",ex:"This is a electrician.",exZh:"这是一个电工。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-458",word:"electronic",ipa:"/ˌɪlˌɛktrˈɑnɪk/",cat:"形容词",zh:"电子的",def:"（adj）电子的。",ex:"It looks very electronic.",exZh:"它看起来非常电子的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-459",word:"elegant",ipa:"/ˈɛləgənt/",cat:"形容词",zh:"优美的",def:"（adj）优美的。",ex:"It looks very elegant.",exZh:"它看起来非常优美的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-460",word:"element",ipa:"/ˈɛləmənt/",cat:"名词",zh:"元素",def:"（n）元素。",ex:"This is a element.",exZh:"这是一个元素。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-461",word:"elementary",ipa:"/ˌɛləmˈɛntri/",cat:"形容词",zh:"初级的",def:"（adj）初级的。",ex:"It looks very elementary.",exZh:"它看起来非常初级的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-462",word:"elevate",ipa:"/ˈɛləvˌeɪt/",cat:"动词",zh:"提升",def:"（vt）提升。",ex:"We should elevate it carefully.",exZh:"我们应当认真地提升。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-463",word:"eliminate",ipa:"/ɪlˈɪmənˌeɪt/",cat:"动词",zh:"消除",def:"（vt）消除。",ex:"We should eliminate it carefully.",exZh:"我们应当认真地消除。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-464",word:"embarrass",ipa:"/ɪmbˈɛrəs/",cat:"动词",zh:"使尴尬",def:"（vt）使尴尬。",ex:"We should embarrass it carefully.",exZh:"我们应当认真地使尴尬。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-465",word:"emerge",ipa:"/ɪmˈɜdʒ/",cat:"动词",zh:"出现",def:"（vi）出现。",ex:"We should emerge it carefully.",exZh:"我们应当认真地出现。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi。"},
+  {id:"hs-466",word:"emergency",ipa:"/ɪmˈɜdʒənsi/",cat:"名词",zh:"突发事件",def:"（n）突发事件。",ex:"This is a emergency.",exZh:"这是一个突发事件。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-467",word:"emission",ipa:"/ɪmˈɪʃən/",cat:"名词",zh:"发出",def:"（n）发出。",ex:"This is a emission.",exZh:"这是一个发出。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-468",word:"emit",ipa:"/ɪmˈɪt/",cat:"动词",zh:"发出",def:"（vt）发出。",ex:"We should emit it carefully.",exZh:"我们应当认真地发出。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-469",word:"emotion",ipa:"/ɪmˈoʊʃən/",cat:"名词",zh:"情绪",def:"（n）情绪。",ex:"This is a emotion.",exZh:"这是一个情绪。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-470",word:"emphasis",ipa:"/ˈɛmfəsəs/",cat:"名词",zh:"强调",def:"（n）强调。",ex:"This is a emphasis.",exZh:"这是一个强调。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-471",word:"emphasize",ipa:"/ˈɛmfəsˌaɪz/",cat:"动词",zh:"强调",def:"（vt）强调。",ex:"We should emphasize it carefully.",exZh:"我们应当认真地强调。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-472",word:"employ",ipa:"/ɛmplˈɔɪ/",cat:"动词",zh:"使用",def:"（vt）使用。",ex:"We should employ it carefully.",exZh:"我们应当认真地使用。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-473",word:"enclose",ipa:"/ɪnklˈoʊz/",cat:"动词",zh:"包住",def:"（vt）包住。",ex:"We should enclose it carefully.",exZh:"我们应当认真地包住。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-474",word:"encounter",ipa:"/ɪnkˈaʊntɜ/",cat:"动词",zh:"遭遇",def:"（vt n）遭遇。",ex:"We should encounter it carefully.",exZh:"我们应当认真地遭遇。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt n。"},
+  {id:"hs-475",word:"endurance",ipa:"/ˈɛndɜəns/",cat:"名词",zh:"耐性",def:"（n）耐性。",ex:"This is a endurance.",exZh:"这是一个耐性。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-476",word:"endure",ipa:"/ɛndjˈʊr/",cat:"动词",zh:"忍受",def:"（vt.vi）忍受。",ex:"We should endure it carefully.",exZh:"我们应当认真地忍受。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-477",word:"energetic",ipa:"/ˌɛnɜdʒˈɛtɪk/",cat:"形容词",zh:"精力充沛的",def:"（adj）精力充沛的。",ex:"It looks very energetic.",exZh:"它看起来非常精力充沛的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-478",word:"energize",ipa:"/ˈɛnɜdʒˌaɪz/",cat:"动词",zh:"使活动",def:"（vt）使活动。",ex:"We should energize it carefully.",exZh:"我们应当认真地使活动。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-479",word:"engage",ipa:"/ɛngˈeɪdʒ/",cat:"动词",zh:"订婚，参与",def:"（vi vt）订婚，参与。",ex:"We should engage it carefully.",exZh:"我们应当认真地订婚，参与。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vi vt。"},
+  {id:"hs-480",word:"enhance",ipa:"/ɛnhˈæns/",cat:"动词",zh:"增加",def:"（vt）增加。",ex:"We should enhance it carefully.",exZh:"我们应当认真地增加。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-481",word:"enlarge",ipa:"/ˌɛnlˈɑrdʒ/",cat:"动词",zh:"扩大",def:"（vt）扩大。",ex:"We should enlarge it carefully.",exZh:"我们应当认真地扩大。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-482",word:"enroll",ipa:"/ɛnrˈoʊl/",cat:"动词",zh:"招生",def:"（vt.vi）招生。",ex:"We should enroll it carefully.",exZh:"我们应当认真地招生。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi。"},
+  {id:"hs-483",word:"ensure",ipa:"/ɛnʃˈʊr/",cat:"动词",zh:"保证",def:"（vt）保证。",ex:"We should ensure it carefully.",exZh:"我们应当认真地保证。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-484",word:"enter for",ipa:"/ˈentə fɔː(r)/",cat:"短语",zh:"报名参加",def:"（短语）报名参加。",ex:"Please learn the phrase \"enter for\".",exZh:"请记住短语“报名参加”。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：固定表达。"},
+  {id:"hs-485",word:"enterprise",ipa:"/ˈɛntɜprˌaɪz/",cat:"名词",zh:"企业",def:"（n）企业。",ex:"This is a enterprise.",exZh:"这是一个企业。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-486",word:"entertain",ipa:"/ˌɛntɜtˈeɪn/",cat:"动词",zh:"快乐",def:"（vt）快乐。",ex:"We should entertain it carefully.",exZh:"我们应当认真地快乐。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-487",word:"entertaining",ipa:"/ˌɛntɜtˈeɪnɪŋ/",cat:"形容词",zh:"有趣的",def:"（adj）有趣的。",ex:"It looks very entertaining.",exZh:"它看起来非常有趣的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-488",word:"entertainment",ipa:"/ˌɛntɜtˈeɪnmənt/",cat:"名词",zh:"娱乐",def:"（n）娱乐。",ex:"This is a entertainment.",exZh:"这是一个娱乐。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-489",word:"enthusiastic",ipa:"/ɪnθˌuziˈæstɪk/",cat:"形容词",zh:"热心的",def:"（adj）热心的。",ex:"It looks very enthusiastic.",exZh:"它看起来非常热心的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-490",word:"enthusiasm",ipa:"/ɪnθˈuziˌæzəm/",cat:"名词",zh:"热心",def:"（n）热心。",ex:"This is a enthusiasm.",exZh:"这是一个热心。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-491",word:"entitle",ipa:"/ɛntˈaɪtəl/",cat:"动词",zh:"给…权利",def:"（vt）给…权利。",ex:"We should entitle it carefully.",exZh:"我们应当认真地给…权利。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-492",word:"entry",ipa:"/ˈɛntri/",cat:"名词",zh:"进入",def:"（n）进入。",ex:"This is a entry.",exZh:"这是一个进入。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-493",word:"envy",ipa:"/ˈɛnvi/",cat:"动词",zh:"羡慕",def:"（vt.n）羡慕。",ex:"We should envy it carefully.",exZh:"我们应当认真地羡慕。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-494",word:"equivalent",ipa:"/ɪkwˈɪvələnt/",cat:"形容词",zh:"相等的",def:"（adj）相等的。",ex:"It looks very equivalent.",exZh:"它看起来非常相等的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-495",word:"erase",ipa:"/ɪrˈeɪs/",cat:"动词",zh:"抹去",def:"（v）抹去。",ex:"We should erase it carefully.",exZh:"我们应当认真地抹去。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-496",word:"escalator",ipa:"/ˈɛskəlˌeɪtɜ/",cat:"名词",zh:"自动扶梯",def:"（n）自动扶梯。",ex:"This is a escalator.",exZh:"这是一个自动扶梯。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-497",word:"essential",ipa:"/ɛsˈɛnʃəl/",cat:"形容词",zh:"必要的",def:"（adj）必要的。",ex:"It looks very essential.",exZh:"它看起来非常必要的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-498",word:"establish",ipa:"/ɪstˈæblɪʃ/",cat:"动词",zh:"创办",def:"（vt）创办。",ex:"We should establish it carefully.",exZh:"我们应当认真地创办。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-499",word:"estimate",ipa:"/ˈɛstəmət/",cat:"动词",zh:"估计",def:"（vt.n）估计。",ex:"We should estimate it carefully.",exZh:"我们应当认真地估计。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.n。"},
+  {id:"hs-500",word:"evaluate",ipa:"/ɪvˈæljuˌeɪt/",cat:"动词",zh:"评价",def:"（v）评价。",ex:"We should evaluate it carefully.",exZh:"我们应当认真地评价。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-501",word:"eventual",ipa:"/əvˈɛntʃuəl/",cat:"形容词",zh:"最后的",def:"（adj）最后的。",ex:"It looks very eventual.",exZh:"它看起来非常最后的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-502",word:"evidence",ipa:"/ˈɛvədəns/",cat:"名词",zh:"证明书，证据",def:"（n）证明书，证据。",ex:"This is a evidence.",exZh:"这是一个证明书，证据。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-503",word:"evident",ipa:"/ˈɛvədənt/",cat:"形容词",zh:"明显的",def:"（adj）明显的。",ex:"It looks very evident.",exZh:"它看起来非常明显的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-504",word:"evil",ipa:"/ˈivəl/",cat:"形容词",zh:"罪恶",def:"（n.adj）罪恶。",ex:"It looks very evil.",exZh:"它看起来非常罪恶。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-505",word:"evolution",ipa:"/ˌɛvəlˈuʃən/",cat:"名词",zh:"进化",def:"（n）进化。",ex:"This is a evolution.",exZh:"这是一个进化。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-506",word:"evolve",ipa:"/ɪvˈɑlv/",cat:"动词",zh:"演化",def:"（v）演化。",ex:"We should evolve it carefully.",exZh:"我们应当认真地演化。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-507",word:"exclude",ipa:"/ɪksklˈud/",cat:"动词",zh:"不包括",def:"（vt）不包括。",ex:"We should exclude it carefully.",exZh:"我们应当认真地不包括。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-508",word:"excursion",ipa:"/ɪkskˈɜʒən/",cat:"名词",zh:"远足",def:"（n）远足。",ex:"This is a excursion.",exZh:"这是一个远足。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-509",word:"executive",ipa:"/ɪgzˈɛkjətɪv/",cat:"形容词",zh:"执行的",def:"（adj n）执行的。",ex:"It looks very executive.",exZh:"它看起来非常执行的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj n。"},
+  {id:"hs-510",word:"exhaust",ipa:"/ɪgzˈɔst/",cat:"动词",zh:"耗尽",def:"（vt.vi n）耗尽。",ex:"We should exhaust it carefully.",exZh:"我们应当认真地耗尽。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt.vi n。"},
+  {id:"hs-511",word:"exhibit",ipa:"/ɪgzˈɪbɪt/",cat:"动词",zh:"展品",def:"（n.vt）展品。",ex:"We should exhibit it carefully.",exZh:"我们应当认真地展品。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.vt。"},
+  {id:"hs-512",word:"exit",ipa:"/ˈɛgzɪt/",cat:"名词",zh:"出口",def:"（n）出口。",ex:"This is a exit.",exZh:"这是一个出口。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-513",word:"existence",ipa:"/ɛgzˈɪstəns/",cat:"名词",zh:"存在",def:"（n）存在。",ex:"This is a existence.",exZh:"这是一个存在。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-514",word:"expand",ipa:"/ɪkspˈænd/",cat:"动词",zh:"扩大",def:"（v）扩大。",ex:"We should expand it carefully.",exZh:"我们应当认真地扩大。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-515",word:"expense",ipa:"/ɪkspˈɛns/",cat:"名词",zh:"代价，费用",def:"（n）代价，费用。",ex:"This is a expense.",exZh:"这是一个代价，费用。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-516",word:"explode",ipa:"/ɪksplˈoʊd/",cat:"动词",zh:"爆炸",def:"（v）爆炸。",ex:"We should explode it carefully.",exZh:"我们应当认真地爆炸。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-517",word:"explosive",ipa:"/ɪksplˈoʊsɪv/",cat:"形容词",zh:"爆炸的",def:"（n.adj）爆炸的。",ex:"It looks very explosive.",exZh:"它看起来非常爆炸的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n.adj。"},
+  {id:"hs-518",word:"exploit",ipa:"/ˈɛksplˌɔɪt/",cat:"动词",zh:"利用，功绩",def:"（vt n）利用，功绩。",ex:"We should exploit it carefully.",exZh:"我们应当认真地利用，功绩。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt n。"},
+  {id:"hs-519",word:"explore",ipa:"/ɪksplˈɔr/",cat:"动词",zh:"探索",def:"（vt）探索。",ex:"We should explore it carefully.",exZh:"我们应当认真地探索。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-520",word:"export",ipa:"/ˈɛkspɔrt/",cat:"名词",zh:"出口",def:"（n）出口。",ex:"This is a export.",exZh:"这是一个出口。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-521",word:"expose",ipa:"/ɪkspˈoʊz/",cat:"动词",zh:"暴露",def:"（vt）暴露。",ex:"We should expose it carefully.",exZh:"我们应当认真地暴露。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-522",word:"extend",ipa:"/ɪkstˈɛnd/",cat:"动词",zh:"延长",def:"（v）延长。",ex:"We should extend it carefully.",exZh:"我们应当认真地延长。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：v。"},
+  {id:"hs-523",word:"extensive",ipa:"/ɪkstˈɛnsɪv/",cat:"形容词",zh:"广泛的",def:"（adj）广泛的。",ex:"It looks very extensive.",exZh:"它看起来非常广泛的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-524",word:"extent",ipa:"/ɪkstˈɛnt/",cat:"名词",zh:"度",def:"（n）度。",ex:"This is a extent.",exZh:"这是一个度。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：n。"},
+  {id:"hs-525",word:"external",ipa:"/ɪkstˈɜnəl/",cat:"形容词",zh:"外面的",def:"（adj）外面的。",ex:"It looks very external.",exZh:"它看起来非常外面的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-526",word:"extinct",ipa:"/ɪkstˈɪŋkt/",cat:"形容词",zh:"灭绝的",def:"（adj）灭绝的。",ex:"It looks very extinct.",exZh:"它看起来非常灭绝的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+  {id:"hs-527",word:"extinguish",ipa:"/ɪkstˈɪŋgwɪʃ/",cat:"动词",zh:"扑灭",def:"（vt）扑灭。",ex:"We should extinguish it carefully.",exZh:"我们应当认真地扑灭。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：vt。"},
+  {id:"hs-528",word:"extraordinary",ipa:"/ˌɛkstrəˈɔrdənˌɛri/",cat:"形容词",zh:"特别的",def:"（adj）特别的。",ex:"It looks very extraordinary.",exZh:"它看起来非常特别的。",ety:"高中必考词汇，建议结合词根词缀与例句记忆。",ext:"注意词性与常见搭配：adj。"},
+];
+
+const EXTRA = {
+  "we":{word:"we",ipa:"/wiː/",zh:"我们",note:""},
+  "should":{word:"should",ipa:"/ʃʊd/",zh:"应该",note:""},
+  "it":{word:"it",ipa:"/ɪt/",zh:"它",note:""},
+  "carefully":{word:"carefully",ipa:"/ˈkeəfəli/",zh:"认真地",note:"careful 的副词"},
+  "this":{word:"this",ipa:"/ðɪs/",zh:"这个",note:""},
+  "is":{word:"is",ipa:"/ɪz/",zh:"是",note:"be 动词第三人称单数"},
+  "a":{word:"a",ipa:"/ə/",zh:"一个",note:"不定冠词"},
+  "looks":{word:"look",ipa:"/lʊks/",zh:"看起来",note:"looks 是第三人称单数"},
+  "very":{word:"very",ipa:"/ˈveri/",zh:"非常",note:""},
+  "he":{word:"he",ipa:"/hiː/",zh:"他",note:""},
+  "spoke":{word:"speak",ipa:"/spəʊk/",zh:"说话",note:"spoke 是过去式"},
+  "to":{word:"to",ipa:"/tuː/",zh:"向，到",note:""},
+  "me":{word:"me",ipa:"/miː/",zh:"我（宾格）",note:""},
+  "the":{word:"the",ipa:"/ðə/",zh:"这个，那个",note:"定冠词"},
+  "desk":{word:"desk",ipa:"/desk/",zh:"书桌",note:""},
+  "please":{word:"please",ipa:"/pliːz/",zh:"请",note:""},
+  "learn":{word:"learn",ipa:"/lɜːn/",zh:"学习",note:""},
+  "phrase":{word:"phrase",ipa:"/freɪz/",zh:"短语",note:""},
+  "today":{word:"today",ipa:"/təˈdeɪ/",zh:"今天",note:""},
+  "word":{word:"word",ipa:"/wɜːd/",zh:"单词",note:""},
+};
+
+const KEY = "eng-highschool.v1";
+const INTERVALS = [10, 1440, 2880, 5760, 10080, 21600, 43200, 86400];
+const INTERVAL_TEXT = ["10 分钟", "1 天", "2 天", "4 天", "7 天", "15 天", "30 天", "60 天"];
+const defaults = () => ({custom:[],removed:[],progress:{},theme:"dawn",accent:"#2563eb",voice:"en-US",mode:"study",category:"全部",query:"",sort:"default",onlyDue:false,index:0,batchSize:10,batchStart:0});
+
+function loadState(){
+  try {
+    const raw = JSON.parse(localStorage.getItem(KEY));
+    if (raw && typeof raw === "object") {
+      const s = Object.assign(defaults(), raw);
+      if (!Array.isArray(s.custom)) s.custom = [];
+      if (!Array.isArray(s.removed)) s.removed = [];
+      if (!s.progress || typeof s.progress !== "object") s.progress = {};
+      if (["list", "browse", "card", "recite"].includes(s.mode)) s.mode = "study";
+      if (s.mode !== "study" && s.mode !== "manage") s.mode = "study";
+      if (![5,10,20,0].includes(Number(s.batchSize))) s.batchSize = 10;
+      s.batchSize = Number(s.batchSize);
+      s.batchStart = Math.max(0, Number(s.batchStart) || 0);
+      return s;
+    }
+  } catch(e) {}
+  return defaults();
+}
+let state = loadState();
+let DICT = {};
+let toastTimer;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {} };
+
+function catalog(){
+  return BASE_WORDS.concat(state.custom).filter(w => !state.removed.includes(w.id));
+}
+function buildDict(){
+  const m = {};
+  catalog().forEach(w => { m[w.word.toLowerCase()] = {word:w.word,ipa:w.ipa,zh:w.zh,note:""}; });
+  Object.keys(EXTRA).forEach(k => { if (!m[k]) m[k] = EXTRA[k]; });
+  return m;
+}
+function progressOf(w){ return state.progress[w.id] || null; }
+function levelOf(w){ return progressOf(w) ? (progressOf(w).level || 0) : -1; }
+function isDue(w){ const p = progressOf(w); return !p || (p.due || 0) <= Date.now(); }
+function dueLabel(w){
+  const p = progressOf(w);
+  if (!p) return "新词";
+  if (p.due <= Date.now()) return "待复习";
+  const d = new Date(p.due);
+  const today = new Date();
+  const sameDay = d.toDateString() === today.toDateString();
+  const time = String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
+  return sameDay ? ("下次 " + time) : ("下次 " + (d.getMonth()+1) + "/" + d.getDate());
+}
+function toast(msg){
+  const el = $("#toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2000);
+}
+
+function speak(text){
+  text = String(text || "").trim();
+  if (!text) return;
+  if (!("speechSynthesis" in window)) { toast("当前浏览器不支持语音朗读"); return; }
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = state.voice;
+    u.rate = 0.85;
+    const voices = window.speechSynthesis.getVoices();
+    const exact = voices.find(v => v.lang && v.lang.replace("_","-").toLowerCase() === state.voice.toLowerCase());
+    const near = exact || voices.find(v => v.lang && v.lang.toLowerCase().startsWith(state.voice.slice(0,2)));
+    if (near) u.voice = near;
+    window.speechSynthesis.speak(u);
+    toast("正在朗读：" + text);
+  } catch(e) { toast("朗读失败，请检查浏览器语音设置"); }
+}
+
+function exampleHtml(text){
+  return String(text || "").split(/([A-Za-z]+)/).map(part => {
+    if (/^[A-Za-z]+$/.test(part)) {
+      const key = part.toLowerCase();
+      if (DICT[key]) return '<span class="hit" data-k="' + key + '" tabindex="0" role="button" title="点击查看意思和发音">' + esc(part) + '</span>';
+    }
+    return esc(part);
+  }).join("");
+}
+
+function filtered(ignoreDue){
+  let list = catalog();
+  if (state.category !== "全部") list = list.filter(w => w.cat === state.category);
+  if (state.query) {
+    const q = state.query.toLowerCase();
+    list = list.filter(w => (w.word + " " + w.zh + " " + w.ipa + " " + w.def).toLowerCase().includes(q));
+  }
+  if (state.onlyDue && !ignoreDue) list = list.filter(isDue);
+  if (state.sort === "alpha") list.sort((a,b) => a.word.localeCompare(b.word));
+  if (state.sort === "level") list.sort((a,b) => levelOf(b) - levelOf(a));
+  if (state.sort === "due") list.sort((a,b) => (progressOf(a) ? progressOf(a).due : 0) - (progressOf(b) ? progressOf(b).due : 0));
+  return list;
+}
+
+function batchList(){
+  const list = filtered();
+  const size = Number(state.batchSize) || 0;
+  if (!list.length || !size || size >= list.length) return list;
+  const start = Math.min(Math.max(0, state.batchStart), list.length - size);
+  return list.slice(start, start + size);
+}
+
+function rateButtons(w){
+  return '<div class="rate">' +
+    '<button class="btn small" data-rate="forget" data-id="' + esc(w.id) + '"><b>忘记</b></button>' +
+    '<button class="btn small" data-rate="hard" data-id="' + esc(w.id) + '"><i>模糊</i></button>' +
+    '<button class="btn small" data-rate="good" data-id="' + esc(w.id) + '"><em>记住</em></button>' +
+    '</div>';
+}
+
+function detailsHtml(w){
+  const lv = levelOf(w);
+  const strength = lv < 0 ? 0 : Math.round((Math.min(lv,7) + 1) / 8 * 100);
+  return '<div class="more">' +
+    '<div class="field"><span class="label">记忆安排 · ' + (lv < 0 ? "新词" : "第 " + (lv+1) + " 档 · 间隔 " + INTERVAL_TEXT[Math.min(lv,7)]) +
+      ' · ' + dueLabel(w) + '</span><div class="bar"><i style="width:' + strength + '%"></i></div>' + rateButtons(w) + '</div>' +
+    (w.def ? '<div class="field"><span class="label">解释</span><p>' + esc(w.def) + '</p></div>' : '') +
+    (w.ex ? '<div class="field"><span class="label">例句（点击划线生词看意思并听发音）</span><p class="example">' + exampleHtml(w.ex) + '</p>' +
+      (w.exZh ? '<p class="trans">' + esc(w.exZh) + '</p>' : '') + '</div>' : '') +
+    (w.ety ? '<div class="field"><span class="label">词源</span><p>' + esc(w.ety) + '</p></div>' : '') +
+    (w.ext ? '<div class="field"><span class="label">扩展</span><p>' + esc(w.ext) + '</p></div>' : '') +
+    '</div>';
+}
+
+let cardFlipped = false;
+let meaningShown = false;
+let batchDone = false;
+function renderCard(){
+  const list = batchList();
+  if (!list.length) {
+    $("#flipCard").innerHTML = '<div class="face front"><p class="hint">没有符合条件的单词</p></div>';
+    $("#cardProgress").textContent = "0 / 0";
+    return;
+  }
+  if (batchDone) {
+    $("#flipCard").innerHTML = '<div class="face front"><span class="tag">本轮完成</span>' +
+      '<div class="word">已背 ' + list.length + ' 词</div>' +
+      '<div class="front-actions"><button class="btn primary" type="button" data-batch="review">复习本轮</button>' +
+      '<button class="btn" type="button" data-batch="next">下一批</button></div>' +
+      '<p class="tip">先复习这一轮，再进入下一批；词量可在上方修改。</p></div>';
+    $("#cardProgress").textContent = "本轮 " + list.length + " / " + list.length + " · 已完成";
+    $("#flipCard").classList.remove("is-flipped");
+    save();
+    return;
+  }
+  state.index = Math.max(0, Math.min(state.index, list.length - 1));
+  cardFlipped = false;
+  meaningShown = false;
+  const w = list[state.index];
+  const strength = levelOf(w) < 0 ? 0 : Math.round((Math.min(levelOf(w),7) + 1) / 8 * 100);
+  const back = '<div class="face back">' +
+    '<div class="wc-top"><span class="tag">' + esc(w.cat) + '</span><span class="level">' + dueLabel(w) + '</span></div>' +
+    '<h3>' + esc(w.word) + ' <button class="btn small" type="button" data-say="' + esc(w.word) + '">发音</button>' +
+    '<button class="btn small ghost" type="button" data-hide>翻回正面</button></h3>' +
+    '<div class="ipa">' + esc(w.ipa || "—") + '　<span class="reveal-zh">' + esc(w.zh) + '</span></div>' +
+    '<div class="bar"><i style="width:' + strength + '%"></i></div>' +
+    detailsHtml(w) + '</div>';
+  $("#flipCard").innerHTML =
+    '<div class="face front"><span class="tag">' + esc(w.cat) + '</span>' +
+    '<div class="word">' + esc(w.word) + '</div><div class="ipa">' + esc(w.ipa || "—") + '</div>' +
+    '<div class="front-actions"><button class="btn" type="button" data-say="' + esc(w.word) + '">听发音</button>' +
+    '<button class="btn primary" type="button" data-reveal id="revealBtn">显示词义</button></div>' +
+    '<div id="inlineMeaning" class="inline-meaning" hidden><div class="inline-zh">' + esc(w.zh) + '</div>' +
+    (w.def ? '<div class="inline-def">' + esc(w.def) + '</div>' : '') + '</div>' +
+    '<p class="tip">先自己回想词义，点「显示词义」在当前页展开中文解释；点击卡片可翻页看完整内容</p></div>' + back;
+  $("#flipCard").classList.toggle("is-flipped", cardFlipped);
+  $("#cardProgress").textContent = "本轮 " + (state.index + 1) + " / " + list.length + " · " + w.word;
+  save();
+}
+
+function renderManage(){
+  const list = filtered(true);
+  $("#manageCount").textContent = "显示 " + list.length + " / " + catalog().length + " 个单词";
+  if (!list.length) {
+    $("#manageList").innerHTML = '<div class="empty">没有符合条件的单词。</div>';
+    return;
+  }
+  const rows = list.map(w => {
+    const lv = levelOf(w);
+    const stage = lv < 0 ? "新词" : (lv >= 4 ? "已掌握" : "第 " + (lv+1) + " 档");
+    return '<div class="manage-row">' +
+      '<span class="m-word">' + esc(w.word) + '</span>' +
+      '<span class="m-muted">' + esc(w.ipa || "—") + '</span>' +
+      '<span>' + esc(w.zh) + '</span>' +
+      '<span class="m-muted">' + esc(w.cat) + '</span>' +
+      '<span class="m-muted">' + stage + ' · ' + dueLabel(w) + '</span>' +
+      '<button class="btn small danger" type="button" data-del="' + esc(w.id) + '">删除</button>' +
+      '</div>';
+  }).join("");
+  $("#manageList").innerHTML = '<div class="manage-row head"><span>单词</span><span>音标</span><span>词义</span><span>分类</span><span>记忆进度</span><span>操作</span></div>' + rows;
+}
+
+function renderStats(){
+  const list = catalog();
+  $("#statTotal").textContent = list.length;
+  $("#statDue").textContent = list.filter(isDue).length;
+  $("#statNew").textContent = list.filter(w => !progressOf(w)).length;
+  $("#statMastered").textContent = list.filter(w => levelOf(w) >= 4).length;
+}
+
+function renderChips(){
+  const cats = ["全部"];
+  catalog().forEach(w => { if (!cats.includes(w.cat)) cats.push(w.cat); });
+  if (!cats.includes(state.category)) state.category = "全部";
+  $("#chips").innerHTML = cats.map(c =>
+    '<button class="chip' + (c === state.category ? ' on' : '') + '" type="button" data-cat="' + esc(c) + '">' + esc(c) + '</button>'
+  ).join("");
+}
+
+function renderCurve(){
+  const W = 640, H = 230, x0 = 46, x1 = 618, y0 = 20, y1 = 188;
+  const px = t => x0 + t / 30 * (x1 - x0);
+  const py = r => y1 - r * (y1 - y0);
+  const series = [
+    {S:1.2, color:"var(--bad)", label:"刚学完（约 1 天衰减）"},
+    {S:5, color:"var(--warn)", label:"复习 1 次"},
+    {S:16, color:"var(--good)", label:"多次复习"}
+  ];
+  let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="遗忘曲线示意图">';
+  [0, .25, .5, .75, 1].forEach(r => {
+    const y = py(r);
+    svg += '<line x1="' + x0 + '" y1="' + y + '" x2="' + x1 + '" y2="' + y + '" stroke="var(--line)" stroke-width="1"/>';
+    svg += '<text x="' + (x0-8) + '" y="' + (y+4) + '" text-anchor="end" font-size="11" fill="var(--muted)">' + Math.round(r*100) + '%</text>';
+  });
+  [0,1,3,7,15,30].forEach(t => {
+    const x = px(t);
+    svg += '<line x1="' + x + '" y1="' + y1 + '" x2="' + x + '" y2="' + (y1+5) + '" stroke="var(--muted)"/>';
+    svg += '<text x="' + x + '" y="' + (y1+20) + '" text-anchor="middle" font-size="11" fill="var(--muted)">' + t + '天</text>';
+  });
+  series.forEach(s => {
+    let pts = [];
+    for (let t = 0; t <= 30; t += .5) pts.push(px(t).toFixed(1) + "," + py(Math.exp(-t / s.S)).toFixed(1));
+    svg += '<polyline fill="none" stroke="' + s.color + '" stroke-width="2.5" stroke-linejoin="round" points="' + pts.join(" ") + '"/>';
+  });
+  let lx = x0 + 12;
+  series.forEach(s => {
+    svg += '<line x1="' + lx + '" y1="' + (H-22) + '" x2="' + (lx+18) + '" y2="' + (H-22) + '" stroke="' + s.color + '" stroke-width="3"/>';
+    svg += '<text x="' + (lx+23) + '" y="' + (H-18) + '" font-size="11" fill="var(--muted)">' + s.label + '</text>';
+    lx += 168;
+  });
+  svg += '</svg>';
+  $("#curveChart").innerHTML = svg;
+}
+
+function applySettings(){
+  document.documentElement.dataset.theme = state.theme;
+  document.documentElement.style.setProperty("--accent", state.accent);
+  $("#themeSelect").value = state.theme;
+  $("#accentPick").value = /^#[0-9a-f]{6}$/i.test(state.accent) ? state.accent : "#2563eb";
+  $("#voiceSelect").value = state.voice;
+  $("#sortSelect").value = state.sort;
+  $("#search").value = state.query;
+  $("#studyMode").classList.toggle("on", state.mode === "study");
+  $("#manageMode").classList.toggle("on", state.mode === "manage");
+  $("#cardView").hidden = state.mode !== "study";
+  $("#manageView").hidden = state.mode !== "manage";
+  $("#onlyDue").classList.toggle("primary", state.onlyDue);
+  $("#onlyDue").setAttribute("aria-pressed", String(state.onlyDue));
+  $("#onlyDue").textContent = state.onlyDue ? "待复习中 ✓" : "只看待复习";
+  $("#batchSelect").value = String(state.batchSize);
+}
+
+function renderAll(){
+  DICT = buildDict();
+  applySettings();
+  renderStats();
+  renderChips();
+  if (state.mode === "manage") renderManage(); else renderCard();
+}
+
+function rate(id, kind){
+  const w = catalog().find(x => x.id === id);
+  if (!w) return;
+  const p = progressOf(w) || {level:0,due:Date.now(),last:0};
+  if (kind === "forget") p.level = 0;
+  if (kind === "good") p.level = Math.min((p.level || 0) + 1, 7);
+  const minutes = INTERVALS[Math.min(p.level, 7)];
+  p.due = Date.now() + minutes * 60 * 1000;
+  p.last = Date.now();
+  state.progress[id] = p;
+  save();
+  if (state.mode === "study") {
+    const currentBatch = batchList();
+    if (state.index + 1 >= currentBatch.length) { batchDone = true; state.index = 0; }
+    else state.index++;
+    cardFlipped = false;
+  }
+  renderAll();
+  toast(kind === "forget" ? "10 分钟后再复习 " + w.word : (kind === "good" ? "记住了，下次 " + INTERVAL_TEXT[Math.min(p.level,7)] + " 后复习" : "保持进度，下次 " + INTERVAL_TEXT[Math.min(p.level,7)] + " 后复习"));
+}
+
+function showPopover(key, anchor){
+  const e = DICT[key];
+  if (!e) return;
+  const box = $("#popover");
+  box.innerHTML = '<div class="pw">' + esc(e.word) + '</div><div class="pi">' + esc(e.ipa || "") + '</div>' +
+    '<div class="pz">' + esc(e.zh) + '</div>' + (e.note ? '<div class="pn">' + esc(e.note) + '</div>' : '') +
+    '<div class="row"><button class="btn small primary" type="button" data-say="' + esc(e.word) + '">发音</button>' +
+    '<button class="btn small" type="button" id="closePop">关闭</button></div>';
+  box.hidden = false;
+  const r = anchor.getBoundingClientRect();
+  const w = box.offsetWidth, h = box.offsetHeight;
+  let left = r.left, top = r.bottom + 8;
+  if (left + w > window.innerWidth - 12) left = window.innerWidth - w - 12;
+  if (top + h > window.innerHeight - 12) top = Math.max(12, r.top - h - 8);
+  box.style.left = Math.max(12, left) + "px";
+  box.style.top = top + "px";
+  speak(e.word);
+}
+function hidePopover(){ $("#popover").hidden = true; }
+
+document.addEventListener("click", ev => {
+  const hit = ev.target.closest(".hit");
+  if (hit) { showPopover(hit.dataset.k, hit); return; }
+  if (ev.target.closest("#closePop") || !ev.target.closest("#popover")) hidePopover();
+
+  const say = ev.target.closest("[data-say]");
+  if (say) { speak(say.dataset.say); return; }
+
+  const cat = ev.target.closest("[data-cat]");
+  if (cat) { state.category = cat.dataset.cat; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); return; }
+
+  const reveal = ev.target.closest("[data-reveal]");
+  if (reveal) {
+    const box = document.getElementById("inlineMeaning");
+    if (box) {
+      box.hidden = !box.hidden;
+      meaningShown = !box.hidden;
+      reveal.textContent = box.hidden ? "显示词义" : "隐藏词义";
+    }
+    return;
+  }
+
+  const hide = ev.target.closest("[data-hide]");
+  if (hide) { cardFlipped = false; $("#flipCard").classList.remove("is-flipped"); return; }
+
+  const del = ev.target.closest("[data-del]");
+  if (del) {
+    const w = catalog().find(x => x.id === del.dataset.del);
+    if (w && confirm('确定删除单词 "' + w.word + '" 吗？')) {
+      state.removed.push(w.id);
+      state.custom = state.custom.filter(x => x.id !== w.id);
+      save(); renderAll(); toast("已删除 " + w.word + "，可用“恢复默认”找回");
+    }
+    return;
+  }
+
+  const batchBtn = ev.target.closest("[data-batch]");
+  if (batchBtn) {
+    if (batchBtn.dataset.batch === "review") {
+      batchDone = false; state.index = 0;
+    } else {
+      const all = filtered();
+      const size = Number(state.batchSize) || 0;
+      const use = size > 0 ? Math.min(size, all.length) : all.length;
+      const maxStart = Math.max(0, all.length - use);
+      state.batchStart = state.batchStart >= maxStart ? 0 : state.batchStart + use;
+      batchDone = false; state.index = 0;
+    }
+    save(); renderAll(); return;
+  }
+
+  const rt = ev.target.closest("[data-rate]");
+  if (rt) { rate(rt.dataset.id, rt.dataset.rate); return; }
+});
+
+$("#flipCard").addEventListener("click", ev => {
+  if (ev.target.closest("button") || ev.target.closest(".hit")) {
+    if (ev.target.closest(".hit")) return;
+    return;
+  }
+  cardFlipped = !cardFlipped;
+  $("#flipCard").classList.toggle("is-flipped", cardFlipped);
+});
+
+$("#studyMode").addEventListener("click", () => { state.mode = "study"; save(); renderAll(); });
+$("#manageMode").addEventListener("click", () => { state.mode = "manage"; save(); renderAll(); });
+$("#prevCard").addEventListener("click", () => { batchDone = false; state.index--; cardFlipped = false; renderCard(); });
+$("#nextCard").addEventListener("click", () => { batchDone = false; state.index++; cardFlipped = false; renderCard(); });
+$("#search").addEventListener("input", e => { state.query = e.target.value.trim(); state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
+$("#themeSelect").addEventListener("change", e => { state.theme = e.target.value; save(); applySettings(); });
+$("#accentPick").addEventListener("input", e => { state.accent = e.target.value; save(); applySettings(); });
+$("#voiceSelect").addEventListener("change", e => { state.voice = e.target.value; save(); });
+$("#sortSelect").addEventListener("change", e => { state.sort = e.target.value; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
+$("#onlyDue").addEventListener("click", () => { state.onlyDue = !state.onlyDue; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
+$("#batchSelect").addEventListener("change", e => { state.batchSize = Number(e.target.value); state.batchStart = 0; state.index = 0; batchDone = false; save(); renderAll(); });
+
+function openAddModal(){ $("#modal").hidden = false; $("#addForm").reset(); $("#addForm").elements.word.focus(); }
+$("#manageAdd").addEventListener("click", openAddModal);
+$("#cancelAdd").addEventListener("click", () => { $("#modal").hidden = true; });
+$("#modal").addEventListener("click", ev => { if (ev.target.id === "modal") $("#modal").hidden = true; });
+$("#addForm").addEventListener("submit", ev => {
+  ev.preventDefault();
+  const f = new FormData(ev.target);
+  const word = String(f.get("word") || "").trim();
+  const zh = String(f.get("zh") || "").trim();
+  if (!word || !zh) return;
+  const w = {
+    id: "c-" + Date.now() + "-" + Math.floor(Math.random()*1000),
+    word: word, ipa: String(f.get("ipa")||"").trim(), cat: String(f.get("cat")||"自定义"),
+    zh: zh, def: String(f.get("def")||"").trim(), ex: String(f.get("ex")||"").trim(),
+    exZh: String(f.get("exZh")||"").trim(), ety: String(f.get("ety")||"").trim(), ext: String(f.get("ext")||"").trim()
+  };
+  state.custom.push(w);
+  state.category = "全部";
+  save();
+  $("#modal").hidden = true;
+  renderAll();
+  toast("已添加 " + word);
+});
+
+$("#resetBtn").addEventListener("click", () => {
+  if (!confirm("恢复默认会清除你添加、删除的单词以及全部记忆进度，确定继续吗？")) return;
+  const keep = {theme:state.theme, accent:state.accent, voice:state.voice};
+  state = Object.assign(defaults(), keep);
+  save(); renderAll(); toast("已恢复默认 528 词");
+});
+
+document.addEventListener("keydown", ev => {
+  if (ev.key === "Escape") { hidePopover(); $("#modal").hidden = true; $("#installModal").hidden = true; }
+  if (state.mode !== "study" || ev.target.matches("input,select,textarea")) return;
+  if (ev.key === "ArrowRight") { batchDone = false; state.index++; cardFlipped = false; renderCard(); }
+  if (ev.key === "ArrowLeft") { batchDone = false; state.index--; cardFlipped = false; renderCard(); }
+  if (ev.key === " ") { ev.preventDefault(); cardFlipped = !cardFlipped; $("#flipCard").classList.toggle("is-flipped", cardFlipped); }
+});
+document.addEventListener("click", ev => {
+  const hit = ev.target.closest(".hit");
+  if (hit && ev.type === "click") return;
+});
+
+renderCurve();
+renderAll();
+if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
+
+(function initPWA(){
+  const installBtn = document.getElementById("installBtn");
+  const installModal = document.getElementById("installModal");
+  let deferredPrompt = null;
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.textContent = "安装应用";
+  });
+
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+  installBtn.addEventListener("click", async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if (choice && choice.outcome === "accepted") toast("正在添加到主屏幕");
+      return;
+    }
+    document.getElementById("iosSteps").hidden = !isIOS;
+    document.getElementById("otherSteps").hidden = isIOS;
+    installModal.hidden = false;
+  });
+
+  document.getElementById("closeInstall").addEventListener("click", () => { installModal.hidden = true; });
+  installModal.addEventListener("click", (e) => { if (e.target === installModal) installModal.hidden = true; });
+
+  if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(() => {});
+    });
+  }
+})();
+</script>
+</body>
+</html>
