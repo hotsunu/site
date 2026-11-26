@@ -410,17 +410,68 @@
     display: block; height: 100%; width: 0; border-radius: 99px;
     background: var(--accent); transition: width .25s ease;
   }
-  @keyframes slideFromRight { from { opacity: 0; transform: translateX(36px); } to { opacity: 1; transform: none; } }
-  @keyframes slideFromLeft { from { opacity: 0; transform: translateX(-36px); } to { opacity: 1; transform: none; } }
-  .flip-card.slide-next { animation: slideFromRight .24s cubic-bezier(.2,.8,.3,1); }
-  .flip-card.slide-prev { animation: slideFromLeft .24s cubic-bezier(.2,.8,.3,1); }
+  /* 跟手拖动：只在拖动时接管过渡，避免和 3D 翻面冲突 */
+  .flip-card { will-change: transform; }
+  .flip-card.is-dragging { transition: none !important; }
+  @keyframes slideFromRight {
+    from { opacity: .15; transform: translate3d(46%, 0, 0) scale(.965); }
+    to   { opacity: 1;   transform: none; }
+  }
+  @keyframes slideFromLeft {
+    from { opacity: .15; transform: translate3d(-46%, 0, 0) scale(.965); }
+    to   { opacity: 1;   transform: none; }
+  }
+  .flip-card.slide-next { animation: slideFromRight .26s cubic-bezier(.22,.86,.3,1); }
+  .flip-card.slide-prev { animation: slideFromLeft .26s cubic-bezier(.22,.86,.3,1); }
   @media (prefers-reduced-motion: reduce) {
     .flip-card.slide-next, .flip-card.slide-prev { animation: none; }
+    .flip-card { transition-duration: .01ms; }
   }
+
+  /* ===== 专注模式：一屏只有卡片 ===== */
+  .focus-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    margin: 0 2px 8px;
+  }
+  .focus-bar .focus-title {
+    font-size: 12px; color: var(--muted); letter-spacing: .01em;
+    font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .focus-bar .btn {
+    flex: 0 0 auto; font-size: 11px; padding: 3px 10px; border-radius: 8px;
+    border-color: transparent; background: transparent; color: var(--muted);
+  }
+  .focus-bar .btn:hover { color: var(--accent); background: var(--soft); }
+  body.focus { overflow: hidden; }
+  body.focus .wrap {
+    display: flex; flex-direction: column;
+    box-sizing: border-box; height: 100vh; height: 100dvh; max-width: 820px;
+    padding: calc(8px + env(safe-area-inset-top, 0px)) 12px calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+  body.focus .user-bar, body.focus .hero, body.focus .fold-toggle,
+  body.focus #leadBox, body.focus #curveBox, body.focus #settingsBox,
+  body.focus .toolbar, body.focus #chips, body.focus footer,
+  body.focus #manageView, body.focus #cardView > .hint { display: none !important; }
+  body.focus .focus-bar { flex: 0 0 auto; }
+  body.focus #cardView {
+    flex: 1 1 auto; display: flex; flex-direction: column;
+    min-height: 0; max-width: 100%; margin: 0;
+  }
+  body.focus #cardView[hidden] { display: none !important; }
+  body.focus .card-stage { flex: 1 1 auto; height: auto; min-height: 0; max-height: none; }
+  body.focus .card-nav { flex: 0 0 auto; margin-top: 10px; }
+  body.focus .face { padding: 22px 20px; }
+  body.focus .front .word { font-size: clamp(44px, 11.5vw, 82px); }
+  body.focus .face.back { overflow-y: auto; }
+  body.focus #toast { bottom: auto; top: calc(40px + env(safe-area-inset-top, 0px)); }
 </style>
 </head>
 <body>
 <div class="wrap">
+<div id="focusBar" class="focus-bar" hidden>
+  <span id="focusTitle" class="focus-title">专注背单词</span>
+  <button id="focusExit" class="btn" type="button">退出专注</button>
+</div>
 
 <div class="user-bar" id="userBar">
   <span class="who">当前用户：<b id="currentUserName">—</b><span id="roleBadge" class="role-badge" hidden>管理员</span></span>
@@ -438,6 +489,7 @@
     <button id="foldLead" class="btn" type="button" aria-pressed="false" data-label="说明">显示说明</button>
     <button id="foldCurve" class="btn" type="button" aria-pressed="false" data-label="曲线">显示曲线</button>
     <button id="foldSettings" class="btn" type="button" aria-pressed="false" data-label="设置">显示设置</button>
+    <button id="focusToggle" class="btn" type="button" aria-pressed="false">专注模式</button>
     <button id="installBtn" class="btn small ghost" type="button">安装到主屏幕</button>
   </div>
 
@@ -1318,7 +1370,7 @@ const EXTRA = {
 const KEY = "eng-highschool.v1";
 const INTERVALS = [10, 1440, 2880, 5760, 10080, 21600, 43200, 86400];
 const INTERVAL_TEXT = ["10 分钟", "1 天", "2 天", "4 天", "7 天", "15 天", "30 天", "60 天"];
-const defaults = () => ({custom:[],removed:[],progress:{},theme:"dawn",accent:"#2563eb",voice:"en-US",mode:"study",category:"全部",query:"",sort:"default",onlyDue:false,index:0,batchSize:10,batchStart:0,batchMode:"preset",batchCustom:10,showLead:false,showCurve:false,showSettings:false,uiVersion:2});
+const defaults = () => ({custom:[],removed:[],progress:{},theme:"dawn",accent:"#2563eb",voice:"en-US",mode:"study",category:"全部",query:"",sort:"default",onlyDue:false,index:0,batchSize:10,batchStart:0,batchMode:"preset",batchCustom:10,showLead:false,showCurve:false,showSettings:false,focus:true,uiVersion:2});
 
 
 let state = defaults();
@@ -1779,6 +1831,7 @@ function applySettings(){
   const applied = $("#batchApplied");
   if (applied) applied.textContent = customOn ? "已设置：每轮 " + (Number(state.batchSize) || 0) + " 个" : "";
   applyFolds();
+  applyFocus();
 }
 
 function renderAll(){
@@ -1787,6 +1840,7 @@ function renderAll(){
   renderStats();
   renderChips();
   if (state.mode === "manage") renderManage(); else renderCard();
+  syncFocusTitle();
 }
 
 function rate(id, kind){
@@ -1807,6 +1861,12 @@ function rate(id, kind){
     cardFlipped = false;
   }
   renderAll();
+  const cardEl = $("#flipCard");
+  if (cardEl && state.mode === "study" && !batchDone) {
+    cardEl.classList.remove("slide-next", "slide-prev");
+    void cardEl.offsetWidth;
+    cardEl.classList.add("slide-next");
+  }
   toast(kind === "forget" ? "10 分钟后再复习 " + w.word : (kind === "good" ? "记住了，下次 " + INTERVAL_TEXT[Math.min(p.level,7)] + " 后复习" : "保持进度，下次 " + INTERVAL_TEXT[Math.min(p.level,7)] + " 后复习"));
 }
 
@@ -1906,6 +1966,7 @@ $("#flipCard").addEventListener("click", ev => {
 $("#studyMode").addEventListener("click", () => { state.mode = "study"; save(); renderAll(); });
 $("#manageMode").addEventListener("click", () => { state.mode = "manage"; save(); renderAll(); });
 /* 左右滑动切换：同时支持触摸滑动和鼠标拖拽 */
+/* 左右滑动：跟手拖动，轻快一划即可切换 */
 let swipeGuard = 0;
 function slideTo(dir, animate){
   const list = batchList();
@@ -1925,33 +1986,93 @@ function slideTo(dir, animate){
 }
 (function bindSwipe(){
   const stage = document.querySelector(".card-stage");
-  if (!stage) return;
-  let start = null;
-  stage.addEventListener("pointerdown", ev => {
+  const card = $("#flipCard");
+  if (!stage || !card) return;
+  let st = null, raf = 0, lastX = 0, captured = false, settle = 0, stageW = 0;
+  function measure(){ stageW = stage.clientWidth || 320; }
+  measure();
+  window.addEventListener("resize", measure);
+
+  function clearInline(){
+    card.classList.remove("is-dragging");
+    card.style.transition = "";
+    card.style.transform = "";
+    card.style.opacity = "";
+  }
+  function paint(x){
+    lastX = x;
+    if (raf) return;
+    raf = requestAnimationFrame(function(){
+      raf = 0;
+      const p = Math.max(-1, Math.min(1, lastX / stageW));
+      card.style.transform = "translate3d(" + lastX.toFixed(1) + "px,0,0) rotate(" +
+        (p * 1.1).toFixed(2) + "deg)" + (cardFlipped ? " rotateY(180deg)" : "");
+      card.style.opacity = String(1 - Math.abs(p) * 0.12);
+    });
+  }
+
+  stage.addEventListener("pointerdown", function(ev){
+    if (ev.button && ev.button > 0) return;
     if (ev.target.closest("button, a, input, select, textarea")) return;
-    start = { x: ev.clientX, y: ev.clientY, t: Date.now(), id: ev.pointerId };
-  });
-  stage.addEventListener("pointermove", ev => {
-    if (!start || ev.pointerId !== start.id) return;
-    const dx = ev.clientX - start.x, dy = ev.clientY - start.y;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 6 && ev.cancelable) {
-      if (stage.hasPointerCapture && !stage.hasPointerCapture(ev.pointerId)) {
-        try { stage.setPointerCapture(ev.pointerId); } catch (e) {}
+    clearTimeout(settle);
+    measure();
+    st = { x: ev.clientX, y: ev.clientY, t: Date.now(), id: ev.pointerId };
+    captured = false;
+    card.classList.remove("slide-next", "slide-prev");
+    card.classList.add("is-dragging");
+    card.style.transition = "none";
+    card.style.transform = cardFlipped ? "rotateY(180deg)" : "none";
+  }, { passive: true });
+
+  stage.addEventListener("pointermove", function(ev){
+    if (!st || ev.pointerId !== st.id) return;
+    const dx = ev.clientX - st.x, dy = ev.clientY - st.y;
+    if (!captured) {
+      if (Math.abs(dy) > 14 && Math.abs(dy) > Math.abs(dx) * 1.4) { st.vertical = true; }
+      if (Math.abs(dx) > 7 && Math.abs(dx) >= Math.abs(dy)) {
+        try { if (stage.setPointerCapture) stage.setPointerCapture(ev.pointerId); } catch (e) {}
+        captured = true;
       }
     }
-  });
-  const finish = ev => {
-    if (!start || ev.pointerId !== start.id) { start = null; return; }
-    const dx = ev.clientX - start.x, dy = ev.clientY - start.y;
-    const dt = Date.now() - start.t;
-    start = null;
-    const isSwipe = Math.abs(dx) > 46 && Math.abs(dx) > Math.abs(dy) * 1.25 && dt < 800;
-    if (!isSwipe) return;
-    swipeGuard = Date.now() + 420;
-    slideTo(dx < 0 ? 1 : -1);
-  };
+    if (st.vertical && !captured) return;
+    if (captured && Math.abs(dy) > 18 && Math.abs(dy) > Math.abs(dx) * 1.5) {
+      st.vertical = true; clearInline(); return;
+    }
+    paint(Math.max(-stageW, Math.min(stageW, dx)));
+  }, { passive: true });
+
+  function finish(ev){
+    if (!st || ev.pointerId !== st.id) { st = null; return; }
+    const s = st; st = null;
+    if (!captured) { clearInline(); return; }
+    const dx = ev.clientX - s.x, dy = ev.clientY - s.y;
+    const dt = Math.max(1, Date.now() - s.t);
+    const w = stageW || 320;
+    const far = Math.abs(dx) > Math.max(26, Math.min(80, w * 0.12));
+    const fast = Math.abs(dx) > 20 && Math.abs(dx) / dt > 0.4;
+    clearTimeout(settle);
+    if (Math.abs(dx) > Math.abs(dy) && (far || fast)) {
+      const dir = dx < 0 ? 1 : -1;
+      swipeGuard = Date.now() + 420;
+      card.style.transition = "transform .2s cubic-bezier(.3,.8,.4,1), opacity .2s ease";
+      card.style.transform = "translate3d(" + (dir > 0 ? -w * 1.04 : w * 1.04) + "px,0,0) rotate(" +
+        (dir > 0 ? -6 : 6) + "deg)" + (cardFlipped ? " rotateY(180deg)" : "");
+      card.style.opacity = "0";
+      settle = setTimeout(function(){
+        clearInline();
+        slideTo(dir, true);
+      }, 150);
+    } else {
+      card.style.transition = "transform .26s cubic-bezier(.22,.86,.3,1), opacity .26s ease";
+      card.style.transform = cardFlipped ? "rotateY(180deg)" : "";
+      card.style.opacity = "1";
+      settle = setTimeout(clearInline, 290);
+    }
+  }
   stage.addEventListener("pointerup", finish);
-  stage.addEventListener("pointercancel", () => { start = null; });
+  stage.addEventListener("pointercancel", function(ev){
+    if (st && ev.pointerId === st.id) { st = null; clearInline(); }
+  });
 })();
 $("#search").addEventListener("input", e => { state.query = e.target.value.trim(); state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
 $("#themeSelect").addEventListener("change", e => { state.theme = e.target.value; save(); applySettings(); });
@@ -2014,7 +2135,7 @@ $("#addForm").addEventListener("submit", ev => {
 
 $("#resetBtn").addEventListener("click", () => {
   if (!confirm("恢复默认会清除你添加、删除的单词以及全部记忆进度，确定继续吗？")) return;
-  const keep = {theme:state.theme, accent:state.accent, voice:state.voice, showLead:state.showLead, showCurve:state.showCurve, showSettings:state.showSettings};
+  const keep = {theme:state.theme, accent:state.accent, voice:state.voice, showLead:state.showLead, showCurve:state.showCurve, showSettings:state.showSettings, focus:state.focus};
   state = Object.assign(defaults(), keep);
   save(); renderAll(); toast("已恢复默认 528 词");
 });
@@ -2055,6 +2176,38 @@ function applyFolds(){
   setFold($("#foldCurve"), "#curveBox", !state.showCurve);
   setFold($("#foldSettings"), "#settingsBox", !state.showSettings);
 }
+
+/* ===== 专注模式：一屏只有卡片，不出现页面级滚动 ===== */
+function syncFocusTitle(){
+  const p = document.getElementById("cardProgress");
+  const t = document.getElementById("focusTitle");
+  if (p && t) t.textContent = p.textContent || "专注背单词";
+}
+function applyFocus(){
+  const on = !!state.focus && state.mode === "study";
+  document.body.classList.toggle("focus", on);
+  const bar = document.getElementById("focusBar");
+  if (bar) bar.hidden = !on;
+  const tg = document.getElementById("focusToggle");
+  if (tg) {
+    tg.textContent = on ? "退出专注" : "专注模式";
+    tg.setAttribute("aria-pressed", String(on));
+  }
+  if (on) syncFocusTitle();
+}
+const focusToggleBtn = document.getElementById("focusToggle");
+if (focusToggleBtn) focusToggleBtn.addEventListener("click", () => {
+  const next = !(state.focus && state.mode === "study");
+  state.focus = next;
+  if (next) state.mode = "study";
+  saveAppState(); renderAll();
+  toast(next ? "专注中：只显示卡片，左右滑动换词" : "已退出专注");
+});
+const focusExitBtn = document.getElementById("focusExit");
+if (focusExitBtn) focusExitBtn.addEventListener("click", () => {
+  state.focus = false; saveAppState(); applyFocus();
+});
+
 
 window.addEventListener("error", function(ev){
   try { console.error("[wordcards]", ev.message); } catch(e) {}
