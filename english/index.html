@@ -159,6 +159,17 @@
   .back .field { margin-bottom: 10px; }
   .card-nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 14px; }
   .progress-text { color: var(--muted); font-size: 13px; }
+  .manage-wrap { overflow-x: auto; margin-top: 8px; }
+  .manage-row {
+    display: grid; grid-template-columns: 1.1fr 1fr 1.5fr .7fr 1.1fr auto;
+    gap: 10px; align-items: center; min-width: 680px;
+    padding: 10px 8px; border-bottom: 1px solid var(--line); font-size: 14px;
+  }
+  .manage-row:last-child { border-bottom: 0; }
+  .manage-row.head { font-size: 12px; font-weight: 700; color: var(--muted); }
+  .manage-row .m-word { font-weight: 700; }
+  .manage-row .m-muted { color: var(--muted); font-size: 13px; }
+  .manage-row button { white-space: nowrap; }
   #popover {
     position: fixed; z-index: 50; width: 250px; padding: 14px 15px;
     background: var(--surface); color: var(--text); border: 1px solid var(--line);
@@ -210,7 +221,7 @@
   <header class="hero">
     <span class="eyebrow">小学英语 · 词汇记忆</span>
     <h1>60 个高频词，听见、读懂、记得住</h1>
-    <p class="lead">点「发音」听读；例句里的生词可直接点击查看意思并朗读；用记忆卡片按遗忘曲线安排复习。所有进度只保存在本机浏览器。</p>
+    <p class="lead">浏览单词看完整释义、例句、词源和扩展；背单词只显示单词与英文例句，用来自测回忆；增删词条请到「单词管理」。所有进度只保存在本机浏览器。</p>
     <div class="stats">
       <div class="stat"><b id="statTotal">60</b><span>当前词库</span></div>
       <div class="stat"><b id="statDue">0</b><span>今日待复习</span></div>
@@ -236,8 +247,9 @@
   <div class="toolbar">
     <input id="search" class="search" type="search" placeholder="搜索单词、释义或音标…" aria-label="搜索单词">
     <div class="seg" role="group" aria-label="显示模式">
-      <button id="listMode" class="on" type="button">列表模式</button>
-      <button id="cardMode" type="button">记忆卡片</button>
+      <button id="browseMode" class="on" type="button">浏览单词</button>
+      <button id="reciteMode" type="button">背单词</button>
+      <button id="manageMode" type="button">单词管理</button>
     </div>
     <label>配色
       <select id="themeSelect" aria-label="配色主题">
@@ -276,7 +288,21 @@
       <span id="cardProgress" class="progress-text"></span>
       <button id="nextCard" class="btn" type="button">下一个</button>
     </div>
-    <p class="hint" style="text-align:center;margin-top:10px">点击卡片翻面 · 键盘 ← → 切换 · 空格翻面</p>
+    <p class="hint" style="text-align:center;margin-top:10px">此模式不显示词义和解释 · 点击卡片翻面看英文例句 · 键盘 ← → 切换 · 空格翻面</p>
+  </section>
+
+  <section id="manageView" class="panel" hidden>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px">
+      <div>
+        <h2>单词管理</h2>
+        <p class="hint">在这里添加或删除单词；删除后可用「恢复默认」找回。上方搜索与分类筛选同样生效。</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span id="manageCount" class="progress-text"></span>
+        <button id="manageAdd" class="btn primary" type="button">添加单词</button>
+      </div>
+    </div>
+    <div class="manage-wrap"><div id="manageList"></div></div>
   </section>
 
   <footer>词源为通俗整理，供学习参考 · 发音使用浏览器内置语音合成 · 数据保存在本机 localStorage</footer>
@@ -477,7 +503,7 @@ const EXTRA = {
 const KEY = "eng60.v1";
 const INTERVALS = [10, 1440, 2880, 5760, 10080, 21600, 43200, 86400];
 const INTERVAL_TEXT = ["10 分钟", "1 天", "2 天", "4 天", "7 天", "15 天", "30 天", "60 天"];
-const defaults = () => ({custom:[],removed:[],progress:{},theme:"dawn",accent:"#2563eb",voice:"en-US",mode:"list",category:"全部",query:"",sort:"default",onlyDue:false,index:0});
+const defaults = () => ({custom:[],removed:[],progress:{},theme:"dawn",accent:"#2563eb",voice:"en-US",mode:"browse",category:"全部",query:"",sort:"default",onlyDue:false,index:0});
 
 function loadState(){
   try {
@@ -487,6 +513,9 @@ function loadState(){
       if (!Array.isArray(s.custom)) s.custom = [];
       if (!Array.isArray(s.removed)) s.removed = [];
       if (!s.progress || typeof s.progress !== "object") s.progress = {};
+      if (s.mode === "list") s.mode = "browse";
+      if (s.mode === "card") s.mode = "recite";
+      if (!["browse", "recite", "manage"].includes(s.mode)) s.mode = "browse";
       return s;
     }
   } catch(e) {}
@@ -558,14 +587,14 @@ function exampleHtml(text){
   }).join("");
 }
 
-function filtered(){
+function filtered(ignoreDue){
   let list = catalog();
   if (state.category !== "全部") list = list.filter(w => w.cat === state.category);
   if (state.query) {
     const q = state.query.toLowerCase();
     list = list.filter(w => (w.word + " " + w.zh + " " + w.ipa + " " + w.def).toLowerCase().includes(q));
   }
-  if (state.onlyDue) list = list.filter(isDue);
+  if (state.onlyDue && !ignoreDue) list = list.filter(isDue);
   if (state.sort === "alpha") list.sort((a,b) => a.word.localeCompare(b.word));
   if (state.sort === "level") list.sort((a,b) => levelOf(b) - levelOf(a));
   if (state.sort === "due") list.sort((a,b) => (progressOf(a) ? progressOf(a).due : 0) - (progressOf(b) ? progressOf(b).due : 0));
@@ -580,15 +609,15 @@ function rateButtons(w){
     '</div>';
 }
 
-function detailsHtml(w){
+function detailsHtml(w, recite){
   const lv = levelOf(w);
   const strength = lv < 0 ? 0 : Math.round((Math.min(lv,7) + 1) / 8 * 100);
   return '<div class="more">' +
-    (w.def ? '<div class="field"><span class="label">解释</span><p>' + esc(w.def) + '</p></div>' : '') +
-    (w.ex ? '<div class="field"><span class="label">例句（点击划线生词看意思并听发音）</span><p class="example">' + exampleHtml(w.ex) + '</p>' +
-      (w.exZh ? '<p class="trans">' + esc(w.exZh) + '</p>' : '') + '</div>' : '') +
-    (w.ety ? '<div class="field"><span class="label">词源</span><p>' + esc(w.ety) + '</p></div>' : '') +
-    (w.ext ? '<div class="field"><span class="label">扩展</span><p>' + esc(w.ext) + '</p></div>' : '') +
+    (!recite && w.def ? '<div class="field"><span class="label">解释</span><p>' + esc(w.def) + '</p></div>' : '') +
+    (w.ex ? '<div class="field"><span class="label">' + (recite ? "例句（点击划线单词听发音）" : "例句（点击划线生词看意思并听发音）") + '</span><p class="example">' + exampleHtml(w.ex) + '</p>' +
+      (!recite && w.exZh ? '<p class="trans">' + esc(w.exZh) + '</p>' : '') + '</div>' : '') +
+    (!recite && w.ety ? '<div class="field"><span class="label">词源</span><p>' + esc(w.ety) + '</p></div>' : '') +
+    (!recite && w.ext ? '<div class="field"><span class="label">扩展</span><p>' + esc(w.ext) + '</p></div>' : '') +
     '<div class="field"><span class="label">记忆安排</span><p>' + (lv < 0 ? "还没开始学习" : "第 " + (lv+1) + " 档 · 间隔 " + INTERVAL_TEXT[Math.min(lv,7)]) +
       ' · ' + dueLabel(w) + '</p><div class="bar"><i style="width:' + strength + '%"></i></div>' + rateButtons(w) + '</div>' +
     '</div>';
@@ -610,8 +639,7 @@ function renderList(){
       '<p class="zh">' + esc(w.zh) + '</p>' +
       '<div class="bar"><i style="width:' + strength + '%"></i></div>' +
       '<div class="wc-actions"><button class="link" type="button" data-detail="' + esc(w.id) + '">展开详情</button>' +
-      '<button class="link" type="button" data-flip="' + esc(w.id) + '">做成卡片</button>' +
-      '<button class="btn small danger" type="button" data-del="' + esc(w.id) + '">删除</button></div>' +
+      '<button class="link" type="button" data-flip="' + esc(w.id) + '">去背单词</button></div>' +
       '<div id="more-' + esc(w.id) + '" hidden>' + detailsHtml(w) + '</div>' +
       '</article>';
   }).join("");
@@ -631,17 +659,39 @@ function renderCard(){
   const back = '<div class="face back">' +
     '<div class="wc-top"><span class="tag">' + esc(w.cat) + '</span><span class="level">' + dueLabel(w) + '</span></div>' +
     '<h3>' + esc(w.word) + ' <button class="btn small" type="button" data-say="' + esc(w.word) + '">发音</button></h3>' +
-    '<div class="ipa">' + esc(w.ipa || "—") + '　' + esc(w.zh) + '</div>' +
+    '<div class="ipa">' + esc(w.ipa || "—") + '</div>' +
     '<div class="bar"><i style="width:' + strength + '%"></i></div>' +
-    detailsHtml(w) + '</div>';
+    detailsHtml(w, true) + '</div>';
   $("#flipCard").innerHTML =
     '<div class="face front"><span class="tag">' + esc(w.cat) + '</span>' +
     '<div class="word">' + esc(w.word) + '</div><div class="ipa">' + esc(w.ipa || "—") + '</div>' +
     '<button class="btn" type="button" data-say="' + esc(w.word) + '">听发音</button>' +
-    '<p class="zh">' + esc(w.zh) + '</p><p class="tip">点击卡片翻面，查看例句、词源和扩展</p></div>' + back;
+    '<p class="tip">先想词义，再点击卡片翻面看英文例句</p></div>' + back;
   $("#flipCard").classList.toggle("is-flipped", cardFlipped);
   $("#cardProgress").textContent = (state.index + 1) + " / " + list.length + " · " + w.word;
   save();
+}
+
+function renderManage(){
+  const list = filtered(true);
+  $("#manageCount").textContent = "显示 " + list.length + " / " + catalog().length + " 个单词";
+  if (!list.length) {
+    $("#manageList").innerHTML = '<div class="empty">没有符合条件的单词。</div>';
+    return;
+  }
+  const rows = list.map(w => {
+    const lv = levelOf(w);
+    const stage = lv < 0 ? "新词" : (lv >= 4 ? "已掌握" : "第 " + (lv+1) + " 档");
+    return '<div class="manage-row">' +
+      '<span class="m-word">' + esc(w.word) + '</span>' +
+      '<span class="m-muted">' + esc(w.ipa || "—") + '</span>' +
+      '<span>' + esc(w.zh) + '</span>' +
+      '<span class="m-muted">' + esc(w.cat) + '</span>' +
+      '<span class="m-muted">' + stage + ' · ' + dueLabel(w) + '</span>' +
+      '<button class="btn small danger" type="button" data-del="' + esc(w.id) + '">删除</button>' +
+      '</div>';
+  }).join("");
+  $("#manageList").innerHTML = '<div class="manage-row head"><span>单词</span><span>音标</span><span>词义</span><span>分类</span><span>记忆进度</span><span>操作</span></div>' + rows;
 }
 
 function renderStats(){
@@ -704,10 +754,12 @@ function applySettings(){
   $("#voiceSelect").value = state.voice;
   $("#sortSelect").value = state.sort;
   $("#search").value = state.query;
-  $("#listMode").classList.toggle("on", state.mode === "list");
-  $("#cardMode").classList.toggle("on", state.mode === "card");
-  $("#listView").hidden = state.mode !== "list";
-  $("#cardView").hidden = state.mode !== "card";
+  $("#browseMode").classList.toggle("on", state.mode === "browse");
+  $("#reciteMode").classList.toggle("on", state.mode === "recite");
+  $("#manageMode").classList.toggle("on", state.mode === "manage");
+  $("#listView").hidden = state.mode !== "browse";
+  $("#cardView").hidden = state.mode !== "recite";
+  $("#manageView").hidden = state.mode !== "manage";
   $("#onlyDue").classList.toggle("primary", state.onlyDue);
   $("#onlyDue").setAttribute("aria-pressed", String(state.onlyDue));
   $("#onlyDue").textContent = state.onlyDue ? "待复习中 ✓" : "只看待复习";
@@ -718,7 +770,9 @@ function renderAll(){
   applySettings();
   renderStats();
   renderChips();
-  if (state.mode === "card") renderCard(); else renderList();
+  if (state.mode === "recite") renderCard();
+  else if (state.mode === "manage") renderManage();
+  else renderList();
 }
 
 function rate(id, kind){
@@ -740,8 +794,10 @@ function showPopover(key, anchor){
   const e = DICT[key];
   if (!e) return;
   const box = $("#popover");
+  const recite = state.mode === "recite";
   box.innerHTML = '<div class="pw">' + esc(e.word) + '</div><div class="pi">' + esc(e.ipa || "") + '</div>' +
-    '<div class="pz">' + esc(e.zh) + '</div>' + (e.note ? '<div class="pn">' + esc(e.note) + '</div>' : '') +
+    (recite ? '' : '<div class="pz">' + esc(e.zh) + '</div>' + (e.note ? '<div class="pn">' + esc(e.note) + '</div>' : '')) +
+    (recite ? '<div class="pn">背单词模式不显示词义</div>' : '') +
     '<div class="row"><button class="btn small primary" type="button" data-say="' + esc(e.word) + '">发音</button>' +
     '<button class="btn small" type="button" id="closePop">关闭</button></div>';
   box.hidden = false;
@@ -782,7 +838,7 @@ document.addEventListener("click", ev => {
     const list = filtered();
     state.index = Math.max(0, list.findIndex(w => w.id === flip.dataset.flip));
     cardFlipped = false;
-    state.mode = "card";
+    state.mode = "recite";
     save(); renderAll();
     return;
   }
@@ -811,8 +867,9 @@ $("#flipCard").addEventListener("click", ev => {
   $("#flipCard").classList.toggle("is-flipped", cardFlipped);
 });
 
-$("#listMode").addEventListener("click", () => { state.mode = "list"; save(); renderAll(); });
-$("#cardMode").addEventListener("click", () => { state.mode = "card"; save(); renderAll(); });
+$("#browseMode").addEventListener("click", () => { state.mode = "browse"; save(); renderAll(); });
+$("#reciteMode").addEventListener("click", () => { state.mode = "recite"; save(); renderAll(); });
+$("#manageMode").addEventListener("click", () => { state.mode = "manage"; save(); renderAll(); });
 $("#prevCard").addEventListener("click", () => { state.index--; cardFlipped = false; renderCard(); });
 $("#nextCard").addEventListener("click", () => { state.index++; cardFlipped = false; renderCard(); });
 $("#search").addEventListener("input", e => { state.query = e.target.value.trim(); state.index = 0; save(); renderAll(); });
@@ -822,7 +879,9 @@ $("#voiceSelect").addEventListener("change", e => { state.voice = e.target.value
 $("#sortSelect").addEventListener("change", e => { state.sort = e.target.value; state.index = 0; save(); renderAll(); });
 $("#onlyDue").addEventListener("click", () => { state.onlyDue = !state.onlyDue; state.index = 0; save(); renderAll(); });
 
-$("#addBtn").addEventListener("click", () => { $("#modal").hidden = false; $("#addForm").reset(); $("#addForm").elements.word.focus(); });
+function openAddModal(){ $("#modal").hidden = false; $("#addForm").reset(); $("#addForm").elements.word.focus(); }
+$("#addBtn").addEventListener("click", openAddModal);
+$("#manageAdd").addEventListener("click", openAddModal);
 $("#cancelAdd").addEventListener("click", () => { $("#modal").hidden = true; });
 $("#modal").addEventListener("click", ev => { if (ev.target.id === "modal") $("#modal").hidden = true; });
 $("#addForm").addEventListener("submit", ev => {
@@ -854,7 +913,7 @@ $("#resetBtn").addEventListener("click", () => {
 
 document.addEventListener("keydown", ev => {
   if (ev.key === "Escape") { hidePopover(); $("#modal").hidden = true; }
-  if (state.mode !== "card" || ev.target.matches("input,select,textarea")) return;
+  if (state.mode !== "recite" || ev.target.matches("input,select,textarea")) return;
   if (ev.key === "ArrowRight") { state.index++; cardFlipped = false; renderCard(); }
   if (ev.key === "ArrowLeft") { state.index--; cardFlipped = false; renderCard(); }
   if (ev.key === " ") { ev.preventDefault(); cardFlipped = !cardFlipped; $("#flipCard").classList.toggle("is-flipped", cardFlipped); }
