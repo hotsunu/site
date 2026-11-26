@@ -308,7 +308,14 @@
       <option value="due">按复习时间</option>
     </select>
     <button id="onlyDue" class="btn" type="button" aria-pressed="false">只看待复习</button>
-    <button id="addBtn" class="btn primary" type="button">添加单词</button>
+    <label>本轮词量
+      <select id="batchSelect" aria-label="本轮背诵量">
+        <option value="5">5 个</option>
+        <option value="10" selected>10 个</option>
+        <option value="20">20 个</option>
+        <option value="0">全部</option>
+      </select>
+    </label>
     <button id="resetBtn" class="btn ghost" type="button">恢复默认</button>
   </div>
 
@@ -321,7 +328,7 @@
       <span id="cardProgress" class="progress-text"></span>
       <button id="nextCard" class="btn" type="button">下一个</button>
     </div>
-    <p class="hint" style="text-align:center;margin-top:10px">词义默认隐藏 · 点「显示词义」在当前页展开中文解释 · 点击卡片翻页看完整内容 · 键盘 ← → 切换 · 空格翻面</p>
+    <p class="hint" style="text-align:center;margin-top:10px">词义默认隐藏 · 点「显示词义」在当前页展开中文解释 · 点击卡片翻页看完整内容 · 本轮词量可在上方选择 · 键盘 ← → 切换 · 空格翻面</p>
   </section>
 
   <section id="manageView" class="panel" hidden>
@@ -555,7 +562,7 @@ const EXTRA = {
 const KEY = "eng60.v1";
 const INTERVALS = [10, 1440, 2880, 5760, 10080, 21600, 43200, 86400];
 const INTERVAL_TEXT = ["10 分钟", "1 天", "2 天", "4 天", "7 天", "15 天", "30 天", "60 天"];
-const defaults = () => ({custom:[],removed:[],progress:{},theme:"dawn",accent:"#2563eb",voice:"en-US",mode:"study",category:"全部",query:"",sort:"default",onlyDue:false,index:0});
+const defaults = () => ({custom:[],removed:[],progress:{},theme:"dawn",accent:"#2563eb",voice:"en-US",mode:"study",category:"全部",query:"",sort:"default",onlyDue:false,index:0,batchSize:10,batchStart:0});
 
 function loadState(){
   try {
@@ -567,6 +574,9 @@ function loadState(){
       if (!s.progress || typeof s.progress !== "object") s.progress = {};
       if (["list", "browse", "card", "recite"].includes(s.mode)) s.mode = "study";
       if (s.mode !== "study" && s.mode !== "manage") s.mode = "study";
+      if (![5,10,20,0].includes(Number(s.batchSize))) s.batchSize = 10;
+      s.batchSize = Number(s.batchSize);
+      s.batchStart = Math.max(0, Number(s.batchStart) || 0);
       return s;
     }
   } catch(e) {}
@@ -652,6 +662,14 @@ function filtered(ignoreDue){
   return list;
 }
 
+function batchList(){
+  const list = filtered();
+  const size = Number(state.batchSize) || 0;
+  if (!list.length || !size || size >= list.length) return list;
+  const start = Math.min(Math.max(0, state.batchStart), list.length - size);
+  return list.slice(start, start + size);
+}
+
 function rateButtons(w){
   return '<div class="rate">' +
     '<button class="btn small" data-rate="forget" data-id="' + esc(w.id) + '"><b>忘记</b></button>' +
@@ -676,11 +694,23 @@ function detailsHtml(w){
 
 let cardFlipped = false;
 let meaningShown = false;
+let batchDone = false;
 function renderCard(){
-  const list = filtered();
+  const list = batchList();
   if (!list.length) {
     $("#flipCard").innerHTML = '<div class="face front"><p class="hint">没有符合条件的单词</p></div>';
     $("#cardProgress").textContent = "0 / 0";
+    return;
+  }
+  if (batchDone) {
+    $("#flipCard").innerHTML = '<div class="face front"><span class="tag">本轮完成</span>' +
+      '<div class="word">已背 ' + list.length + ' 词</div>' +
+      '<div class="front-actions"><button class="btn primary" type="button" data-batch="review">复习本轮</button>' +
+      '<button class="btn" type="button" data-batch="next">下一批</button></div>' +
+      '<p class="tip">先复习这一轮，再进入下一批；词量可在上方修改。</p></div>';
+    $("#cardProgress").textContent = "本轮 " + list.length + " / " + list.length + " · 已完成";
+    $("#flipCard").classList.remove("is-flipped");
+    save();
     return;
   }
   state.index = Math.max(0, Math.min(state.index, list.length - 1));
@@ -704,7 +734,7 @@ function renderCard(){
     (w.def ? '<div class="inline-def">' + esc(w.def) + '</div>' : '') + '</div>' +
     '<p class="tip">先自己回想词义，点「显示词义」在当前页展开中文解释；点击卡片可翻页看完整内容</p></div>' + back;
   $("#flipCard").classList.toggle("is-flipped", cardFlipped);
-  $("#cardProgress").textContent = (state.index + 1) + " / " + list.length + " · " + w.word;
+  $("#cardProgress").textContent = "本轮 " + (state.index + 1) + " / " + list.length + " · " + w.word;
   save();
 }
 
@@ -797,6 +827,7 @@ function applySettings(){
   $("#onlyDue").classList.toggle("primary", state.onlyDue);
   $("#onlyDue").setAttribute("aria-pressed", String(state.onlyDue));
   $("#onlyDue").textContent = state.onlyDue ? "待复习中 ✓" : "只看待复习";
+  $("#batchSelect").value = String(state.batchSize);
 }
 
 function renderAll(){
@@ -818,7 +849,12 @@ function rate(id, kind){
   p.last = Date.now();
   state.progress[id] = p;
   save();
-  if (state.mode === "study") { state.index++; cardFlipped = false; }
+  if (state.mode === "study") {
+    const currentBatch = batchList();
+    if (state.index + 1 >= currentBatch.length) { batchDone = true; state.index = 0; }
+    else state.index++;
+    cardFlipped = false;
+  }
   renderAll();
   toast(kind === "forget" ? "10 分钟后再复习 " + w.word : (kind === "good" ? "记住了，下次 " + INTERVAL_TEXT[Math.min(p.level,7)] + " 后复习" : "保持进度，下次 " + INTERVAL_TEXT[Math.min(p.level,7)] + " 后复习"));
 }
@@ -852,7 +888,7 @@ document.addEventListener("click", ev => {
   if (say) { speak(say.dataset.say); return; }
 
   const cat = ev.target.closest("[data-cat]");
-  if (cat) { state.category = cat.dataset.cat; save(); renderAll(); return; }
+  if (cat) { state.category = cat.dataset.cat; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); return; }
 
   const reveal = ev.target.closest("[data-reveal]");
   if (reveal) {
@@ -879,6 +915,21 @@ document.addEventListener("click", ev => {
     return;
   }
 
+  const batchBtn = ev.target.closest("[data-batch]");
+  if (batchBtn) {
+    if (batchBtn.dataset.batch === "review") {
+      batchDone = false; state.index = 0;
+    } else {
+      const all = filtered();
+      const size = Number(state.batchSize) || 0;
+      const use = size > 0 ? Math.min(size, all.length) : all.length;
+      const maxStart = Math.max(0, all.length - use);
+      state.batchStart = state.batchStart >= maxStart ? 0 : state.batchStart + use;
+      batchDone = false; state.index = 0;
+    }
+    save(); renderAll(); return;
+  }
+
   const rt = ev.target.closest("[data-rate]");
   if (rt) { rate(rt.dataset.id, rt.dataset.rate); return; }
 });
@@ -894,17 +945,17 @@ $("#flipCard").addEventListener("click", ev => {
 
 $("#studyMode").addEventListener("click", () => { state.mode = "study"; save(); renderAll(); });
 $("#manageMode").addEventListener("click", () => { state.mode = "manage"; save(); renderAll(); });
-$("#prevCard").addEventListener("click", () => { state.index--; cardFlipped = false; renderCard(); });
-$("#nextCard").addEventListener("click", () => { state.index++; cardFlipped = false; renderCard(); });
-$("#search").addEventListener("input", e => { state.query = e.target.value.trim(); state.index = 0; save(); renderAll(); });
+$("#prevCard").addEventListener("click", () => { batchDone = false; state.index--; cardFlipped = false; renderCard(); });
+$("#nextCard").addEventListener("click", () => { batchDone = false; state.index++; cardFlipped = false; renderCard(); });
+$("#search").addEventListener("input", e => { state.query = e.target.value.trim(); state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
 $("#themeSelect").addEventListener("change", e => { state.theme = e.target.value; save(); applySettings(); });
 $("#accentPick").addEventListener("input", e => { state.accent = e.target.value; save(); applySettings(); });
 $("#voiceSelect").addEventListener("change", e => { state.voice = e.target.value; save(); });
-$("#sortSelect").addEventListener("change", e => { state.sort = e.target.value; state.index = 0; save(); renderAll(); });
-$("#onlyDue").addEventListener("click", () => { state.onlyDue = !state.onlyDue; state.index = 0; save(); renderAll(); });
+$("#sortSelect").addEventListener("change", e => { state.sort = e.target.value; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
+$("#onlyDue").addEventListener("click", () => { state.onlyDue = !state.onlyDue; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
+$("#batchSelect").addEventListener("change", e => { state.batchSize = Number(e.target.value); state.batchStart = 0; state.index = 0; batchDone = false; save(); renderAll(); });
 
 function openAddModal(){ $("#modal").hidden = false; $("#addForm").reset(); $("#addForm").elements.word.focus(); }
-$("#addBtn").addEventListener("click", openAddModal);
 $("#manageAdd").addEventListener("click", openAddModal);
 $("#cancelAdd").addEventListener("click", () => { $("#modal").hidden = true; });
 $("#modal").addEventListener("click", ev => { if (ev.target.id === "modal") $("#modal").hidden = true; });
@@ -938,8 +989,8 @@ $("#resetBtn").addEventListener("click", () => {
 document.addEventListener("keydown", ev => {
   if (ev.key === "Escape") { hidePopover(); $("#modal").hidden = true; $("#installModal").hidden = true; }
   if (state.mode !== "study" || ev.target.matches("input,select,textarea")) return;
-  if (ev.key === "ArrowRight") { state.index++; cardFlipped = false; renderCard(); }
-  if (ev.key === "ArrowLeft") { state.index--; cardFlipped = false; renderCard(); }
+  if (ev.key === "ArrowRight") { batchDone = false; state.index++; cardFlipped = false; renderCard(); }
+  if (ev.key === "ArrowLeft") { batchDone = false; state.index--; cardFlipped = false; renderCard(); }
   if (ev.key === " ") { ev.preventDefault(); cardFlipped = !cardFlipped; $("#flipCard").classList.toggle("is-flipped", cardFlipped); }
 });
 document.addEventListener("click", ev => {
