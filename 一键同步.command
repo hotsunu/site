@@ -5,6 +5,9 @@
 cd "$(dirname "$0")" || exit 1
 echo "[目录] $(pwd)"
 
+# 0. 共享仓库由不同用户操作时，git 会报 dubious ownership，先信任当前目录
+git config --global --add safe.directory "$(pwd)" 2>/dev/null
+
 # 1. 暂存所有改动
 git add -A
 
