@@ -281,6 +281,126 @@
   .front-rate { margin-top: 14px; }
   .front-rate .label { display: block; text-align: center; margin-bottom: 6px; }
   .custom-batch { width: 78px; }
+
+  /* ---- 折叠控件 / 词量确认 / 登录辅助 ---- */
+  .fold-toggle { margin: 0 0 8px; align-items: center; }
+  .fold-toggle #installBtn { margin-left: auto; }
+  #settingsBox {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 12px 14px; margin: 8px 0 14px;
+  }
+  #settingsBox label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+  #settingsBox .batch-row { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  #settingsBox .batch-custom-wrap { display: inline-flex; align-items: center; gap: 6px; }
+  #settingsBox .batch-applied { font-size: 12px; color: var(--muted); }
+  #leadBox .stats { margin-top: 16px; }
+  #leadBox .install-note { display: block; margin-top: 10px; }
+  .auth-alt { margin-top: 12px; text-align: center; }
+  .auth-alt button {
+    border: 0; background: none; padding: 2px 4px; color: var(--accent);
+    font-size: 12px; text-decoration: underline;
+  }
+  .auth-guest { width: 100%; margin-top: 10px; }
+
+  /* ===== 视觉优化：背单词优先 ===== */
+  .wrap { padding: 22px 16px 70px; }
+  .user-bar { padding: 8px 12px; margin-bottom: 10px; }
+  .user-bar .who { font-size: 13px; }
+  .hero { margin-bottom: 10px; }
+  .eyebrow { font-size: 11px; margin-bottom: 6px; }
+  h1 { font-size: clamp(19px, 4.6vw, 26px); margin: 0; letter-spacing: -.02em; }
+  .fold-toggle { margin: 0 0 10px; gap: 6px; }
+  .fold-toggle .btn {
+    border-color: transparent; background: var(--surface); color: var(--muted);
+    font-size: 12px; padding: 5px 10px;
+  }
+  .fold-toggle .btn:hover { color: var(--accent); border-color: var(--line); }
+  .fold-toggle .btn[aria-pressed="true"] { color: var(--accent); background: var(--soft); border-color: transparent; }
+  .toolbar { margin-bottom: 10px; }
+  .search { padding: 9px 12px; }
+  .chips {
+    flex-wrap: nowrap; overflow-x: auto; margin: 0 0 12px; padding: 2px 1px 4px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex: 0 0 auto; padding: 4px 11px; font-size: 12px; }
+
+  /* 卡片：正面三段式（标签 / 单词 / 操作），背单词时不抢注意力 */
+  .card-mode { max-width: 660px; }
+  .card-stage { height: clamp(420px, 64vh, 520px); }
+  .face { padding: 22px 24px; border-radius: 22px; }
+  .face.front {
+    display: grid; grid-template-rows: auto 1fr auto; gap: 8px;
+    align-items: stretch;
+    text-align: center;
+    background: radial-gradient(120% 82% at 50% 0%, var(--soft) 0%, var(--surface) 60%);
+  }
+  .front-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .front-body { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 0; overflow-y: auto; }
+  .front .word {
+    font-size: clamp(40px, 9.5vw, 64px); font-weight: 800; letter-spacing: -.035em;
+    line-height: 1.08; margin: 0 0 6px; word-break: break-word;
+  }
+  .front .ipa { font-size: 16px; color: var(--muted); margin: 0; }
+  .front-actions { margin-top: 20px; gap: 8px; }
+  .front-actions .btn { min-height: 42px; padding: 8px 18px; border-radius: 12px; font-size: 14px; }
+  .inline-meaning { margin-top: 16px; padding: 10px 18px; }
+  .inline-zh { font-size: 20px; }
+
+  /* 复习三键：大按钮、颜色分区，拇指好按 */
+  .front-foot { display: flex; flex-direction: column; gap: 8px; }
+  .front-rate { margin-top: 0; }
+  .front-rate .label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .rate { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 0; }
+  .rate button {
+    min-height: 48px; border-radius: 13px; font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .12s ease, filter .12s ease;
+  }
+  .rate button[data-rate="forget"] {
+    color: var(--bad); background: color-mix(in srgb, var(--bad) 8%, var(--surface));
+    border-color: color-mix(in srgb, var(--bad) 26%, var(--line));
+  }
+  .rate button[data-rate="hard"] {
+    color: var(--warn); background: color-mix(in srgb, var(--warn) 9%, var(--surface));
+    border-color: color-mix(in srgb, var(--warn) 26%, var(--line));
+  }
+  .rate button[data-rate="good"] {
+    color: var(--good); background: color-mix(in srgb, var(--good) 9%, var(--surface));
+    border-color: color-mix(in srgb, var(--good) 26%, var(--line));
+  }
+  .rate button:hover { filter: brightness(.97); transform: translateY(-1px); }
+  .rate button:active { transform: translateY(0); filter: brightness(.94); }
+  .rate b, .rate i, .rate em { font-weight: 700; }
+  .front .tip { font-size: 11px; margin: 0; color: var(--muted); }
+
+  /* 背面 */
+  .back-word { margin: 2px 0; font-size: 26px; }
+  .back .ipa .reveal-zh { margin-left: 10px; }
+  .back .field p { font-size: 14px; }
+
+  /* 翻页 */
+  .card-nav { margin-top: 12px; }
+  .card-nav .btn { min-height: 40px; padding: 8px 16px; border-radius: 11px; }
+  .progress-text { font-variant-numeric: tabular-nums; }
+  #cardView > .hint { font-size: 11px; margin-top: 8px !important; opacity: .85; }
+  .done-words { font-size: clamp(26px, 6vw, 34px); font-weight: 800; letter-spacing: -.02em; }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 12px 12px 48px; }
+    .user-bar { padding: 6px 10px; margin-bottom: 8px; }
+    .card-stage { height: min(calc(100dvh - 250px), 520px); min-height: 400px; }
+    .face { padding: 18px 16px; }
+    .front .word { font-size: clamp(38px, 12vw, 56px); }
+    .front-actions .btn { min-height: 44px; padding: 8px 16px; }
+    .rate button { min-height: 52px; }
+    .card-nav .btn { min-height: 44px; }
+    #cardView > .hint { display: none; }
+  }
+  @media (max-width: 560px) {
+    .hero { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -296,22 +416,27 @@
   <header class="hero">
     <span class="eyebrow">高中英语 · 必考词汇</span>
     <h1>528 个高中必考词，听见、读懂、记得住</h1>
-  <div id="leadBox">
-    <p class="lead">根据手写词表整理的高中必考词汇。先看到单词，自己回想词义；点「显示词义」后展开中文释义与提示，点卡片翻页可看 3 条例句、词源和扩展。用「忘记 / 模糊 / 记住」按遗忘曲线安排复习，可自选每轮背诵量。增删词条请到「单词管理」。</p>
+  </header>
+
+  <div class="fold-toggle" role="group" aria-label="内容显示">
+    <button id="foldLead" class="btn" type="button" aria-pressed="false" data-label="说明">显示说明</button>
+    <button id="foldCurve" class="btn" type="button" aria-pressed="false" data-label="曲线">显示曲线</button>
+    <button id="foldSettings" class="btn" type="button" aria-pressed="false" data-label="设置">显示设置</button>
+    <button id="installBtn" class="btn small ghost" type="button">安装到主屏幕</button>
   </div>
-    <div class="install-cta">
-      <button id="installBtn" class="btn small primary" type="button">安装到主屏幕</button>
-      <span class="install-note">添加到 iPhone 桌面后，可像 App 一样全屏打开，并支持离线使用</span>
-    </div>
+
+  <div id="leadBox" class="fold-panel" hidden>
+    <p class="lead">根据手写词表整理的高中必考词汇。先看到单词，自己回想词义；点「显示词义」后展开中文释义与提示，点卡片翻页可看 3 条例句、词源和扩展。用「忘记 / 模糊 / 记住」按遗忘曲线安排复习，可自选每轮背诵量。增删词条请到「单词管理」。</p>
     <div class="stats">
       <div class="stat"><b id="statTotal">528</b><span>当前词库</span></div>
       <div class="stat"><b id="statDue">0</b><span>今日待复习</span></div>
       <div class="stat"><b id="statNew">528</b><span>未学新词</span></div>
       <div class="stat"><b id="statMastered">0</b><span>已掌握</span></div>
     </div>
-  </header>
+    <p class="hint install-note">安装：添加到 iPhone 桌面后，可像 App 一样全屏打开，并支持离线使用</p>
+  </div>
 
-  <div id="curveBox" class="fold-panel">
+  <div id="curveBox" class="fold-panel" hidden>
   <section class="panel">
     <h2>艾宾浩斯遗忘曲线</h2>
     <p class="hint">学完不复习，记忆会快速衰减；每次「记住」都会把曲线拉回顶点，并延长下次复习间隔。</p>
@@ -325,12 +450,6 @@
       </div>
     </div>
   </section>
-  </div>
-
-  <div class="fold-toggle" role="group" aria-label="内容显示">
-    <button id="foldLead" class="btn" type="button" aria-pressed="true" data-label="说明">隐藏说明</button>
-    <button id="foldCurve" class="btn" type="button" aria-pressed="true" data-label="曲线">隐藏曲线</button>
-    <button id="foldSettings" class="btn" type="button" aria-pressed="true" data-label="设置">隐藏设置</button>
   </div>
 
   <div class="toolbar">
@@ -364,19 +483,24 @@
       <option value="due">按复习时间</option>
     </select>
     <button id="onlyDue" class="btn" type="button" aria-pressed="false">只看待复习</button>
-    <label>本轮词量
-      <select id="batchSelect" aria-label="本轮背诵量">
-        <option value="5">5 个</option>
-        <option value="10" selected>10 个</option>
-        <option value="15">15 个</option>
-        <option value="20">20 个</option>
-        <option value="30">30 个</option>
-        <option value="custom">自定义</option>
-        <option value="0">全部</option>
-      </select>
-      <input id="batchCustom" class="custom-batch" type="number" min="1" max="500" placeholder="个数" hidden>
-    </label>
-    <button id="resetBtn" class="btn ghost" type="button">恢复默认</button>
+    <div class="batch-row">
+      <label>本轮词量
+        <select id="batchSelect" aria-label="本轮背诵量">
+          <option value="5">5 个</option>
+          <option value="10" selected>10 个</option>
+          <option value="15">15 个</option>
+          <option value="20">20 个</option>
+          <option value="30">30 个</option>
+          <option value="custom">自定义</option>
+          <option value="0">全部</option>
+        </select>
+      </label>
+      <span id="batchCustomWrap" class="batch-custom-wrap" hidden>
+        <input id="batchCustom" class="custom-batch" type="number" min="1" max="500" inputmode="numeric" placeholder="个数">
+        <button id="batchApply" class="btn small primary" type="button">确定</button>
+      </span>
+      <span id="batchApplied" class="batch-applied"></span>
+    </div><button id="resetBtn" class="btn ghost" type="button">恢复默认</button>
   </div>
 
   <div id="chips" class="chips"></div>
@@ -388,7 +512,7 @@
       <span id="cardProgress" class="progress-text"></span>
       <button id="nextCard" class="btn" type="button">下一个</button>
     </div>
-    <p class="hint" style="text-align:center;margin-top:10px">词义默认隐藏 · 点「显示词义」在当前页展开中文解释 · 点击卡片翻页看完整内容 · 复习按钮在正面 · 本轮词量在设置中 · 键盘 ← → 切换 · 空格翻面</p>
+    <p class="hint" style="text-align:center;margin-top:10px">点卡片或空格翻面 · 键盘 ← → 切换 · 本轮词量在「显示设置」</p>
   </section>
 
   <section id="manageView" class="panel" hidden>
@@ -464,6 +588,8 @@
         <button id="authSubmit" class="btn primary" type="submit">登录</button>
         <button id="authCancel" class="btn" type="button" hidden>取消</button>
       </div>
+      <div class="auth-alt"><button id="authAlt" type="button">没有账号？注册一个</button></div>
+      <button id="authGuest" class="btn auth-guest" type="button">先随便看看（游客模式）</button>
     </form>
   </div>
 </div>
@@ -1177,7 +1303,7 @@ const EXTRA = {
 const KEY = "eng-highschool.v1";
 const INTERVALS = [10, 1440, 2880, 5760, 10080, 21600, 43200, 86400];
 const INTERVAL_TEXT = ["10 分钟", "1 天", "2 天", "4 天", "7 天", "15 天", "30 天", "60 天"];
-const defaults = () => ({custom:[],removed:[],progress:{},theme:"dawn",accent:"#2563eb",voice:"en-US",mode:"study",category:"全部",query:"",sort:"default",onlyDue:false,index:0,batchSize:10,batchStart:0,batchMode:"preset",batchCustom:10,showLead:true,showCurve:true,showSettings:true});
+const defaults = () => ({custom:[],removed:[],progress:{},theme:"dawn",accent:"#2563eb",voice:"en-US",mode:"study",category:"全部",query:"",sort:"default",onlyDue:false,index:0,batchSize:10,batchStart:0,batchMode:"preset",batchCustom:10,showLead:false,showCurve:false,showSettings:false,uiVersion:2});
 
 
 let state = defaults();
@@ -1218,6 +1344,8 @@ function loadAppState(){
     const raw = JSON.parse(localStorage.getItem(dataKey()));
     if (raw && typeof raw === "object") {
       const s = Object.assign(defaults(), raw);
+      if (!raw.uiVersion || raw.uiVersion < 2) { s.showLead = false; s.showCurve = false; s.showSettings = false; }
+      s.uiVersion = 2;
       if (!Array.isArray(s.custom)) s.custom = [];
       if (!Array.isArray(s.removed)) s.removed = [];
       if (!s.progress || typeof s.progress !== "object") s.progress = {};
@@ -1243,14 +1371,20 @@ function openAuth(mode){
   $("#authSubmit").textContent = authMode === "register" ? "注册并登录" : "登录";
   $("#authCancel").hidden = !(sessionUser() && authMode === "register");
   $("#authError").textContent = "";
+  const alt = $("#authAlt");
+  if (alt) alt.textContent = authMode === "register" ? "已有账号？直接登录" : "没有账号？注册一个";
+  const guest = $("#authGuest");
+  if (guest) guest.hidden = !!sessionUser();
   $("#authModal").hidden = false;
   setTimeout(() => $("#authName").focus(), 0);
 }
 function currentRole(){ const u = getUserByName(sessionUser()); return u ? u.role : "user"; }
 function updateUserBar(){
   const name = sessionUser();
-  $("#userBar").hidden = !name;
-  $("#currentUserName").textContent = name || "—";
+  $("#userBar").hidden = false;
+  $("#currentUserName").textContent = name || "游客";
+  $("#userSwitchBtn").textContent = name ? "切换用户" : "登录 / 注册";
+  $("#userLogoutBtn").hidden = !name;
   $("#roleBadge").hidden = currentRole() !== "admin";
   $("#userManageBtn").hidden = currentRole() !== "admin";
 }
@@ -1289,6 +1423,8 @@ $("#authForm").addEventListener("submit", ev => {
   toast("欢迎回来，" + u.name);
 });
 $("#authCancel").addEventListener("click", () => { $("#authModal").hidden = true; });
+$("#authAlt").addEventListener("click", () => openAuth(authMode === "register" ? "login" : "register"));
+$("#authGuest").addEventListener("click", () => { $("#authModal").hidden = true; state = loadAppState(); updateUserBar(); renderAll(); });
 $("#userSwitchBtn").addEventListener("click", () => { openAuth("login"); });
 $("#userManageBtn").addEventListener("click", () => { renderUserList(); $("#userModal").hidden = false; });
 $("#userLogoutBtn").addEventListener("click", doLogout);
@@ -1355,18 +1491,9 @@ try {
   if (old && !localStorage.getItem(adminKey)) localStorage.setItem(adminKey, old);
 } catch(e) {}
 
-/* 初始化用户会话 */
-if (!sessionUser() || !getUserByName(sessionUser())) {
-  try { localStorage.removeItem(SESSION_KEY); } catch(e) {}
-  state = defaults();
-  updateUserBar();
-  openAuth("login");
-} else {
-  applySession();
-}
 
 /* USER SYSTEM END */
-const save = saveAppState;
+function save(){ saveAppState(); }
 
 function catalog(){
   return BASE_WORDS.concat(state.custom).filter(w => !state.removed.includes(w.id));
@@ -1479,16 +1606,20 @@ let batchDone = false;
 function renderCard(){
   const list = batchList();
   if (!list.length) {
-    $("#flipCard").innerHTML = '<div class="face front"><p class="hint">没有符合条件的单词</p></div>';
+    $("#flipCard").innerHTML = '<div class="face front"><div class="front-head"><span class="tag">没有结果</span></div>' +
+      '<div class="front-body"><p class="hint">当前筛选下没有单词</p>' +
+      '<div class="front-actions"><button class="btn" type="button" data-clear-filter>清空筛选</button></div></div>' +
+      '<div class="front-foot"></div></div>';
     $("#cardProgress").textContent = "0 / 0";
     return;
   }
   if (batchDone) {
-    $("#flipCard").innerHTML = '<div class="face front"><span class="tag">本轮完成</span>' +
-      '<div class="word">已背 ' + list.length + ' 词</div>' +
+    $("#flipCard").innerHTML = '<div class="face front">' +
+      '<div class="front-head"><span class="tag">本轮完成</span></div>' +
+      '<div class="front-body"><div class="done-words">已背 ' + list.length + ' 词</div>' +
       '<div class="front-actions"><button class="btn primary" type="button" data-batch="review">复习本轮</button>' +
-      '<button class="btn" type="button" data-batch="next">下一批</button></div>' +
-      '<p class="tip">先复习这一轮，再进入下一批；词量可在上方修改。</p></div>';
+      '<button class="btn" type="button" data-batch="next">下一批</button></div></div>' +
+      '<div class="front-foot"><p class="tip">先复习这一轮，再进入下一批；词量可在「显示设置」里改。</p></div></div>';
     $("#cardProgress").textContent = "本轮 " + list.length + " / " + list.length + " · 已完成";
     $("#flipCard").classList.remove("is-flipped");
     save();
@@ -1501,19 +1632,26 @@ function renderCard(){
   const strength = levelOf(w) < 0 ? 0 : Math.round((Math.min(levelOf(w),7) + 1) / 8 * 100);
   const back = '<div class="face back">' +
     '<div class="wc-top"><span class="tag">' + esc(w.cat) + '</span><span class="level">' + dueLabel(w) + '</span></div>' +
-    '<h3>' + esc(w.word) + ' <button class="btn small" type="button" data-say="' + esc(w.word) + '">发音</button>' +
-    '<div class="ipa">' + esc(w.ipa || "—") + '　<span class="reveal-zh">' + esc(w.zh) + '</span></div>' +
+    '<h3 class="back-word">' + esc(w.word) + ' <button class="btn small" type="button" data-say="' + esc(w.word) + '">发音</button></h3>' +
+    '<div class="ipa">' + esc(w.ipa || "—") + '<span class="reveal-zh">' + esc(w.zh) + '</span></div>' +
     '<div class="bar"><i style="width:' + strength + '%"></i></div>' +
     detailsHtml(w) + '</div>';
   $("#flipCard").innerHTML =
-    '<div class="face front"><span class="tag">' + esc(w.cat) + '</span>' +
-    '<div class="word">' + esc(w.word) + '</div><div class="ipa">' + esc(w.ipa || "—") + '</div>' +
+    '<div class="face front">' +
+    '<div class="front-head"><span class="tag">' + esc(w.cat) + '</span>' +
+    '<span class="level">' + dueLabel(w) + '</span></div>' +
+    '<div class="front-body">' +
+    '<div class="word">' + esc(w.word) + '</div>' +
+    '<div class="ipa">' + esc(w.ipa || "—") + '</div>' +
     '<div class="front-actions"><button class="btn" type="button" data-say="' + esc(w.word) + '">听发音</button>' +
     '<button class="btn primary" type="button" data-reveal id="revealBtn">显示词义</button></div>' +
     '<div id="inlineMeaning" class="inline-meaning" hidden><div class="inline-zh">' + esc(w.zh) + '</div>' +
     (w.def ? '<div class="inline-def">' + esc(w.def) + '</div>' : '') + '</div>' +
-    '<div class="front-rate"><span class="label">记得怎么样？</span>' + rateButtons(w) + '</div>' +
-    '<p class="tip">先自己回想词义，点「显示词义」在当前页展开中文解释；点击卡片可翻页看完整内容</p></div>' + back;
+    '</div>' +
+    '<div class="front-foot">' +
+    '<div class="front-rate"><span class="label">这个词记得怎么样？</span>' + rateButtons(w) + '</div>' +
+    '<p class="tip">回想词义 → 显示词义 → 评价；点卡片或空格可翻面看完整内容</p>' +
+    '</div></div>' + back;
   $("#flipCard").classList.toggle("is-flipped", cardFlipped);
   $("#cardProgress").textContent = "本轮 " + (state.index + 1) + " / " + list.length + " · " + w.word;
   save();
@@ -1610,8 +1748,12 @@ function applySettings(){
   $("#onlyDue").textContent = state.onlyDue ? "待复习中 ✓" : "只看待复习";
   const presets = [5,10,15,20,30,0];
   $("#batchSelect").value = state.batchMode === "custom" ? "custom" : String(state.batchSize);
-  $("#batchCustom").hidden = state.batchMode !== "custom";
+  const customOn = state.batchMode === "custom";
+  const wrap = $("#batchCustomWrap");
+  if (wrap) wrap.hidden = !customOn;
   $("#batchCustom").value = state.batchCustom || 10;
+  const applied = $("#batchApplied");
+  if (applied) applied.textContent = customOn ? "已设置：每轮 " + (Number(state.batchSize) || 0) + " 个" : "";
   applyFolds();
 }
 
@@ -1674,6 +1816,14 @@ document.addEventListener("click", ev => {
 
   const cat = ev.target.closest("[data-cat]");
   if (cat) { state.category = cat.dataset.cat; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); return; }
+
+  const clearF = ev.target.closest("[data-clear-filter]");
+  if (clearF) {
+    state.query = ""; state.category = "全部"; state.onlyDue = false;
+    state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll();
+    toast("已清空筛选");
+    return;
+  }
 
   const reveal = ev.target.closest("[data-reveal]");
   if (reveal) {
@@ -1738,22 +1888,33 @@ $("#accentPick").addEventListener("input", e => { state.accent = e.target.value;
 $("#voiceSelect").addEventListener("change", e => { state.voice = e.target.value; save(); });
 $("#sortSelect").addEventListener("change", e => { state.sort = e.target.value; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
 $("#onlyDue").addEventListener("click", () => { state.onlyDue = !state.onlyDue; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
+function applyCustomBatch(){
+  const raw = Math.round(Number($("#batchCustom").value));
+  if (!raw || raw < 1) { toast("请输入 1–500 之间的数字"); $("#batchCustom").focus(); return; }
+  const n = Math.max(1, Math.min(500, raw));
+  state.batchMode = "custom"; state.batchCustom = n; state.batchSize = n;
+  state.batchStart = 0; state.index = 0; batchDone = false;
+  $("#batchCustom").value = n;
+  save(); renderAll();
+  toast("本轮背 " + n + " 个单词");
+}
 $("#batchSelect").addEventListener("change", e => {
   const v = e.target.value;
+  const wrap = $("#batchCustomWrap");
   if (v === "custom") {
-    const n = Math.max(1, Math.min(500, Number($("#batchCustom").value) || 10));
-    state.batchMode = "custom"; state.batchCustom = n; state.batchSize = n;
-    $("#batchCustom").hidden = false;
-  } else {
-    state.batchMode = "preset"; state.batchSize = Number(v);
-    $("#batchCustom").hidden = true;
+    wrap.hidden = false;
+    $("#batchCustom").value = state.batchCustom || 10;
+    $("#batchCustom").focus();
+    $("#batchCustom").select && $("#batchCustom").select();
+    return;
   }
+  wrap.hidden = true;
+  state.batchMode = "preset"; state.batchSize = Number(v);
   state.batchStart = 0; state.index = 0; batchDone = false; save(); renderAll();
 });
-$("#batchCustom").addEventListener("change", e => {
-  const n = Math.max(1, Math.min(500, Number(e.target.value) || 10));
-  e.target.value = n; state.batchMode = "custom"; state.batchCustom = n; state.batchSize = n;
-  state.batchStart = 0; state.index = 0; batchDone = false; save(); renderAll();
+$("#batchApply").addEventListener("click", applyCustomBatch);
+$("#batchCustom").addEventListener("keydown", e => {
+  if (e.key === "Enter") { e.preventDefault(); applyCustomBatch(); }
 });
 
 function openAddModal(){ $("#modal").hidden = false; $("#addForm").reset(); $("#addForm").elements.word.focus(); }
@@ -1824,8 +1985,23 @@ function applyFolds(){
   setFold($("#foldSettings"), "#settingsBox", !state.showSettings);
 }
 
+window.addEventListener("error", function(ev){
+  try { console.error("[wordcards]", ev.message); } catch(e) {}
+});
+
 renderCurve();
-renderAll();
+
+/* 初始化用户会话：必须放在所有 let/const 声明之后，否则会触发暂时性死区报错 */
+if (!sessionUser() || !getUserByName(sessionUser())) {
+  try { localStorage.removeItem(SESSION_KEY); } catch(e) {}
+  state = defaults();
+  updateUserBar();
+  renderAll();
+  openAuth("login");
+} else {
+  applySession();
+}
+
 if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
 
 (function initPWA(){

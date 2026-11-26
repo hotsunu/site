@@ -1,4 +1,4 @@
-const CACHE_NAME = "english-highschool-v2";
+const CACHE_NAME = "english-highschool-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -22,7 +22,7 @@ self.addEventListener("activate", (event) => {
     caches.keys()
       .then((keys) => Promise.all(
         keys
-          .filter((key) => key.startsWith("english-word-cards-") && key !== CACHE_NAME)
+          .filter((key) => key.startsWith("english-") && key !== CACHE_NAME)
           .map((key) => caches.delete(key))
       ))
       .then(() => self.clients.claim())
