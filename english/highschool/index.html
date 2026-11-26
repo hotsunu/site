@@ -154,10 +154,10 @@
   .face {
     position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
     background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
-    box-shadow: var(--shadow); padding: 28px; overflow: auto;
+    box-shadow: var(--shadow); padding: 28px; overflow: hidden; touch-action: pan-y;
   }
   .face.front { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-  .face.back { transform: rotateY(180deg); }
+  .face.back { transform: rotateY(180deg); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
   .front .word { font-size: 58px; font-weight: 700; letter-spacing: -.03em; margin: 12px 0 4px; }
   .front .ipa { font-size: 19px; }
   .front .zh { font-size: 19px; margin-top: 20px; }
@@ -180,6 +180,7 @@
     display: grid; grid-template-columns: 1.1fr 1fr 1.5fr .7fr 1.1fr auto;
     gap: 10px; align-items: center; min-width: 680px;
     padding: 10px 8px; border-bottom: 1px solid var(--line); font-size: 14px;
+    content-visibility: auto; contain-intrinsic-size: auto 44px;
   }
   .manage-row:last-child { border-bottom: 0; }
   .manage-row.head { font-size: 12px; font-weight: 700; color: var(--muted); }
@@ -1461,6 +1462,7 @@ function applySession(){
   renderAll();
 }
 function doLogout(){
+  flushSave();
   try { localStorage.removeItem(SESSION_KEY); } catch(e) {}
   state = defaults();
   updateUserBar();
@@ -1476,6 +1478,7 @@ $("#authForm").addEventListener("submit", ev => {
     if (getUserByName(name)) { $("#authError").textContent = "用户名已存在"; return; }
     list.push({name:name, pass:hashPass(pass), role:"user"});
     writeUsers(list);
+    flushSave();
     try { localStorage.setItem(SESSION_KEY, name); } catch(e) {}
     $("#authModal").hidden = true;
     applySession();
@@ -1484,6 +1487,7 @@ $("#authForm").addEventListener("submit", ev => {
   }
   const u = getUserByName(name);
   if (!u || u.pass !== hashPass(pass)) { $("#authError").textContent = "用户名或密码错误"; return; }
+  flushSave();
   try { localStorage.setItem(SESSION_KEY, u.name); } catch(e) {}
   $("#authModal").hidden = true;
   applySession();
@@ -1491,7 +1495,7 @@ $("#authForm").addEventListener("submit", ev => {
 });
 $("#authCancel").addEventListener("click", () => { $("#authModal").hidden = true; });
 $("#authAlt").addEventListener("click", () => openAuth(authMode === "register" ? "login" : "register"));
-$("#authGuest").addEventListener("click", () => { $("#authModal").hidden = true; state = loadAppState(); updateUserBar(); renderAll(); });
+$("#authGuest").addEventListener("click", () => { flushSave(); $("#authModal").hidden = true; state = loadAppState(); updateUserBar(); renderAll(); });
 $("#userSwitchBtn").addEventListener("click", () => { openAuth("login"); });
 $("#userManageBtn").addEventListener("click", () => { renderUserList(); $("#userModal").hidden = false; });
 $("#userLogoutBtn").addEventListener("click", doLogout);
@@ -1560,10 +1564,25 @@ try {
 
 
 /* USER SYSTEM END */
-function save(){ saveAppState(); }
+let saveTimer = 0;
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){ saveTimer = 0; saveAppState(); }, 260);
+}
+function flushSave(){
+  if (saveTimer) { clearTimeout(saveTimer); saveTimer = 0; }
+  saveAppState();
+}
+window.addEventListener("pagehide", flushSave);
+document.addEventListener("visibilitychange", function(){ if (document.hidden) flushSave(); });
 
 function catalog(){
   return BASE_WORDS.concat(state.custom).filter(w => !state.removed.includes(w.id));
+}
+let DICT_SIG = "";
+function ensureDict(){
+  const sig = BASE_WORDS.length + "|" + state.custom.length + "|" + state.removed.length;
+  if (!DICT || sig !== DICT_SIG) { DICT = buildDict(); DICT_SIG = sig; }
 }
 function buildDict(){
   const m = {};
@@ -1650,6 +1669,46 @@ function rateButtons(w){
     '</div>';
 }
 
+let currentWord = null;
+function backHtml(w){
+  const lv = levelOf(w);
+  const strength = lv < 0 ? 0 : Math.round((Math.min(lv, 7) + 1) / 8 * 100);
+  return '<div class="wc-top"><span class="tag">' + esc(w.cat) + '</span><span class="level">' + dueLabel(w) + '</span></div>' +
+    '<h3 class="back-word">' + esc(w.word) + ' <button class="btn small" type="button" data-say="' + esc(w.word) + '">发音</button></h3>' +
+    '<div class="ipa">' + esc(w.ipa || "—") + '<span class="reveal-zh">' + esc(w.zh) + '</span></div>' +
+    '<div class="bar"><i style="width:' + strength + '%"></i></div>' +
+    detailsHtml(w);
+}
+/* 背面较重（3 条例句 + 词源 + 扩展），翻面时才生成；切卡只重建正面 */
+function ensureBack(){
+  const card = $("#flipCard");
+  if (!card || !currentWord) return;
+  const back = card.querySelector(".face.back");
+  if (!back || back.dataset.filled === "1") return;
+  back.innerHTML = backHtml(currentWord);
+  back.dataset.filled = "1";
+}
+function reducedMotion(){
+  try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e) { return false; }
+}
+/* 用 Web Animations 入场：避免 void offsetWidth 强制同步布局整棵卡片树 */
+function animCardIn(dir){
+  const card = $("#flipCard");
+  if (!card) return;
+  if (typeof card.animate === "function" && !reducedMotion()) {
+    if (card.getAnimations) card.getAnimations().forEach(a => a.cancel());
+    const from = dir > 0 ? 46 : -46;
+    card.animate([
+      { opacity: .25, transform: "translate3d(" + from + "%,0,0) scale(.965)" },
+      { opacity: 1, transform: "none" }
+    ], { duration: 240, easing: "cubic-bezier(.22,.86,.3,1)" });
+    return;
+  }
+  card.classList.remove("slide-next", "slide-prev");
+  void card.offsetWidth;
+  card.classList.add(dir > 0 ? "slide-next" : "slide-prev");
+}
+
 function detailsHtml(w){
   const lv = levelOf(w);
   const strength = lv < 0 ? 0 : Math.round((Math.min(lv,7) + 1) / 8 * 100);
@@ -1704,13 +1763,7 @@ function renderCard(){
   cardFlipped = false;
   meaningShown = false;
   const w = list[state.index];
-  const strength = levelOf(w) < 0 ? 0 : Math.round((Math.min(levelOf(w),7) + 1) / 8 * 100);
-  const back = '<div class="face back">' +
-    '<div class="wc-top"><span class="tag">' + esc(w.cat) + '</span><span class="level">' + dueLabel(w) + '</span></div>' +
-    '<h3 class="back-word">' + esc(w.word) + ' <button class="btn small" type="button" data-say="' + esc(w.word) + '">发音</button></h3>' +
-    '<div class="ipa">' + esc(w.ipa || "—") + '<span class="reveal-zh">' + esc(w.zh) + '</span></div>' +
-    '<div class="bar"><i style="width:' + strength + '%"></i></div>' +
-    detailsHtml(w) + '</div>';
+  currentWord = w;
   $("#flipCard").innerHTML =
     '<div class="face front">' +
     '<div class="front-head"><span class="tag">' + esc(w.cat) + '</span>' +
@@ -1726,7 +1779,7 @@ function renderCard(){
     '<div class="front-foot">' +
     '<div class="front-rate"><span class="label">这个词记得怎么样？</span>' + rateButtons(w) + '</div>' +
     '<p class="tip">回想词义 → 显示词义 → 评价；点卡片或空格可翻面看完整内容</p>' +
-    '</div></div>' + back;
+    '</div></div><div class="face back" data-back></div>';
   $("#flipCard").classList.toggle("is-flipped", cardFlipped);
   $("#cardProgress").textContent = "本轮 " + (state.index + 1) + " / " + list.length + " · " + w.word;
   setBatchBar((state.index + 1) / list.length);
@@ -1757,16 +1810,28 @@ function renderManage(){
 
 function renderStats(){
   const list = catalog();
+  const now = Date.now();
+  let due = 0, fresh = 0, mastered = 0;
+  for (let i = 0; i < list.length; i++) {
+    const p = state.progress[list[i].id];
+    if (!p) { fresh++; due++; continue; }
+    if ((p.due || 0) <= now) due++;
+    if ((p.level || 0) >= 4) mastered++;
+  }
   $("#statTotal").textContent = list.length;
-  $("#statDue").textContent = list.filter(isDue).length;
-  $("#statNew").textContent = list.filter(w => !progressOf(w)).length;
-  $("#statMastered").textContent = list.filter(w => levelOf(w) >= 4).length;
+  $("#statDue").textContent = due;
+  $("#statNew").textContent = fresh;
+  $("#statMastered").textContent = mastered;
 }
 
+let chipsSig = "";
 function renderChips(){
   const cats = ["全部"];
   catalog().forEach(w => { if (!cats.includes(w.cat)) cats.push(w.cat); });
   if (!cats.includes(state.category)) state.category = "全部";
+  const sig = cats.join("|") + "#" + state.category;
+  if (sig === chipsSig) return;
+  chipsSig = sig;
   $("#chips").innerHTML = cats.map(c =>
     '<button class="chip' + (c === state.category ? ' on' : '') + '" type="button" data-cat="' + esc(c) + '">' + esc(c) + '</button>'
   ).join("");
@@ -1835,7 +1900,7 @@ function applySettings(){
 }
 
 function renderAll(){
-  DICT = buildDict();
+  ensureDict();
   applySettings();
   renderStats();
   renderChips();
@@ -1861,12 +1926,7 @@ function rate(id, kind){
     cardFlipped = false;
   }
   renderAll();
-  const cardEl = $("#flipCard");
-  if (cardEl && state.mode === "study" && !batchDone) {
-    cardEl.classList.remove("slide-next", "slide-prev");
-    void cardEl.offsetWidth;
-    cardEl.classList.add("slide-next");
-  }
+  if (state.mode === "study" && !batchDone) animCardIn(1);
   toast(kind === "forget" ? "10 分钟后再复习 " + w.word : (kind === "good" ? "记住了，下次 " + INTERVAL_TEXT[Math.min(p.level,7)] + " 后复习" : "保持进度，下次 " + INTERVAL_TEXT[Math.min(p.level,7)] + " 后复习"));
 }
 
@@ -1959,6 +2019,7 @@ $("#flipCard").addEventListener("click", ev => {
     if (ev.target.closest(".hit")) return;
     return;
   }
+  if (!cardFlipped) ensureBack();
   cardFlipped = !cardFlipped;
   $("#flipCard").classList.toggle("is-flipped", cardFlipped);
 });
@@ -1979,10 +2040,7 @@ function slideTo(dir, animate){
   cardFlipped = false;
   renderCard();
   if (animate === false) return;
-  const card = $("#flipCard");
-  card.classList.remove("slide-next", "slide-prev");
-  void card.offsetWidth;
-  card.classList.add(dir > 0 ? "slide-next" : "slide-prev");
+  animCardIn(dir);
 }
 (function bindSwipe(){
   const stage = document.querySelector(".card-stage");
@@ -2004,10 +2062,8 @@ function slideTo(dir, animate){
     if (raf) return;
     raf = requestAnimationFrame(function(){
       raf = 0;
-      const p = Math.max(-1, Math.min(1, lastX / stageW));
-      card.style.transform = "translate3d(" + lastX.toFixed(1) + "px,0,0) rotate(" +
-        (p * 1.1).toFixed(2) + "deg)" + (cardFlipped ? " rotateY(180deg)" : "");
-      card.style.opacity = String(1 - Math.abs(p) * 0.12);
+      card.style.transform = "translate3d(" + lastX.toFixed(1) + "px,0,0)" +
+        (cardFlipped ? " rotateY(180deg)" : "");
     });
   }
 
@@ -2145,7 +2201,7 @@ document.addEventListener("keydown", ev => {
   if (state.mode !== "study" || ev.target.matches("input,select,textarea")) return;
   if (ev.key === "ArrowRight") { slideTo(1, false); }
   if (ev.key === "ArrowLeft") { slideTo(-1, false); }
-  if (ev.key === " ") { ev.preventDefault(); cardFlipped = !cardFlipped; $("#flipCard").classList.toggle("is-flipped", cardFlipped); }
+  if (ev.key === " ") { ev.preventDefault(); if (!cardFlipped) ensureBack(); cardFlipped = !cardFlipped; $("#flipCard").classList.toggle("is-flipped", cardFlipped); }
 });
 document.addEventListener("click", ev => {
   const hit = ev.target.closest(".hit");
@@ -2263,6 +2319,33 @@ if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
       navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(() => {});
     });
   }
+})();
+/* ===== 性能探针：地址后加 ?perf=1 查看帧率 / 切卡耗时 / 节点数 ===== */
+(function perfProbe(){
+  if (!/[?&]perf=1/.test(location.search)) return;
+  const box = document.createElement("div");
+  box.style.cssText = "position:fixed;left:8px;bottom:8px;z-index:9999;font:11px/1.45 ui-monospace,Menlo,monospace;background:rgba(0,0,0,.72);color:#fff;padding:6px 9px;border-radius:8px;pointer-events:none;white-space:pre;letter-spacing:.02em";
+  document.body.appendChild(box);
+  let frames = 0, t0 = performance.now(), prev = t0, gapMax = 0, cardMs = 0;
+  const orig = renderCard;
+  renderCard = function(){
+    const s = performance.now();
+    const r = orig.apply(null, arguments);
+    cardMs = performance.now() - s;
+    return r;
+  };
+  (function loop(now){
+    frames++;
+    const gap = now - prev; prev = now;
+    if (gap < 600 && gap > gapMax) gapMax = gap;
+    if (now - t0 >= 500) {
+      const fps = Math.round(frames * 1000 / (now - t0));
+      const nodes = document.querySelectorAll("#flipCard *").length;
+      box.textContent = "FPS " + fps + "  最大帧间隔 " + gapMax.toFixed(0) + "ms\n切卡 " + cardMs.toFixed(1) + "ms  节点 " + nodes;
+      frames = 0; t0 = now; gapMax = 0;
+    }
+    requestAnimationFrame(loop);
+  })(performance.now());
 })();
 </script>
 </body>
