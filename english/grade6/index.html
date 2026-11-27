@@ -144,6 +144,19 @@
   .empty { text-align: center; color: var(--muted); padding: 60px 20px; }
   .card-mode { max-width: 720px; margin: 0 auto; }
   .card-stage { perspective: 1200px; height: 400px; }
+  .card-stage { position: relative; }
+  .card-nav-arrow {
+    position: absolute; top: 50%; z-index: 6;
+    width: 42px; height: 42px; margin-top: -21px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line); border-radius: 50%;
+    background: var(--surface); color: var(--text); box-shadow: var(--shadow);
+    font-size: 26px; line-height: 1; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .card-nav-arrow.prev { left: 6px; }
+  .card-nav-arrow.next { right: 6px; }
+  .card-nav-arrow:disabled { opacity: .35; cursor: default; }
   .flip-card {
     position: relative; width: 100%; height: 100%; transform-style: preserve-3d;
     transition: transform .55s cubic-bezier(.2,.7,.2,1); cursor: pointer;
@@ -554,12 +567,16 @@
   <div id="chips" class="chips"></div>
 
   <section id="cardView" class="card-mode" aria-live="polite">
-    <div class="card-stage"><div id="flipCard" class="flip-card"></div></div>
+    <div class="card-stage">
+      <div id="flipCard" class="flip-card"></div>
+      <button id="cardPrev" class="card-nav-arrow prev" type="button" data-card-nav="prev" aria-label="上一张">‹</button>
+      <button id="cardNext" class="card-nav-arrow next" type="button" data-card-nav="next" aria-label="下一张">›</button>
+    </div>
     <div class="card-nav">
       <div class="batch-bar" aria-hidden="true"><i id="batchBarFill"></i></div>
       <span id="cardProgress" class="progress-text"></span>
     </div>
-    <p class="hint" style="text-align:center;margin-top:10px">左右滑动切换单词 · 点卡片或空格翻面 · 键盘 ← → 也可切换</p>
+    <p class="hint" style="text-align:center;margin-top:10px">左右滑动或点卡片两侧箭头切换单词 · 点卡片或空格翻面 · 键盘 ← → 也可切换</p>
   </section>
 
   <section id="manageView" class="panel" hidden>
@@ -1760,8 +1777,19 @@ function setBatchBar(ratio){
   if (fill) fill.style.width = Math.round(Math.max(0, Math.min(1, ratio)) * 1000) / 10 + "%";
 }
 
+function updateNavButtons(list, index){
+  const prev = document.querySelector('[data-card-nav="prev"]');
+  const next = document.querySelector('[data-card-nav="next"]');
+  if (!prev || !next) return;
+  const total = list ? list.length : 0;
+  const i = index || 0;
+  prev.disabled = !total || i <= 0;
+  next.disabled = !total || i >= total - 1;
+}
+
 function renderCard(){
   const list = batchList();
+  updateNavButtons(list, batchDone ? -1 : state.index);
   $("#flipCard").classList.remove("slide-next", "slide-prev");
   if (!list.length) {
     $("#flipCard").innerHTML = '<div class="face front"><div class="front-head"><span class="tag">没有结果</span></div>' +
@@ -1786,6 +1814,7 @@ function renderCard(){
     return;
   }
   state.index = Math.max(0, Math.min(state.index, list.length - 1));
+  updateNavButtons(list, state.index);
   cardFlipped = false;
   meaningShown = false;
   const w = list[state.index];
@@ -2068,6 +2097,10 @@ function slideTo(dir, animate){
   if (animate === false) return;
   animCardIn(dir);
 }
+const navPrevBtn = document.querySelector('[data-card-nav="prev"]');
+const navNextBtn = document.querySelector('[data-card-nav="next"]');
+if (navPrevBtn) navPrevBtn.addEventListener("click", function(){ slideTo(-1); });
+if (navNextBtn) navNextBtn.addEventListener("click", function(){ slideTo(1); });
 (function bindSwipe(){
   const stage = document.querySelector(".card-stage");
   const card = $("#flipCard");
