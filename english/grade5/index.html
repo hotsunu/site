@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dawn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小学五年级英语 · PEP 教材全量词汇卡片</title>
+<style>
+  :root {
+    --bg: #f5f7fb;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --text: #1d2230;
+    --muted: #6b7280;
+    --line: #e5e8ef;
+    --accent: #2563eb;
+    --soft: color-mix(in srgb, var(--accent) 10%, var(--surface));
+    --good: #15803d;
+    --warn: #b45309;
+    --bad: #b91c1c;
+    --shadow: 0 6px 24px rgba(31, 45, 80, .07);
+    --radius: 16px;
+  }
+  html[data-theme="mint"] {
+    --bg: #f2f9f5; --surface: #ffffff; --surface-2: #f4fbf7;
+    --text: #14251d; --muted: #5d7468; --line: #d8e9de;
+    --accent: #0f8a5f; --shadow: 0 6px 24px rgba(16, 90, 60, .08);
+  }
+  html[data-theme="sunset"] {
+    --bg: #fdf7f1; --surface: #ffffff; --surface-2: #fff9f3;
+    --text: #2b2118; --muted: #856c58; --line: #f0e0d0;
+    --accent: #c2620f; --shadow: 0 6px 24px rgba(120, 70, 20, .08);
+  }
+  html[data-theme="night"] {
+    --bg: #111725; --surface: #1a2233; --surface-2: #212b3e;
+    --text: #e8edf7; --muted: #9aa7be; --line: #334057;
+    --accent: #7aa2ff; --shadow: 0 8px 28px rgba(0, 0, 0, .3);
+    --good: #5bd19a; --warn: #f0b267; --bad: #ff8a8a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Segoe UI", sans-serif;
+    font-size: 15px; line-height: 1.65;
+  }
+  button, input, select { font: inherit; }
+  button { cursor: pointer; }
+  [hidden] { display: none !important; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 36px 20px 80px; }
+  .hero { margin-bottom: 22px; }
+  .eyebrow {
+    display: inline-block; font-size: 12px; font-weight: 600;
+    color: var(--accent); background: var(--soft);
+    padding: 4px 11px; border-radius: 999px; margin-bottom: 12px;
+  }
+  h1 { font-size: 30px; line-height: 1.25; margin: 0 0 8px; letter-spacing: -.02em; }
+  .lead { margin: 0; color: var(--muted); }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .stat {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 9px 15px; min-width: 106px; box-shadow: var(--shadow);
+  }
+  .stat b { display: block; font-size: 21px; line-height: 1.3; }
+  .stat span { font-size: 12px; color: var(--muted); }
+  .panel {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 20px 22px; margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .panel h2 { font-size: 16px; margin: 0 0 4px; }
+  .panel .hint { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+  .curve-layout { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(230px, 1fr); gap: 22px; align-items: center; }
+  .curve-layout svg { width: 100%; height: auto; display: block; }
+  .curve-notes { font-size: 13px; color: var(--muted); }
+  .curve-notes p { margin: 0 0 10px; }
+  .steps { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
+  .steps span {
+    background: var(--soft); color: var(--accent); border-radius: 7px;
+    padding: 3px 8px; font-size: 12px; font-weight: 600;
+  }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+  .search {
+    flex: 1 1 220px; min-width: 180px; padding: 10px 13px;
+    border: 1px solid var(--line); border-radius: 10px;
+    background: var(--surface); color: var(--text); outline: none;
+  }
+  .search:focus { border-color: var(--accent); }
+  select, .btn {
+    padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--surface); color: var(--text);
+  }
+  select:focus, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { filter: brightness(1.08); color: #fff; }
+  .btn.small { padding: 5px 10px; font-size: 12px; border-radius: 8px; }
+  .btn.ghost { background: transparent; }
+  .btn.danger { color: var(--bad); }
+  .seg { display: inline-flex; padding: 3px; background: var(--surface); border: 1px solid var(--line); border-radius: 11px; }
+  .seg button { border: 0; background: transparent; color: var(--muted); padding: 6px 13px; border-radius: 8px; }
+  .seg button.on { background: var(--soft); color: var(--accent); font-weight: 600; }
+  .color-pick { width: 38px; height: 38px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 18px; }
+  .chip {
+    border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+    padding: 5px 12px; border-radius: 999px; font-size: 13px;
+  }
+  .chip.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 14px; }
+  .word-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 17px 18px; box-shadow: var(--shadow); display: flex; flex-direction: column;
+  }
+  .wc-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .tag { font-size: 11px; color: var(--accent); background: var(--soft); border-radius: 6px; padding: 2px 8px; }
+  .level { font-size: 11px; color: var(--muted); }
+  .wc-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 8px; }
+  .wc-head h3 { font-size: 25px; margin: 0; letter-spacing: -.02em; }
+  .ipa { color: var(--muted); font-size: 14px; margin: 1px 0 8px; }
+  .zh { font-weight: 600; margin: 0 0 12px; }
+  .bar { height: 5px; border-radius: 99px; background: var(--line); overflow: hidden; margin-bottom: 12px; }
+  .bar > i { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
+  .more { border-top: 1px solid var(--line); padding-top: 12px; }
+  .field { margin-bottom: 12px; }
+  .field .label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .06em; margin-bottom: 3px; }
+  .field p { margin: 0; font-size: 14px; }
+  .example { font-size: 15px; line-height: 1.8; }
+  .ex-say {
+    border: 1px solid var(--line); background: var(--soft); color: var(--accent);
+    border-radius: 999px; padding: 2px 9px; margin-right: 6px;
+    font-size: 12px; cursor: pointer; vertical-align: 1px;
+  }
+  .ex-say:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .hit {
+    color: var(--accent); border-bottom: 1px dashed var(--accent);
+    cursor: pointer; padding: 0 1px;
+  }
+  .hit:hover, .hit:focus-visible { background: var(--soft); outline: none; border-radius: 3px; }
+  .trans { color: var(--muted); font-size: 13px; margin-top: 3px !important; }
+  .rate { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .rate button { flex: 1 1 auto; font-size: 12px; }
+  .rate b { color: var(--bad); } .rate i { color: var(--warn); font-style: normal; } .rate em { color: var(--good); font-style: normal; }
+  .wc-actions { margin-top: auto; padding-top: 12px; display: flex; gap: 8px; align-items: center; }
+  .link { border: 0; background: transparent; color: var(--accent); padding: 4px 0; font-size: 13px; }
+  .empty { text-align: center; color: var(--muted); padding: 60px 20px; }
+  .card-mode { max-width: 720px; margin: 0 auto; }
+  .card-stage { perspective: 1200px; height: 400px; }
+  .card-stage { position: relative; }
+  .card-nav-arrow {
+    position: absolute; top: 50%; z-index: 6;
+    width: 42px; height: 42px; margin-top: -21px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line); border-radius: 50%;
+    background: var(--surface); color: var(--text); box-shadow: var(--shadow);
+    font-size: 26px; line-height: 1; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .card-nav-arrow.prev { left: 6px; }
+  .card-nav-arrow.next { right: 6px; }
+  .card-nav-arrow:disabled { opacity: .35; cursor: default; }
+  .flip-card {
+    position: relative; width: 100%; height: 100%; transform-style: preserve-3d;
+    transition: transform .55s cubic-bezier(.2,.7,.2,1); cursor: pointer;
+  }
+  .flip-card.is-flipped { transform: rotateY(180deg); }
+  .face {
+    position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+    box-shadow: var(--shadow); padding: 28px; overflow: hidden; touch-action: pan-y;
+  }
+  .face.front { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .face.back { transform: rotateY(180deg); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  .front .word { font-size: 58px; font-weight: 700; letter-spacing: -.03em; margin: 12px 0 4px; }
+  .front .ipa { font-size: 19px; }
+  .front .zh { font-size: 19px; margin-top: 20px; }
+  .front-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; }
+  .inline-meaning {
+    margin-top: 14px; padding: 10px 16px; max-width: 100%;
+    background: var(--soft); border: 1px solid var(--line); border-radius: 10px;
+  }
+  .inline-zh { color: var(--accent); font-weight: 700; font-size: 18px; }
+  .inline-def { color: var(--muted); font-size: 13px; margin-top: 3px; }
+  .front .tip { color: var(--muted); font-size: 12px; margin-top: 14px; }
+  .reveal-zh { color: var(--accent); font-weight: 700; font-size: 16px; }
+  .back h3 { margin: 0 0 4px; font-size: 26px; }
+  .back .ipa { margin-bottom: 14px; }
+  .back .field { margin-bottom: 10px; }
+  .card-nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 14px; }
+  .progress-text { color: var(--muted); font-size: 13px; }
+  .manage-wrap { overflow-x: auto; margin-top: 8px; }
+  .manage-row {
+    display: grid; grid-template-columns: 1.1fr 1fr 1.5fr .7fr 1.1fr auto;
+    gap: 10px; align-items: center; min-width: 680px;
+    padding: 10px 8px; border-bottom: 1px solid var(--line); font-size: 14px;
+    content-visibility: auto; contain-intrinsic-size: auto 44px;
+  }
+  .manage-row:last-child { border-bottom: 0; }
+  .manage-row.head { font-size: 12px; font-weight: 700; color: var(--muted); }
+  .manage-row .m-word { font-weight: 700; }
+  .manage-row .m-muted { color: var(--muted); font-size: 13px; }
+  .manage-row button { white-space: nowrap; }
+  #popover {
+    position: fixed; z-index: 50; width: 250px; padding: 14px 15px;
+    background: var(--surface); color: var(--text); border: 1px solid var(--line);
+    border-radius: 13px; box-shadow: 0 12px 36px rgba(10, 20, 40, .18);
+  }
+  #popover .pw { font-size: 19px; font-weight: 700; }
+  #popover .pi { color: var(--muted); font-size: 13px; }
+  #popover .pz { margin: 8px 0; font-weight: 600; }
+  #popover .pn { font-size: 12px; color: var(--muted); }
+  #popover .row { display: flex; gap: 8px; margin-top: 10px; }
+  #modal {
+    position: fixed; inset: 0; z-index: 60; background: rgba(15, 23, 42, .5);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-box {
+    width: min(560px, 100%); max-height: 90vh; overflow: auto;
+    background: var(--surface); border-radius: 18px; padding: 24px;
+    box-shadow: 0 20px 60px rgba(10, 20, 40, .25);
+  }
+  .modal-box h2 { margin: 0 0 14px; font-size: 19px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-grid label { font-size: 12px; color: var(--muted); }
+  .form-grid input, .form-grid select {
+    width: 100%; margin-top: 4px; padding: 8px 10px;
+    border: 1px solid var(--line); border-radius: 9px;
+    background: var(--surface); color: var(--text); outline: none;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+  #toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: var(--surface); padding: 9px 16px; border-radius: 99px;
+    font-size: 13px; opacity: 0; pointer-events: none; transition: .25s; z-index: 80; max-width: 90vw;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .ex-src { display: inline-block; margin: 3px 0 0; padding: 1px 7px; border-radius: 999px; background: rgba(37,99,235,.10); color: var(--accent); font-size: 11px; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 34px; }
+  @media (max-width: 720px) {
+    .curve-layout { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid .full { grid-column: auto; }
+    .wrap { padding: 24px 14px 60px; }
+    h1 { font-size: 25px; }
+    .card-stage { height: 430px; }
+  }
+
+  /* ---- 折叠说明 / 用户系统 ---- */
+  .fold-toggle { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 4px; }
+  .fold-toggle .btn { font-size: 12px; padding: 5px 11px; }
+  .fold-panel { margin: 10px 0; }
+  .user-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 10px 14px; margin-bottom: 16px; }
+  .user-bar .who { margin-right: auto; font-size: 14px; color: var(--muted); }
+  .user-bar .who b { color: var(--text); }
+  .role-badge { font-size: 11px; padding: 2px 7px; border-radius: 999px;
+    background: var(--accent); color: #fff; margin-left: 6px; }
+  #authModal { position: fixed; inset: 0; z-index: 70; background: rgba(15,23,42,.45);
+    display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .auth-box { background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px; width: min(400px, 100%); box-shadow: 0 12px 40px rgba(0,0,0,.18); }
+  .auth-box h2 { margin: 0 0 6px; font-size: 19px; }
+  .auth-box p { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+  .auth-box label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 4px; }
+  .auth-box input { width: 100%; padding: 9px 11px; border: 1px solid var(--line);
+    border-radius: 9px; background: var(--bg); color: var(--text); font-size: 14px; }
+  .auth-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .auth-err { color: var(--bad); font-size: 12px; min-height: 16px; margin-top: 8px; }
+  .user-row { display: flex; align-items: center; gap: 8px; padding: 8px 0;
+    border-bottom: 1px solid var(--line); font-size: 13px; flex-wrap: wrap; }
+  .user-row:last-child { border-bottom: 0; }
+  .user-row .nm { font-weight: 600; margin-right: auto; }
+  .user-row span.muted { color: var(--muted); }
+  .front-rate { margin-top: 14px; }
+  .front-rate .label { display: block; text-align: center; margin-bottom: 6px; }
+  .custom-batch { width: 78px; }
+
+  /* ---- 折叠控件 / 词量确认 / 登录辅助 ---- */
+  .fold-toggle { margin: 0 0 8px; align-items: center; }
+  .fold-toggle #installBtn { margin-left: auto; }
+  #settingsBox {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 12px 14px; margin: 8px 0 14px;
+  }
+  #settingsBox label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+  #settingsBox .batch-row { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  #settingsBox .batch-custom-wrap { display: inline-flex; align-items: center; gap: 6px; }
+  #settingsBox .batch-applied { font-size: 12px; color: var(--muted); }
+  #leadBox .stats { margin-top: 16px; }
+  #leadBox .install-note { display: block; margin-top: 10px; }
+  .auth-alt { margin-top: 12px; text-align: center; }
+  .auth-alt button {
+    border: 0; background: none; padding: 2px 4px; color: var(--accent);
+    font-size: 12px; text-decoration: underline;
+  }
+  .auth-guest { width: 100%; margin-top: 10px; }
+
+  /* ===== 视觉优化：背单词优先 ===== */
+  .wrap { padding: 22px 16px 70px; }
+  .user-bar { padding: 8px 12px; margin-bottom: 10px; }
+  .user-bar .who { font-size: 13px; }
+  .hero { margin-bottom: 10px; }
+  .eyebrow { font-size: 11px; margin-bottom: 6px; }
+  h1 { font-size: clamp(19px, 4.6vw, 26px); margin: 0; letter-spacing: -.02em; }
+  .fold-toggle { margin: 0 0 10px; gap: 6px; }
+  .fold-toggle .btn {
+    border-color: transparent; background: var(--surface); color: var(--muted);
+    font-size: 12px; padding: 5px 10px;
+  }
+  .fold-toggle .btn:hover { color: var(--accent); border-color: var(--line); }
+  .fold-toggle .btn[aria-pressed="true"] { color: var(--accent); background: var(--soft); border-color: transparent; }
+  .toolbar { margin-bottom: 10px; }
+  .search { padding: 9px 12px; }
+  .chips {
+    flex-wrap: nowrap; overflow-x: auto; margin: 0 0 12px; padding: 2px 1px 4px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex: 0 0 auto; padding: 4px 11px; font-size: 12px; }
+
+  /* 卡片：正面三段式（标签 / 单词 / 操作），背单词时不抢注意力 */
+  .card-mode { max-width: 660px; }
+  .card-stage { height: clamp(420px, 64vh, 520px); }
+  .face { padding: 22px 24px; border-radius: 22px; }
+  .face.front {
+    display: grid; grid-template-rows: auto 1fr auto; gap: 8px;
+    align-items: stretch;
+    text-align: center;
+    background: radial-gradient(120% 82% at 50% 0%, var(--soft) 0%, var(--surface) 60%);
+  }
+  .front-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .front-body { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 0; overflow-y: auto; }
+  .front .word {
+    font-size: clamp(40px, 9.5vw, 64px); font-weight: 800; letter-spacing: -.035em;
+    line-height: 1.08; margin: 0 0 6px; word-break: break-word;
+  }
+  .front .ipa { font-size: 16px; color: var(--muted); margin: 0; }
+  .front-actions { margin-top: 20px; gap: 8px; }
+  .front-actions .btn { min-height: 42px; padding: 8px 18px; border-radius: 12px; font-size: 14px; }
+  .inline-meaning { margin-top: 16px; padding: 10px 18px; }
+  .inline-zh { font-size: 20px; }
+
+  /* 复习三键：大按钮、颜色分区，拇指好按 */
+  .front-foot { display: flex; flex-direction: column; gap: 8px; }
+  .front-rate { margin-top: 0; }
+  .front-rate .label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .rate { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 0; }
+  .rate button {
+    min-height: 48px; border-radius: 13px; font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .12s ease, filter .12s ease;
+  }
+  .rate button[data-rate="forget"] {
+    color: var(--bad); background: color-mix(in srgb, var(--bad) 8%, var(--surface));
+    border-color: color-mix(in srgb, var(--bad) 26%, var(--line));
+  }
+  .rate button[data-rate="hard"] {
+    color: var(--warn); background: color-mix(in srgb, var(--warn) 9%, var(--surface));
+    border-color: color-mix(in srgb, var(--warn) 26%, var(--line));
+  }
+  .rate button[data-rate="good"] {
+    color: var(--good); background: color-mix(in srgb, var(--good) 9%, var(--surface));
+    border-color: color-mix(in srgb, var(--good) 26%, var(--line));
+  }
+  .rate button:hover { filter: brightness(.97); transform: translateY(-1px); }
+  .rate button:active { transform: translateY(0); filter: brightness(.94); }
+  .rate b, .rate i, .rate em { font-weight: 700; }
+  .front .tip { font-size: 11px; margin: 0; color: var(--muted); }
+
+  /* 背面 */
+  .back-word { margin: 2px 0; font-size: 26px; }
+  .back .ipa .reveal-zh { margin-left: 10px; }
+  .back .field p { font-size: 14px; }
+
+  /* 翻页 */
+  .card-nav { margin-top: 12px; }
+  .card-nav .btn { min-height: 40px; padding: 8px 16px; border-radius: 11px; }
+  .progress-text { font-variant-numeric: tabular-nums; }
+  #cardView > .hint { font-size: 11px; margin-top: 8px !important; opacity: .85; }
+  .done-words { font-size: clamp(26px, 6vw, 34px); font-weight: 800; letter-spacing: -.02em; }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 12px 12px 48px; }
+    .user-bar { padding: 6px 10px; margin-bottom: 8px; }
+    .card-stage { height: min(calc(100dvh - 250px), 520px); min-height: 400px; }
+    .face { padding: 18px 16px; }
+    .front .word { font-size: clamp(38px, 12vw, 56px); }
+    .front-actions .btn { min-height: 44px; padding: 8px 16px; }
+    .rate button { min-height: 52px; }
+    .card-nav .btn { min-height: 44px; }
+    #cardView > .hint { display: none; }
+  }
+  @media (max-width: 560px) {
+    .hero { display: none; }
+  }
+
+  /* ===== 左右滑动切换 ===== */
+  .card-stage { touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+  .card-nav { flex-direction: column; align-items: center; gap: 8px; margin-top: 12px; }
+  .batch-bar { width: 100%; height: 4px; border-radius: 99px; background: var(--line); overflow: hidden; }
+  .batch-bar > i {
+    display: block; height: 100%; width: 0; border-radius: 99px;
+    background: var(--accent); transition: width .25s ease;
+  }
+  /* 跟手拖动：只在拖动时接管过渡，避免和 3D 翻面冲突 */
+  .flip-card { will-change: transform; }
+  .flip-card.is-dragging { transition: none !important; }
+  @keyframes slideFromRight {
+    from { opacity: .15; transform: translate3d(46%, 0, 0) scale(.965); }
+    to   { opacity: 1;   transform: none; }
+  }
+  @keyframes slideFromLeft {
+    from { opacity: .15; transform: translate3d(-46%, 0, 0) scale(.965); }
+    to   { opacity: 1;   transform: none; }
+  }
+  .flip-card.slide-next { animation: slideFromRight .26s cubic-bezier(.22,.86,.3,1); }
+  .flip-card.slide-prev { animation: slideFromLeft .26s cubic-bezier(.22,.86,.3,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .flip-card.slide-next, .flip-card.slide-prev { animation: none; }
+    .flip-card { transition-duration: .01ms; }
+  }
+
+  /* ===== 专注模式：一屏只有卡片 ===== */
+  .focus-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    margin: 0 2px 8px;
+  }
+  .focus-bar .focus-title {
+    font-size: 12px; color: var(--muted); letter-spacing: .01em;
+    font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .focus-bar .btn {
+    flex: 0 0 auto; font-size: 11px; padding: 3px 10px; border-radius: 8px;
+    border-color: transparent; background: transparent; color: var(--muted);
+  }
+  .focus-bar .btn:hover { color: var(--accent); background: var(--soft); }
+  body.focus { overflow: hidden; }
+  body.focus .wrap {
+    display: flex; flex-direction: column;
+    box-sizing: border-box; height: 100vh; height: 100dvh; max-width: 820px;
+    padding: calc(8px + env(safe-area-inset-top, 0px)) 12px calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+  body.focus .user-bar, body.focus .hero, body.focus .fold-toggle,
+  body.focus #leadBox, body.focus #curveBox, body.focus #settingsBox,
+  body.focus .toolbar, body.focus #chips, body.focus footer,
+  body.focus #manageView, body.focus #cardView > .hint { display: none !important; }
+  body.focus .focus-bar { flex: 0 0 auto; }
+  body.focus #cardView {
+    flex: 1 1 auto; display: flex; flex-direction: column;
+    min-height: 0; max-width: 100%; margin: 0;
+  }
+  body.focus #cardView[hidden] { display: none !important; }
+  body.focus .card-stage { flex: 1 1 auto; height: auto; min-height: 0; max-height: none; }
+  body.focus .card-nav { flex: 0 0 auto; margin-top: 10px; }
+  body.focus .face { padding: 22px 20px; }
+  body.focus .front .word { font-size: clamp(44px, 11.5vw, 82px); }
+  body.focus .face.back { overflow-y: auto; }
+  body.focus #toast { bottom: auto; top: calc(40px + env(safe-area-inset-top, 0px)); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div id="focusBar" class="focus-bar" hidden>
+  <span id="focusTitle" class="focus-title">专注背单词</span>
+  <button id="focusExit" class="btn" type="button">退出专注</button>
+</div>
+
+<div class="user-bar" id="userBar">
+  <span class="who">当前用户：<b id="currentUserName">—</b><span id="roleBadge" class="role-badge" hidden>管理员</span></span>
+  <button id="userSwitchBtn" class="btn small" type="button">切换用户</button>
+  <button id="userManageBtn" class="btn small" type="button" hidden>用户管理</button>
+  <button id="userLogoutBtn" class="btn small ghost" type="button">退出</button>
+</div>
+
+  <header class="hero">
+    <span class="eyebrow">人教版 PEP · 五年级上下册</span>
+    <h1 id="heroTitle">五年级英语词汇，听见、读懂、记得住</h1>
+  </header>
+
+  <div class="fold-toggle" role="group" aria-label="内容显示">
+    <button id="foldLead" class="btn" type="button" aria-pressed="false" data-label="说明">显示说明</button>
+    <button id="foldCurve" class="btn" type="button" aria-pressed="false" data-label="曲线">显示曲线</button>
+    <button id="foldSettings" class="btn" type="button" aria-pressed="false" data-label="设置">显示设置</button>
+    <button id="focusToggle" class="btn" type="button" aria-pressed="false">专注模式</button>
+    <button id="installBtn" class="btn small ghost" type="button">安装到主屏幕</button>
+  </div>
+
+  <div id="leadBox" class="fold-panel" hidden>
+    <p class="lead">按人教版 PEP 五年级上下册教材词汇整理。先看到单词，自己回想词义；点「显示词义」后再展开释义、例句、词源和扩展，并用「忘记 / 模糊 / 记住」安排复习。增删词条请到「单词管理」。所有进度只保存在本机浏览器。</p>
+    <div class="stats">
+      <div class="stat"><b id="statTotal">—</b><span>当前词库</span></div>
+      <div class="stat"><b id="statDue">0</b><span>今日待复习</span></div>
+      <div class="stat"><b id="statNew">—</b><span>未学新词</span></div>
+      <div class="stat"><b id="statMastered">0</b><span>已掌握</span></div>
+    </div>
+    <p class="hint install-note">安装：添加到桌面后，可像 App 一样全屏打开，并支持离线使用</p>
+  </div>
+
+  <div id="curveBox" class="fold-panel" hidden>
+  <section class="panel">
+    <h2>艾宾浩斯遗忘曲线</h2>
+    <p class="hint">学完不复习，记忆会快速衰减；每次「记住」都会把曲线拉回顶点，并延长下次复习间隔。</p>
+    <div class="curve-layout">
+      <div id="curveChart"></div>
+      <div class="curve-notes">
+        <p><b>记忆残留</b>：新学内容 1 天后大约只剩三分之一，因此第一次复习要来得早。</p>
+        <div class="steps"><span>10 分钟</span><span>1 天</span><span>2 天</span><span>4 天</span><span>7 天</span><span>15 天</span><span>30 天</span><span>60 天</span></div>
+        <p>卡片上按「忘记 / 模糊 / 记住」：忘记 → 10 分钟后重来；模糊 → 维持原间隔；记住 → 进入下一档。</p>
+        <p>卡片上的进度条就是当前记忆强度，颜色越满表示间隔越长。</p>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <div class="toolbar">
+    <input id="search" class="search" type="search" placeholder="搜索单词、释义或音标…" aria-label="搜索单词">
+    <div class="seg" role="group" aria-label="显示模式">
+      <button id="studyMode" class="on" type="button">背单词</button>
+      <button id="manageMode" type="button">单词管理</button>
+    </div>
+  </div>
+
+  <div id="settingsBox" hidden>
+    <label>配色
+      <select id="themeSelect" aria-label="配色主题">
+        <option value="dawn">晨光蓝</option>
+        <option value="mint">薄荷绿</option>
+        <option value="sunset">暖阳橙</option>
+        <option value="night">夜读深色</option>
+      </select>
+    </label>
+    <label>主题色 <input id="accentPick" class="color-pick" type="color" aria-label="自定义主题色"></label>
+    <label>口音
+      <select id="voiceSelect" aria-label="发音口音">
+        <option value="en-US">美音</option>
+        <option value="en-GB">英音</option>
+      </select>
+    </label>
+    <select id="sortSelect" aria-label="排序方式">
+      <option value="default">默认顺序</option>
+      <option value="alpha">按字母</option>
+      <option value="level">按掌握度</option>
+      <option value="due">按复习时间</option>
+    </select>
+    <button id="onlyDue" class="btn" type="button" aria-pressed="false">只看待复习</button>
+    <div class="batch-row">
+      <label>本轮词量
+        <select id="batchSelect" aria-label="本轮背诵量">
+          <option value="5">5 个</option>
+          <option value="10" selected>10 个</option>
+          <option value="15">15 个</option>
+          <option value="20">20 个</option>
+          <option value="30">30 个</option>
+          <option value="custom">自定义</option>
+          <option value="0">全部</option>
+        </select>
+      </label>
+      <span id="batchCustomWrap" class="batch-custom-wrap" hidden>
+        <input id="batchCustom" class="custom-batch" type="number" min="1" max="500" inputmode="numeric" placeholder="个数">
+        <button id="batchApply" class="btn small primary" type="button">确定</button>
+      </span>
+      <span id="batchApplied" class="batch-applied"></span>
+    </div><button id="resetBtn" class="btn ghost" type="button">恢复默认</button>
+  </div>
+
+  <div id="chips" class="chips"></div>
+
+  <section id="cardView" class="card-mode" aria-live="polite">
+    <div class="card-stage">
+      <div id="flipCard" class="flip-card"></div>
+      <button id="cardPrev" class="card-nav-arrow prev" type="button" data-card-nav="prev" aria-label="上一张">‹</button>
+      <button id="cardNext" class="card-nav-arrow next" type="button" data-card-nav="next" aria-label="下一张">›</button>
+    </div>
+    <div class="card-nav">
+      <div class="batch-bar" aria-hidden="true"><i id="batchBarFill"></i></div>
+      <span id="cardProgress" class="progress-text"></span>
+    </div>
+    <p class="hint" style="text-align:center;margin-top:10px">左右滑动或点卡片两侧箭头切换单词 · 点卡片或空格翻面 · 键盘 ← → 也可切换</p>
+  </section>
+
+  <section id="manageView" class="panel" hidden>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px">
+      <div>
+        <h2>单词管理</h2>
+        <p class="hint">在这里添加或删除单词；删除后可用「恢复默认」找回。上方搜索与分类筛选同样生效。</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span id="manageCount" class="progress-text"></span>
+        <button id="manageAdd" class="btn primary" type="button">添加单词</button>
+      </div>
+    </div>
+    <div class="manage-wrap"><div id="manageList"></div></div>
+  </section>
+
+  <footer>词源为通俗整理，供学习参考 · 发音使用浏览器内置语音合成 · 数据保存在本机 localStorage</footer>
+</div>
+
+<div id="popover" hidden role="dialog" aria-label="生词释义"></div>
+
+<div id="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-label="添加单词">
+    <h2>添加自己的单词</h2>
+    <form id="addForm" class="form-grid">
+      <label>单词 *<input name="word" required maxlength="40" placeholder="例如 homework"></label>
+      <label>音标<input name="ipa" maxlength="60" placeholder="/ˈhəʊmwɜːk/"></label>
+      <label>中文意思 *<input name="zh" required maxlength="80" placeholder="家庭作业"></label>
+      <label>分类<select name="cat"><option value="自定义">自定义</option><option value="地点">地点</option><option value="交通">交通</option><option value="计划">计划</option><option value="爱好">爱好</option><option value="职业">职业</option><option value="情绪">情绪</option><option value="比较">比较</option><option value="动作">动作</option></select></label>
+      <label class="full">解释<input name="def" maxlength="200" placeholder="这个单词怎么用"></label>
+      <label class="full">例句<input name="ex" maxlength="240" placeholder="I do my homework after school."></label>
+      <label class="full">例句翻译<input name="exZh" maxlength="240" placeholder="放学后我做家庭作业。"></label>
+      <label class="full">词源<input name="ety" maxlength="240" placeholder="这个词的来历"></label>
+      <label class="full">扩展<input name="ext" maxlength="240" placeholder="派生词、搭配等"></label>
+      <div class="modal-actions full">
+        <button id="cancelAdd" class="btn" type="button">取消</button>
+        <button class="btn primary" type="submit">保存单词</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="authModal" hidden>
+  <div class="auth-box" role="dialog" aria-modal="true" aria-label="用户登录">
+    <h2 id="authTitle">登录单词卡</h2>
+    <p id="authDesc">本机账号，学习进度按用户分别保存。</p>
+    <form id="authForm">
+      <label for="authName">用户名</label>
+      <input id="authName" autocomplete="username" maxlength="24" required>
+      <label for="authPass">密码</label>
+      <input id="authPass" type="password" autocomplete="current-password" maxlength="40" required>
+      <div id="authError" class="auth-err"></div>
+      <div class="auth-actions">
+        <button id="authSubmit" class="btn primary" type="submit">登录</button>
+        <button id="authCancel" class="btn" type="button" hidden>取消</button>
+      </div>
+      <div class="auth-alt"><button id="authAlt" type="button">没有账号？注册一个</button></div>
+      <button id="authGuest" class="btn auth-guest" type="button">先随便看看（游客模式）</button>
+    </form>
+  </div>
+</div>
+
+<div id="userModal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-label="用户管理">
+    <h2>用户管理</h2>
+    <div id="userList"></div>
+    <form id="userAddForm" style="margin-top:14px">
+      <label>新增用户名<input id="newUserName" maxlength="24" required placeholder="用户名"></label>
+      <label>初始密码<input id="newUserPass" maxlength="40" required placeholder="密码"></label>
+      <div class="auth-actions"><button class="btn primary" type="submit">添加用户</button></div>
+    </form>
+    <div class="auth-actions"><button id="closeUserModal" class="btn" type="button">关闭</button></div>
+  </div>
+</div>
+
+<div id="toast" role="status"></div>
+
+<script>
+const BASE_WORDS = [
+  {id:"b-g5s-above", word:"above", ipa:"/əˈbʌv/", cat:"五上U5", zh:"在（或向）……上面", def:"表示位置高于某物、在某物上方。", ex:"The kite is flying above the tall tree.", exZh:"风筝正在那棵高树的上方飞。", ety:"ab-（离开）+ove，原义“向上”，后指在……上方。", ext:"over 在……上方；below 在……下方"},
+  {id:"b-g5s-any", word:"any", ipa:"/ˈeni/", cat:"五上U4", zh:"任何的；任一的", def:"用于疑问句或否定句，表示“一些、任何一个”。", ex:"Do you have any colour pencils for the art class?", exZh:"美术课上你有彩笔吗？", ety:"any 来自古英语 ænig（任何一个），与 one 同源。", ext:"some 一些；anyone 任何人"},
+  {id:"b-g5s-aren't", word:"aren't", ipa:"/ɑːnt/", cat:"五上U1", zh:"are not 的缩写：不是；不在", def:"are not 的缩写形式，用于否定句。", ex:"They aren't in the classroom after school today.", exZh:"今天放学后他们不在教室里。", ety:"are + not 的缩写，把 not 的 o 换成撇号后连写。", ext:"isn't 不是；don't 不（do not 的缩写）"},
+  {id:"b-g5s-at", word:"at", ipa:"/æt/", cat:"五上U4", zh:"（用于邮件地址）在", def:"用在电子邮箱等地址前，表示“在”。", ex:"Please write to me at amy@example.com after school.", exZh:"放学后请发邮件到 amy@example.com 给我。", ety:"at 来自古英语 æt，表示“在某处、某时”。", ext:"at home 在家；at school 在学校"},
+  {id:"b-g5s-behind", word:"behind", ipa:"/bɪˈhaɪnd/", cat:"五上U5", zh:"在（或向）……后面", def:"表示位置在某物的后方。", ex:"A small cat is sleeping behind the sofa.", exZh:"一只小猫正在沙发后面睡觉。", ety:"be-（在）+hind（后面），合起来表示“在……后面”。", ext:"beside 在旁边；in front of 在……前面"},
+  {id:"b-g5s-beside", word:"beside", ipa:"/bɪˈsaɪd/", cat:"五上U5", zh:"在旁边（附近）", def:"表示紧挨着某物，在其旁边。", ex:"The water bottle is beside my schoolbag on the desk.", exZh:"水瓶在书桌上我的书包旁边。", ety:"be-（在）+side（边），意思是“在……边上”。", ext:"next to 紧挨着；side 边"},
+  {id:"b-g5s-between", word:"between", ipa:"/bɪˈtwiːn/", cat:"五上U5", zh:"在……中间", def:"表示位于两个事物之间。", ex:"I sit between Lucy and Tom in the music class.", exZh:"音乐课上我坐在露西和汤姆中间。", ety:"be-（在）+tween（两者），原义“在两者之间”。", ext:"among 在……之中；next to 在旁边"},
+  {id:"b-g5s-bike", word:"bike", ipa:"/baɪk/", cat:"五上U5", zh:"自行车；脚踏车", def:"两轮的人力交通工具。", ex:"My father rides a bike to work every morning.", exZh:"我爸爸每天早上骑自行车上班。", ety:"bike 是 bicycle 的缩写，bi- 表示“两个”，cycle 指“轮子、循环”。", ext:"ride a bike 骑自行车；bicycle 自行车"},
+  {id:"b-g5s-boating", word:"boating", ipa:"/ˈbəʊtɪŋ/", cat:"五上U6", zh:"划船", def:"在船上用桨划行的活动。", ex:"We go boating on the lake in the nature park.", exZh:"我们在自然公园的湖上划船。", ety:"boat（船）+ -ing（动名词），表示“划船”这项活动。", ext:"go boating 去划船；boat 小船"},
+  {id:"b-g5s-bottle", word:"bottle", ipa:"/ˈbɒtl/", cat:"五上U5", zh:"瓶子", def:"装水或饮料的容器。", ex:"There is a green bottle on the teacher's desk.", exZh:"讲台上有一个绿色的瓶子。", ety:"bottle 来自拉丁语，经法语进入英语，原指“小桶”。", ext:"water bottle 水瓶；a bottle of water 一瓶水"},
+  {id:"b-g5s-bridge", word:"bridge", ipa:"/brɪdʒ/", cat:"五上U6", zh:"桥", def:"跨越河流或道路供人通行的建筑。", ex:"There is an old bridge over the small river.", exZh:"小河上有一座古老的桥。", ety:"bridge 来自古英语 brycg，原义“横跨的通道”。", ext:"cross the bridge 过桥；river 河"},
+  {id:"b-g5s-building", word:"building", ipa:"/ˈbɪldɪŋ/", cat:"五上U6", zh:"建筑物；房子；楼房", def:"供人居住或使用的房屋建筑。", ex:"That tall building near the park is a library.", exZh:"公园附近那栋高楼是图书馆。", ety:"build（建造）+ -ing，表示“建造出来的东西”。", ext:"build 建造；office building 办公楼"},
+  {id:"b-g5s-cartoon", word:"cartoon", ipa:"/kɑːˈtuːn/", cat:"五上U4", zh:"漫画", def:"幽默夸张的图画或动画。", ex:"I like drawing cartoons with my friends after school.", exZh:"我喜欢放学后和朋友们画漫画。", ety:"cartoon 来自意大利语 cartone（纸板），原指画在纸上的草图。", ext:"draw cartoons 画漫画；cartoonist 漫画家"},
+  {id:"b-g5s-clever", word:"clever", ipa:"/ˈklevə(r)/", cat:"五上U1", zh:"聪明的；聪颖的", def:"形容人学习快、脑子好。", ex:"My clever sister can solve hard maths problems quickly.", exZh:"我聪明的姐姐能很快解出难的数学题。", ety:"clever 来自古英语，原与“抓握”有关，引申为“机灵”。", ext:"smart 聪明的；clever 聪明的"},
+  {id:"b-g5s-clock", word:"clock", ipa:"/klɒk/", cat:"五上U5", zh:"时钟；钟", def:"显示时间的器具。", ex:"A round clock is on the wall of our classroom.", exZh:"我们教室的墙上有一个圆钟。", ety:"clock 可能来自拉丁语 clocca（钟），原指钟声。", ext:"alarm clock 闹钟；o'clock ……点钟"},
+  {id:"b-g5s-cook", word:"cook", ipa:"/kuːk/", cat:"五上U4", zh:"烹调；烹饪", def:"制作食物；也指做饭的人。", ex:"My mother can cook delicious noodles for dinner.", exZh:"我妈妈能做美味的面条当晚餐。", ety:"cook 来自拉丁语 coquus（厨师），与“煮”有关。", ext:"cook 厨师；cooking 烹饪"},
+  {id:"b-g5s-cooking", word:"cooking", ipa:"/ˈkuːkɪŋ/", cat:"五上U4", zh:"烹饪；烹调", def:"做饭的行为或课程。", ex:"We have a cooking class with Grandma on Thursday.", exZh:"星期四我们和奶奶一起上烹饪课。", ety:"cook（做饭）+ -ing，表示“做饭”这件事或课程。", ext:"cooking class 烹饪课；cook 做饭"},
+  {id:"b-g5s-dance", word:"dance", ipa:"/dæns/", cat:"五上U4", zh:"跳舞", def:"随音乐摆动身体。", ex:"The girls dance beautifully at the school party.", exZh:"女孩们在学校聚会上跳得很美。", ety:"dance 来自古法语 dancer，原义就是“跳舞”。", ext:"dancer 舞蹈家；dance party 舞会"},
+  {id:"b-g5s-day", word:"day", ipa:"/deɪ/", cat:"五上U2", zh:"一天；一日", def:"二十四小时的时间，也指白天。", ex:"What day do you have English class this week?", exZh:"这周你星期几有英语课？", ety:"day 来自古英语 dæg，与“白昼”同源。", ext:"birthday 生日；every day 每天"},
+  {id:"b-g5s-dear", word:"Dear", ipa:"/dɪə/", cat:"五上U4", zh:"（用于信函抬头的名字或头衔前）亲爱的", def:"书信或邮件开头的礼貌称呼。", ex:"Dear Miss White, thank you for your interesting class.", exZh:"亲爱的怀特老师，谢谢您有趣的课。", ety:"dear 来自古英语 dēore（珍贵的），用作书信称呼。", ext:"Dear Sir 亲爱的先生；dear 亲爱的"},
+  {id:"b-g5s-delicious", word:"delicious", ipa:"/dɪˈlɪʃəs/", cat:"五上U3", zh:"美味的；可口的", def:"尝起来非常好吃。", ex:"The salad is fresh and really delicious today.", exZh:"今天的沙拉很新鲜，真的很好吃。", ety:"delicious 来自拉丁语 deliciae（美味），与“快乐”有关。", ext:"delicious food 美食；tasty 好吃的"},
+  {id:"b-g5s-dirty", word:"dirty", ipa:"/ˈdɜːti/", cat:"五上U5", zh:"肮脏的", def:"不干净、有污渍的。", ex:"My room is dirty, so I will clean it.", exZh:"我的房间很脏，所以我要打扫它。", ety:"dirt（污物）+ -y（形容词后缀），表示“脏的”。", ext:"clean 干净的；dirty clothes 脏衣服"},
+  {id:"b-g5s-do", word:"do", ipa:"/duː/", cat:"五上U2", zh:"做；干", def:"表示进行某项活动。", ex:"I do my homework before dinner every day.", exZh:"我每天晚饭前做作业。", ety:"do 来自古英语 dōn，是最基本的动词之一。", ext:"do homework 做作业；do sports 做运动"},
+  {id:"b-g5s-do-homework", word:"do homework", ipa:"/duː ˈhəʊmwɜːk/", cat:"五上U2", zh:"做作业", def:"完成老师布置的功课。", ex:"I do homework for an hour after school.", exZh:"放学后我做一小时作业。", ety:"do（做）+ homework（家庭作业），合成短语。", ext:"homework 家庭作业；do my homework 做我的作业"},
+  {id:"b-g5s-do-kung-fu", word:"do kung fu", ipa:"/duː ˌkʌŋ ˈfuː/", cat:"五上U4", zh:"练武术", def:"练习中国功夫。", ex:"My uncle can do kung fu very well.", exZh:"我叔叔武术练得很好。", ety:"do（做、练）+ kung fu（功夫），表示“练武术”。", ext:"kung fu 功夫；martial arts 武术"},
+  {id:"b-g5s-draw", word:"draw", ipa:"/drɔː/", cat:"五上U4", zh:"画", def:"用笔等工具作画。", ex:"I can draw a cute rabbit in five minutes.", exZh:"我能在五分钟内画一只可爱的兔子。", ety:"draw 来自古英语 dragan（拖、拉），原义“拉笔作画”。", ext:"draw pictures 画画；drawing 图画"},
+  {id:"b-g5s-draw-cartoons", word:"draw cartoons", ipa:"/drɔː kɑːˈtuːnz/", cat:"五上U4", zh:"画漫画", def:"画幽默夸张的图画。", ex:"We draw cartoons for our English newspaper.", exZh:"我们为英语报画漫画。", ety:"draw（画）+ cartoons（漫画），合成短语。", ext:"cartoon 漫画；draw pictures 画画"},
+  {id:"b-g5s-drink", word:"drink", ipa:"/drɪŋk/", cat:"五上U3", zh:"喝；饮", def:"把液体咽下去。", ex:"Please drink some water when you are thirsty.", exZh:"口渴时请喝些水。", ety:"drink 来自古英语 drincan，意为“喝”。", ext:"drink water 喝水；drink 饮料"},
+  {id:"b-g5s-email", word:"email", ipa:"/ˈiːmeɪl/", cat:"五上U4", zh:"电子邮件", def:"通过网络发送的信件。", ex:"I will send an email to my friend tonight.", exZh:"今晚我要给朋友发一封电子邮件。", ety:"e-（electronic 电子的缩写）+ mail（邮件）。", ext:"send an email 发邮件；e-mail 电子邮件"},
+  {id:"b-g5s-every", word:"every", ipa:"/ˈevri/", cat:"五上U2", zh:"每一个，每个", def:"表示所有的个体。", ex:"Every student in our class reads books on Friday.", exZh:"我们班的每个学生星期五都读书。", ety:"every 来自古英语 ǣfre（永远），后指“每一个”。", ext:"everybody 每个人；every day 每天"},
+  {id:"b-g5s-everywhere", word:"everywhere", ipa:"/ˈevriweə(r)/", cat:"五上U5", zh:"处处；到处", def:"所有地方。", ex:"My little brother's toys are everywhere in the room.", exZh:"我弟弟的玩具在房间里到处都是。", ety:"every（每个）+ where（哪里），合成“到处”。", ext:"anywhere 任何地方；somewhere 某处"},
+  {id:"b-g5s-favourite", word:"favourite", ipa:"/ˈfeɪvərɪt/", cat:"五上U3", zh:"特别喜爱的", def:"最喜欢的人或事物。", ex:"My favourite food is beef noodles with vegetables.", exZh:"我最喜欢的食物是蔬菜牛肉面。", ety:"favourite 来自拉丁语 favor（喜爱），经法语进入英语。", ext:"favourite food 最爱的食物；like ... best 最喜欢"},
+  {id:"b-g5s-finish", word:"finish", ipa:"/ˈfɪnɪʃ/", cat:"五上U1", zh:"完成；做好", def:"把事情做完。", ex:"I finish my homework before I watch TV.", exZh:"我看电视前先完成作业。", ety:"finish 来自拉丁语 finis（结束、边界）。", ext:"finish homework 完成作业；end 结束"},
+  {id:"b-g5s-flower", word:"flower", ipa:"/ˈflaʊə/", cat:"五上U5", zh:"花；花朵", def:"植物开出的美丽部分。", ex:"There are some yellow flowers beside the window.", exZh:"窗户旁边有一些黄色的花。", ety:"flower 来自拉丁语 flos（花），经法语进入英语。", ext:"flower pot 花盆；flowers 花（复数）"},
+  {id:"b-g5s-food", word:"food", ipa:"/fuːd/", cat:"五上U3", zh:"食物", def:"供人食用的东西。", ex:"We bring healthy food for the school trip.", exZh:"我们为学校旅行带健康的食物。", ety:"food 来自古英语 fōda，与“喂养”有关。", ext:"healthy food 健康食品；fast food 快餐"},
+  {id:"b-g5s-forest", word:"forest", ipa:"/ˈfɒrɪst/", cat:"五上U6", zh:"森林；林区", def:"大片树木生长的地方。", ex:"There is a big forest behind the small village.", exZh:"小村庄后面有一片大森林。", ety:"forest 来自拉丁语 forestis（外面的林地）。", ext:"in the forest 在森林里；woods 树林"},
+  {id:"b-g5s-fresh", word:"fresh", ipa:"/freʃ/", cat:"五上U3", zh:"新鲜的；刚摘的", def:"刚采摘或刚做好的，不陈旧。", ex:"The milk is fresh and tastes very good.", exZh:"这牛奶很新鲜，味道很好。", ety:"fresh 来自古英语 fersc，原义“未盐腌的、新的”。", ext:"fresh air 新鲜空气；fresh fruit 新鲜水果"},
+  {id:"b-g5s-friday", word:"Friday", ipa:"/ˈfrɪdeɪ/", cat:"五上U2", zh:"星期五", def:"一周中的第五天。", ex:"We have a football game this Friday afternoon.", exZh:"这个星期五下午我们有一场足球比赛。", ety:"Friday 来自古英语 Frīgedæg，意为“Frigga 的日子”。", ext:"on Friday 在星期五；Friday evening 星期五晚上"},
+  {id:"b-g5s-front", word:"front", ipa:"/frʌnt/", cat:"五上U5", zh:"正面", def:"物体朝向前面的一面。", ex:"The front of the classroom has a big blackboard.", exZh:"教室前面有一块大黑板。", ety:"front 来自拉丁语 frons（前额、前面）。", ext:"in front of 在……前面；front door 前门"},
+  {id:"b-g5s-funny", word:"funny", ipa:"/ˈfʌni/", cat:"五上U1", zh:"滑稽的；可笑的", def:"让人发笑的。", ex:"Our funny teacher makes everyone laugh in class.", exZh:"我们有趣的老师在课上让大家都笑。", ety:"fun（乐趣）+ -y（形容词后缀），表示“好笑的”。", ext:"fun 乐趣；funny story 有趣的故事"},
+  {id:"b-g5s-go-boating", word:"go boating", ipa:"/ɡəʊ ˈbəʊtɪŋ/", cat:"五上U6", zh:"去划船", def:"去进行划船活动。", ex:"Let's go boating on the lake this Sunday.", exZh:"这个星期天我们去湖上划船吧。", ety:"go（去）+ boating（划船），表示去做这项活动。", ext:"go swimming 去游泳；boating 划船"},
+  {id:"b-g5s-grandparent", word:"grandparent", ipa:"/ˈɡrændˌpeərənt/", cat:"五上U5", zh:"祖父；祖母；外祖父；外祖母", def:"父母亲的父亲或母亲。", ex:"My grandparent lives in a small village near here.", exZh:"我的一位祖父母住在附近的小村庄。", ety:"grand（上一代）+ parent（父或母），指祖辈。", ext:"grandparents 祖父母；grandpa 爷爷"},
+  {id:"b-g5s-hamburger", word:"hamburger", ipa:"/ˈhæmbɜːɡə/", cat:"五上U3", zh:"汉堡包", def:"夹肉和蔬菜的圆面包。", ex:"I want a hamburger and some juice for lunch.", exZh:"我午餐想要一个汉堡包和一些果汁。", ety:"hamburger 来自德国城市 Hamburg（汉堡），因当地肉饼得名。", ext:"hot dog 热狗；sandwich 三明治"},
+  {id:"b-g5s-hard-working", word:"hard-working", ipa:"/ˈhɑːd ˌwɜːkɪŋ/", cat:"五上U1", zh:"工作努力的；辛勤的", def:"学习或做事非常认真努力。", ex:"She is hard-working and always finishes her homework early.", exZh:"她很勤奋，总是早早完成作业。", ety:"hard（努力地）+ working（工作），合成形容词。", ext:"hard work 努力工作；lazy 懒惰的"},
+  {id:"b-g5s-healthy", word:"healthy", ipa:"/ˈhelθi/", cat:"五上U3", zh:"健康的", def:"身体好、有利于健康的。", ex:"Eating vegetables every day keeps us healthy.", exZh:"每天吃蔬菜让我们保持健康。", ety:"health（健康）+ -y（形容词后缀），表示“健康的”。", ext:"health 健康；healthy food 健康食品"},
+  {id:"b-g5s-helpful", word:"helpful", ipa:"/ˈhelpfl/", cat:"五上U1", zh:"有用的；愿意帮忙的", def:"乐于帮助别人的。", ex:"Tom is helpful and often helps me with maths.", exZh:"汤姆乐于助人，经常帮我学数学。", ety:"help（帮助）+ -ful（形容词后缀），表示“有帮助的”。", ext:"help 帮助；helpless 无助的"},
+  {id:"b-g5s-high", word:"high", ipa:"/haɪ/", cat:"五上U6", zh:"高的", def:"距离地面大，高度大。", ex:"The mountain near our village is very high.", exZh:"我们村附近的那座山很高。", ety:"high 来自古英语 hēah，与“高”同源。", ext:"high 高的；height 高度"},
+  {id:"b-g5s-hill", word:"hill", ipa:"/hɪl/", cat:"五上U6", zh:"山丘；小山", def:"比山低的小土丘。", ex:"There are some sheep on the green hill.", exZh:"绿色的山丘上有一些羊。", ety:"hill 来自古英语 hyll，意为“小山”。", ext:"mountain 高山；hill 小山"},
+  {id:"b-g5s-him", word:"him", ipa:"/hɪm/", cat:"五上U1", zh:"（用作宾语或表语）他", def:"男性第三人称的宾格形式。", ex:"I often play football with him on weekends.", exZh:"我周末经常和他一起踢足球。", ety:"him 是 he 的宾格，来自古英语 him。", ext:"he 他（主格）；his 他的"},
+  {id:"b-g5s-hot", word:"hot", ipa:"/hɒt/", cat:"五上U3", zh:"辣的；辛辣的", def:"味道辛辣，也指温度高。", ex:"This soup is too hot, so I need some water.", exZh:"这汤太辣了，所以我需要喝点水。", ety:"hot 来自古英语 hāt，原义“热的”，引申为“辣的”。", ext:"hot 热的；hot dog 热狗"},
+  {id:"b-g5s-house", word:"house", ipa:"/haʊs/", cat:"五上U6", zh:"房屋；房子；住宅", def:"供人居住的建筑物。", ex:"Their house is next to a small nature park.", exZh:"他们的房子紧挨着一个小自然公园。", ety:"house 来自古英语 hūs，意为“住处”。", ext:"housework 家务；house 房子"},
+  {id:"b-g5s-ice-cream", word:"ice cream", ipa:"/ˈaɪs kriːm/", cat:"五上U3", zh:"冰激凌", def:"冷冻的甜食。", ex:"My sister likes ice cream on hot summer days.", exZh:"我姐姐喜欢在炎热夏天吃冰激凌。", ety:"ice（冰）+ cream（奶油），合成“冰激凌”。", ext:"ice 冰；cream 奶油"},
+  {id:"b-g5s-in-front-of", word:"in front of", ipa:"/ɪn ˈfrʌnt əv/", cat:"五上U5", zh:"在……前面", def:"表示位置在某物前方。", ex:"A big tree stands in front of our school gate.", exZh:"我们校门前立着一棵大树。", ety:"in（在）+ front（前面）+ of，合成介词短语。", ext:"front 前面；behind 在……后面"},
+  {id:"b-g5s-kind", word:"kind", ipa:"/kaɪnd/", cat:"五上U1", zh:"体贴的；慈祥的；宽容的", def:"对人温和、友善。", ex:"Ms Wang is kind and helps us after class.", exZh:"王老师很和蔼，课后帮助我们。", ety:"kind 来自古英语 cynn（种类、天性），后指“善良的”。", ext:"kindness 善良；kind 友好的"},
+  {id:"b-g5s-know", word:"know", ipa:"/nəʊ/", cat:"五上U1", zh:"知道；了解", def:"明白某件事或认识某人。", ex:"I know his name, but I don't know his age.", exZh:"我知道他的名字，但不知道他的年龄。", ety:"know 来自古英语 cnāwan，与“认识”有关。", ext:"knowledge 知识；know 知道"},
+  {id:"b-g5s-kung-fu", word:"kung fu", ipa:"/ˌkʌŋ ˈfuː/", cat:"五上U4", zh:"功夫；武术", def:"中国传统武术。", ex:"Many children learn kung fu at school now.", exZh:"现在很多孩子在学校学武术。", ety:"kung fu 是汉语“功夫”的音译，进入英语后指中国武术。", ext:"Chinese kung fu 中国功夫；martial arts 武术"},
+  {id:"b-g5s-lake", word:"lake", ipa:"/leɪk/", cat:"五上U6", zh:"湖；湖泊", def:"大片被陆地围住的水域。", ex:"We can see many ducks on the lake.", exZh:"我们能看见湖面上有许多鸭子。", ety:"lake 来自拉丁语 lacus（湖），经法语进入英语。", ext:"lake 湖；river 河"},
+  {id:"b-g5s-learn", word:"learn", ipa:"/lɜːn/", cat:"五上U4", zh:"学；学习；学会", def:"通过练习获得知识或技能。", ex:"I want to learn how to play the pipa.", exZh:"我想学弹琵琶。", ety:"learn 来自古英语 leornian，意为“学习”。", ext:"learn 学习；teacher 老师"},
+  {id:"b-g5s-live", word:"live", ipa:"/lɪv/", cat:"五上U5", zh:"住；居住", def:"在某处生活。", ex:"My family lives in a house near the park.", exZh:"我家住在公园附近的一所房子里。", ety:"live 来自拉丁语 vivus（活的），意为“生活、居住”。", ext:"live in 住在；life 生活"},
+  {id:"b-g5s-lot", word:"lot", ipa:"/lɒt/", cat:"五上U5", zh:"大量；许多", def:"很多的数量。", ex:"There is a lot of water in the bottle.", exZh:"瓶子里有很多水。", ety:"lot 来自古英语 hlot（份额），后指“大量”。", ext:"a lot 许多；lots of 大量"},
+  {id:"b-g5s-lots-of", word:"lots of", ipa:"/ˈlɒts əv/", cat:"五上U5", zh:"大量；许多", def:"很多的人或物。", ex:"We have lots of books in our classroom corner.", exZh:"我们教室角落有很多书。", ety:"lot（大量）+s+of，构成数量短语。", ext:"a lot of 许多；many 许多"},
+  {id:"b-g5s-monday", word:"Monday", ipa:"/ˈmʌndeɪ/", cat:"五上U2", zh:"星期一", def:"一周中的第一天。", ex:"We have maths and music on Monday morning.", exZh:"星期一上午我们有数学和音乐课。", ety:"Monday 来自古英语 Mōndæg，意为“月亮的日子”。", ext:"on Monday 在星期一；Monday morning 星期一上午"},
+  {id:"b-g5s-mountain", word:"mountain", ipa:"/ˈmaʊntən/", cat:"五上U6", zh:"高山；山岳", def:"高而大的山。", ex:"There is a high mountain behind the village.", exZh:"村子后面有一座高山。", ety:"mount（山）+ -ain，来自拉丁语 mons（山）。", ext:"hill 小山；mountain climbing 爬山"},
+  {id:"b-g5s-mouse", word:"mouse", ipa:"/maʊs/", cat:"五上U5", zh:"老鼠", def:"小型啮齿动物。", ex:"A little mouse runs behind the door quickly.", exZh:"一只小老鼠飞快地跑到门后。", ety:"mouse 来自古英语 mūs，与“鼠”同源。", ext:"mice 老鼠（复数）；mouse 鼠标"},
+  {id:"b-g5s-move", word:"move", ipa:"/muːv/", cat:"五上U5", zh:"搬家", def:"换到另一个地方居住。", ex:"My family will move to a new house next month.", exZh:"我家下个月要搬新家。", ety:"move 来自拉丁语 movere（移动）。", ext:"move 移动；move house 搬家"},
+  {id:"b-g5s-ms", word:"Ms", ipa:"/mɪz/", cat:"五上U1", zh:"（用于女子的姓氏或姓名前，不指明婚否）女士", def:"对女性的礼貌称呼，不说明婚否。", ex:"Ms Liu is our new English teacher this term.", exZh:"刘女士是我们这学期的新英语老师。", ety:"Ms 是 Mistress 的缩写，用于不指明婚否的女性。", ext:"Mr 先生；Mrs 太太"},
+  {id:"b-g5s-nature", word:"nature", ipa:"/ˈneɪtʃə(r)/", cat:"五上U6", zh:"自然界；大自然", def:"山川、森林等自然环境。", ex:"We love nature and often visit the nature park.", exZh:"我们热爱大自然，经常去自然公园。", ety:"nature 来自拉丁语 natura（天性、自然）。", ext:"nature park 自然公园；natural 自然的"},
+  {id:"b-g5s-next", word:"next", ipa:"/nekst/", cat:"五上U4", zh:"下一个的；接下来的", def:"紧跟着的、随后的。", ex:"We will have a party next Friday afternoon.", exZh:"下星期五下午我们要开派对。", ety:"next 来自古英语 nīhst，意为“最近的、下一个”。", ext:"next week 下周；last 上一个的"},
+  {id:"b-g5s-no-problem", word:"no problem", ipa:"/nəʊ ˈprɒbləm/", cat:"五上U4", zh:"没问题", def:"表示愿意帮忙或事情容易办到。", ex:"Can you help me? No problem, I'm happy to.", exZh:"你能帮我吗？没问题，我很乐意。", ety:"no（不）+ problem（问题），字面意思是“没有问题”。", ext:"problem 问题；have a problem 有问题"},
+  {id:"b-g5s-often", word:"often", ipa:"/ˈɔːfn/", cat:"五上U2", zh:"时常；常常", def:"表示事情发生的频率高。", ex:"I often read books in the library after school.", exZh:"放学后我常在图书馆看书。", ety:"often 来自古英语 oft，加上 -en 后缀。", ext:"sometimes 有时；usually 通常"},
+  {id:"b-g5s-old", word:"old", ipa:"/əʊld/", cat:"五上U1", zh:"老的；年纪大的", def:"年纪大，不年轻。", ex:"My grandfather is old but still very strong.", exZh:"我爷爷年纪大了，但仍然很强壮。", ety:"old 来自古英语 eald，与“成长”有关。", ext:"young 年轻的；old friend 老朋友"},
+  {id:"b-g5s-onion", word:"onion", ipa:"/ˈʌnjən/", cat:"五上U3", zh:"洋葱；葱头", def:"一种有辛辣味的蔬菜。", ex:"I don't like onions, but my sister loves them.", exZh:"我不喜欢洋葱，但我姐姐很喜欢。", ety:"onion 来自拉丁语 unio（洋葱、大珍珠）。", ext:"onions 洋葱（复数）；vegetable 蔬菜"},
+  {id:"b-g5s-our", word:"our", ipa:"/ˈaʊə/", cat:"五上U1", zh:"我们的", def:"第一人称复数所有格。", ex:"Our English teacher is young and funny.", exZh:"我们的英语老师年轻又风趣。", ety:"our 来自古英语 ūre，是 we 的所有格。", ext:"we 我们；ours 我们的（东西）"},
+  {id:"b-g5s-park", word:"park", ipa:"/pɑːk/", cat:"五上U6", zh:"公园", def:"供人游玩休息的绿地。", ex:"There is a small park near my house.", exZh:"我家附近有一个小公园。", ety:"park 来自拉丁语 parcus（围起来的园地）。", ext:"nature park 自然公园；in the park 在公园里"},
+  {id:"b-g5s-party", word:"party", ipa:"/ˈpɑːti/", cat:"五上U4", zh:"聚会；派对", def:"为庆祝而举行的集会。", ex:"We will have a birthday party for Amy on Sunday.", exZh:"星期天我们将为艾米举办生日聚会。", ety:"party 来自法语 partie（部分、聚会）。", ext:"birthday party 生日聚会；have a party 开派对"},
+  {id:"b-g5s-photo", word:"photo", ipa:"/ˈfəʊtəʊ/", cat:"五上U5", zh:"照片；相片", def:"用相机拍下的图像。", ex:"There is a photo of my family on the wall.", exZh:"墙上有一张我的全家福照片。", ety:"photo 是 photograph 的缩写，源自希腊语“光+写”。", ext:"take a photo 拍照；photograph 照片"},
+  {id:"b-g5s-ping-pong", word:"ping-pong", ipa:"/ˈpɪŋˌpɒŋ/", cat:"五上U4", zh:"乒乓球", def:"一种球类运动。", ex:"My father plays ping-pong with me every evening.", exZh:"我爸爸每天晚上和我打乒乓球。", ety:"ping-pong 是模仿击球声音的拟声词。", ext:"play ping-pong 打乒乓球；table tennis 乒乓球"},
+  {id:"b-g5s-plant", word:"plant", ipa:"/plɑːnt/", cat:"五上U5", zh:"植物", def:"生长在土里或水里的生物。", ex:"I put a green plant beside the window.", exZh:"我把一株绿色植物放在窗边。", ety:"plant 来自拉丁语 planta（嫩枝、植物）。", ext:"water the plant 给植物浇水；tree 树"},
+  {id:"b-g5s-play", word:"play", ipa:"/pleɪ/", cat:"五上U4", zh:"踢；玩；参加（体育运动）", def:"进行体育活动或玩耍。", ex:"The boys play football on the playground after school.", exZh:"男孩们放学后在操场上踢足球。", ety:"play 来自古英语 plegian，意为“玩耍、游戏”。", ext:"play sports 做运动；player 运动员"},
+  {id:"b-g5s-play-basketball", word:"play basketball", ipa:"/pleɪ ˈbɑːskɪtbɔːl/", cat:"五上U4", zh:"打篮球", def:"进行篮球运动。", ex:"My brother can play basketball very well now.", exZh:"我哥哥现在篮球打得很好。", ety:"play（打、踢）+ basketball（篮球），合成短语。", ext:"basketball 篮球；play football 踢足球"},
+  {id:"b-g5s-play-football", word:"play football", ipa:"/pleɪ ˈfʊtbɔːl/", cat:"五上U4", zh:"踢足球", def:"进行足球运动。", ex:"We play football with our friends on Saturday.", exZh:"星期六我们和朋友踢足球。", ety:"play（踢）+ football（足球），合成短语。", ext:"football 足球；play basketball 打篮球"},
+  {id:"b-g5s-play-ping-pong", word:"play ping-pong", ipa:"/pleɪ ˈpɪŋpɒŋ/", cat:"五上U4", zh:"打乒乓球", def:"进行乒乓球运动。", ex:"They play ping-pong in the gym after lunch.", exZh:"午饭后他们在体育馆打乒乓球。", ety:"play（打）+ ping-pong（乒乓球），合成短语。", ext:"ping-pong 乒乓球；table tennis 乒乓球"},
+  {id:"b-g5s-play-sports", word:"play sports", ipa:"/pleɪ spɔːts/", cat:"五上U2", zh:"做体育运动", def:"参加体育活动。", ex:"You should play sports every day to stay healthy.", exZh:"你应该每天做运动来保持健康。", ety:"play（进行）+ sports（运动），合成短语。", ext:"sports 运动；do sports 做运动"},
+  {id:"b-g5s-play-the-pipa", word:"play the pipa", ipa:"/pleɪ ðə ˈpiːpɑː/", cat:"五上U4", zh:"弹琵琶", def:"演奏中国传统乐器琵琶。", ex:"She can play the pipa at the school show.", exZh:"她能在学校演出上弹琵琶。", ety:"play（弹）+ the + pipa（琵琶，汉语拼音音译）。", ext:"pipa 琵琶；play the piano 弹钢琴"},
+  {id:"b-g5s-polite", word:"polite", ipa:"/pəˈlaɪt/", cat:"五上U1", zh:"有礼貌的；客气的", def:"说话做事有礼节。", ex:"The polite boy says hello to his teacher every morning.", exZh:"那个有礼貌的男孩每天早上向老师问好。", ety:"polite 来自拉丁语 politus（磨光的、文雅的）。", ext:"politely 有礼貌地；impolite 没礼貌的"},
+  {id:"b-g5s-problem", word:"problem", ipa:"/ˈprɒbləm/", cat:"五上U4", zh:"问题", def:"需要解决的困难或疑问。", ex:"This maths problem is not difficult for me.", exZh:"这道数学题对我来说不难。", ety:"problem 来自希腊语，原义“向前抛出”，即“难题”。", ext:"no problem 没问题；solve a problem 解决问题"},
+  {id:"b-g5s-rabbit", word:"rabbit", ipa:"/ˈræbɪt/", cat:"五上U5", zh:"兔；野兔", def:"有长耳朵的小动物。", ex:"A white rabbit is jumping near the flower bed.", exZh:"一只白兔正在花坛边跳。", ety:"rabbit 来自中古英语 rabbit，可能源自法语。", ext:"rabbit 兔子；bunny 小兔（儿语）"},
+  {id:"b-g5s-read", word:"read", ipa:"/riːd/", cat:"五上U2", zh:"看；读", def:"看书或文字。", ex:"I read English stories for twenty minutes every night.", exZh:"我每晚读二十分钟英语故事。", ety:"read 来自古英语 rædan，意为“阅读、解释”。", ext:"read books 看书；reading 阅读"},
+  {id:"b-g5s-read-books", word:"read books", ipa:"/riːd bʊks/", cat:"五上U2", zh:"看书", def:"阅读书籍。", ex:"We read books quietly in the reading room.", exZh:"我们在阅览室安静地看书。", ety:"read（读）+ books（书），合成短语。", ext:"book 书；reading room 阅览室"},
+  {id:"b-g5s-river", word:"river", ipa:"/ˈrɪvə/", cat:"五上U6", zh:"河；江", def:"流动的水道。", ex:"There are many fish in the river near the bridge.", exZh:"桥附近的河里有很多鱼。", ety:"river 来自拉丁语 riparia（河岸），经法语进入英语。", ext:"in the river 在河里；lake 湖"},
+  {id:"b-g5s-robot", word:"robot", ipa:"/ˈrəʊbɒt/", cat:"五上U1", zh:"机器人", def:"能自动做事的机器。", ex:"The robot can clean the room and sing songs.", exZh:"这个机器人能打扫房间还会唱歌。", ety:"robot 来自捷克语 robota（劳役），后进入英语。", ext:"robot 机器人；machine 机器"},
+  {id:"b-g5s-salad", word:"salad", ipa:"/ˈsæləd/", cat:"五上U3", zh:"蔬菜沙拉；混合沙拉", def:"拌在一起吃的蔬菜或水果。", ex:"I'd like a fruit salad after lunch today.", exZh:"今天午饭后我想要一份水果沙拉。", ety:"salad 来自拉丁语 salata（加盐的），与 salt（盐）同源。", ext:"fruit salad 水果沙拉；vegetable salad 蔬菜沙拉"},
+  {id:"b-g5s-sandwich", word:"sandwich", ipa:"/ˈsænwɪtʃ/", cat:"五上U3", zh:"三明治", def:"两片面包中间夹食物的食品。", ex:"Mom makes a chicken sandwich for my lunch box.", exZh:"妈妈为我的午餐盒做一个鸡肉三明治。", ety:"sandwich 来自英国贵族 Sandwich 伯爵的名字。", ext:"chicken sandwich 鸡肉三明治；bread 面包"},
+  {id:"b-g5s-saturday", word:"Saturday", ipa:"/ˈsætədeɪ/", cat:"五上U2", zh:"星期六", def:"一周中的第六天。", ex:"On Saturday I help my mother clean the room.", exZh:"星期六我帮妈妈打扫房间。", ety:"Saturday 来自古英语 Sæterdæg，意为“土星的日子”。", ext:"on Saturday 在星期六；weekend 周末"},
+  {id:"b-g5s-schedule", word:"schedule", ipa:"/ˈʃedjuːl/", cat:"五上U2", zh:"工作计划；日程安排", def:"列出活动时间的表。", ex:"Here is our class schedule for this week.", exZh:"这是我们这周的课程表。", ety:"schedule 来自拉丁语 schedula（小纸片），后指“时间表”。", ext:"class schedule 课程表；timetable 时间表"},
+  {id:"b-g5s-send", word:"send", ipa:"/send/", cat:"五上U4", zh:"邮寄；发送", def:"把东西或信息送出。", ex:"I will send you a postcard from Beijing.", exZh:"我会从北京给你寄一张明信片。", ety:"send 来自古英语 sendan，意为“送出、派遣”。", ext:"send an email 发邮件；send a letter 寄信"},
+  {id:"b-g5s-should", word:"should", ipa:"/ʃəd/", cat:"五上U2", zh:"应该，应当", def:"表示建议或提醒别人做某事。", ex:"You should drink more water in hot weather.", exZh:"天热时你应该多喝水。", ety:"should 是 shall 的过去式，后用作情态动词“应该”。", ext:"should 应该；must 必须"},
+  {id:"b-g5s-shy", word:"shy", ipa:"/ʃaɪ/", cat:"五上U1", zh:"羞怯的；腼腆的；怕生的", def:"害羞、不敢说话的。", ex:"The shy girl smiles but says nothing in class.", exZh:"那个害羞的女孩在课上微笑但不说话。", ety:"shy 来自古英语 sceoh，意为“胆怯的”。", ext:"shy 害羞的；shyly 害羞地"},
+  {id:"b-g5s-sing", word:"sing", ipa:"/sɪŋ/", cat:"五上U4", zh:"唱；唱歌", def:"用声音唱出歌曲。", ex:"Let's sing an English song together now.", exZh:"现在让我们一起唱一首英文歌。", ety:"sing 来自古英语 singan，与“唱歌”同源。", ext:"singer 歌手；sing a song 唱歌"},
+  {id:"b-g5s-sing-english-songs", word:"sing English songs", ipa:"/sɪŋ ˈɪŋɡlɪʃ sɒŋz/", cat:"五上U4", zh:"唱英文歌曲", def:"用英语唱歌。", ex:"We can sing English songs at the English party.", exZh:"我们能在英语晚会上唱英文歌。", ety:"sing（唱）+ English（英语）+ songs（歌曲），合成短语。", ext:"song 歌曲；sing a song 唱歌"},
+  {id:"b-g5s-sometimes", word:"sometimes", ipa:"/ˈsʌmtaɪmz/", cat:"五上U2", zh:"有时；间或", def:"不是经常，但偶尔发生。", ex:"Sometimes I walk to school with my friend.", exZh:"有时我和朋友一起步行上学。", ety:"some（一些）+ times（次数），表示“有时”。", ext:"often 经常；always 总是"},
+  {id:"b-g5s-song", word:"song", ipa:"/sɒŋ/", cat:"五上U4", zh:"歌曲", def:"可以唱的音乐作品。", ex:"This song is very popular in our class.", exZh:"这首歌在我们班很受欢迎。", ety:"song 来自古英语 sang，与 sing（唱）同源。", ext:"English song 英文歌；singer 歌手"},
+  {id:"b-g5s-speak", word:"speak", ipa:"/spiːk/", cat:"五上U4", zh:"会说；会讲（某种语言）", def:"用语言表达、说某种语言。", ex:"I can speak English with my new friend.", exZh:"我能和新朋友说英语。", ety:"speak 来自古英语 sprecan，意为“说话”。", ext:"speak English 说英语；speaker 说话者"},
+  {id:"b-g5s-speak-english", word:"speak English", ipa:"/spiːk ˈɪŋɡlɪʃ/", cat:"五上U4", zh:"说英语", def:"用英语交谈。", ex:"My cousin can speak English very well.", exZh:"我表姐英语说得很好。", ety:"speak（说）+ English（英语），合成短语。", ext:"English 英语；speak Chinese 说汉语"},
+  {id:"b-g5s-sport", word:"sport", ipa:"/spɔːt/", cat:"五上U2", zh:"体育运动", def:"锻炼身体或比赛的活动。", ex:"Football is my favourite sport at school.", exZh:"足球是我在学校最喜欢的运动。", ety:"sport 来自拉丁语 portare（携带），原指“消遣活动”。", ext:"play sports 做运动；sports meeting 运动会"},
+  {id:"b-g5s-strict", word:"strict", ipa:"/strɪkt/", cat:"五上U1", zh:"要求严格的；严厉的", def:"要求高、不放松标准。", ex:"Our maths teacher is strict but very kind.", exZh:"我们的数学老师很严格但很和蔼。", ety:"strict 来自拉丁语 stringere（拉紧），意为“严格的”。", ext:"be strict with 对……严格；kind 和蔼的"},
+  {id:"b-g5s-sunday", word:"Sunday", ipa:"/ˈsʌndeɪ/", cat:"五上U2", zh:"星期日", def:"一周中的第一天。", ex:"We visit our grandparents every Sunday morning.", exZh:"我们每个星期日上午去看望祖父母。", ety:"Sunday 来自古英语 Sunnandæg，意为“太阳的日子”。", ext:"on Sunday 在星期日；Sunday morning 星期日上午"},
+  {id:"b-g5s-sweet", word:"sweet", ipa:"/swiːt/", cat:"五上U3", zh:"含糖的；甜的", def:"像糖一样的味道。", ex:"These apples are sweet and fresh.", exZh:"这些苹果又甜又新鲜。", ety:"sweet 来自古英语 swēte，与“甜”同源。", ext:"sweet food 甜食；candy 糖果"},
+  {id:"b-g5s-swim", word:"swim", ipa:"/swɪm/", cat:"五上U4", zh:"游泳", def:"在水中游动。", ex:"I can swim in the pool with my father.", exZh:"我能和爸爸在泳池里游泳。", ety:"swim 来自古英语 swimman，意为“游水”。", ext:"swimmer 游泳者；go swimming 去游泳"},
+  {id:"b-g5s-tea", word:"tea", ipa:"/tiː/", cat:"五上U3", zh:"茶；茶水", def:"用茶叶泡的饮料。", ex:"My grandfather drinks tea every afternoon.", exZh:"我爷爷每天下午喝茶。", ety:"tea 来自汉语“茶”的发音，经福建方言传入英语。", ext:"green tea 绿茶；tea time 茶点时间"},
+  {id:"b-g5s-their", word:"their", ipa:"/ðeə/", cat:"五上U5", zh:"他们的；她们的；它们的", def:"第三人称复数所有格。", ex:"Their room is clean and bright.", exZh:"他们的房间干净又明亮。", ety:"their 来自古诺斯语，是 they 的所有格。", ext:"they 他们；theirs 他们的（东西）"},
+  {id:"b-g5s-there", word:"there", ipa:"/ðeə/", cat:"五上U5", zh:"（表示存在或发生）", def:"与 be 动词连用表示“有”。", ex:"There is a new clock on the wall.", exZh:"墙上有一个新钟。", ety:"there 来自古英语 þær，原义“在那里”。", ext:"there is 有（单数）；there are 有（复数）"},
+  {id:"b-g5s-thirsty", word:"thirsty", ipa:"/ˈθɜːsti/", cat:"五上U3", zh:"渴的；口渴的", def:"想喝水的感觉。", ex:"I am thirsty after the football game.", exZh:"足球比赛后我口渴了。", ety:"thirst（口渴）+ -y（形容词后缀），表示“渴的”。", ext:"thirst 口渴；hungry 饥饿的"},
+  {id:"b-g5s-thursday", word:"Thursday", ipa:"/ˈθɜːzdeɪ/", cat:"五上U2", zh:"星期四", def:"一周中的第四天。", ex:"We have PE class on Thursday afternoon.", exZh:"我们星期四下午有体育课。", ety:"Thursday 来自古英语 Þūresdæg，意为“雷神之日”。", ext:"on Thursday 在星期四；Thursday afternoon 星期四下午"},
+  {id:"b-g5s-tired", word:"tired", ipa:"/ˈtaɪəd/", cat:"五上U2", zh:"疲倦的", def:"累了、没力气。", ex:"I feel tired after running for ten minutes.", exZh:"跑了十分钟后我觉得累了。", ety:"tire（使疲劳）+ -d（形容词后缀），表示“疲倦的”。", ext:"tired 累的；rest 休息"},
+  {id:"b-g5s-tree", word:"tree", ipa:"/triː/", cat:"五上U6", zh:"树；树木；乔木", def:"有树干和枝叶的植物。", ex:"There are many tall trees in the forest.", exZh:"森林里有许多高大的树。", ety:"tree 来自古英语 trēo，意为“树”。", ext:"tree 树；apple tree 苹果树"},
+  {id:"b-g5s-tuesday", word:"Tuesday", ipa:"/ˈtjuːzdeɪ/", cat:"五上U2", zh:"星期二", def:"一周中的第二天。", ex:"I have a drawing class on Tuesday.", exZh:"我星期二有一节绘画课。", ety:"Tuesday 来自古英语 Tīwesdæg，意为“战神 Tiu 的日子”。", ext:"on Tuesday 在星期二；Tuesday evening 星期二晚上"},
+  {id:"b-g5s-village", word:"village", ipa:"/ˈvɪlɪdʒ/", cat:"五上U6", zh:"村庄；村镇", def:"乡村的小聚居地。", ex:"My grandma lives in a quiet village.", exZh:"我奶奶住在一个安静的村庄。", ety:"village 来自拉丁语 villa（乡间别墅），经法语进入英语。", ext:"in the village 在村里；villager 村民"},
+  {id:"b-g5s-want", word:"want", ipa:"/wɒnt/", cat:"五上U3", zh:"要；想要", def:"希望得到某物或做某事。", ex:"I want a sandwich and a cup of tea.", exZh:"我想要一个三明治和一杯茶。", ety:"want 来自古诺斯语 vanta（缺少），后指“想要”。", ext:"want 想要；would like 想要（礼貌）"},
+  {id:"b-g5s-wash", word:"wash", ipa:"/wɒʃ/", cat:"五上U2", zh:"洗", def:"用水清洁东西。", ex:"I wash my hands before every meal.", exZh:"我每顿饭前都洗手。", ety:"wash 来自古英语 wæscan，意为“洗”。", ext:"wash clothes 洗衣服；wash hands 洗手"},
+  {id:"b-g5s-wash-my-clothes", word:"wash my clothes", ipa:"/wɒʃ maɪ kləʊðz/", cat:"五上U2", zh:"洗我的衣服", def:"把自己的衣服洗干净。", ex:"I wash my clothes on Sunday morning.", exZh:"我星期日上午洗我的衣服。", ety:"wash（洗）+ my（我的）+ clothes（衣服），合成短语。", ext:"clothes 衣服；wash hands 洗手"},
+  {id:"b-g5s-watch", word:"watch", ipa:"/wɒtʃ/", cat:"五上U2", zh:"看", def:"观看电视、比赛等。", ex:"We watch a fun film at home on Friday.", exZh:"星期五我们在家看一部有趣的电影。", ety:"watch 来自古英语 wæccan（守望），后指“观看”。", ext:"watch TV 看电视；look at 看"},
+  {id:"b-g5s-watch-tv", word:"watch TV", ipa:"/wɒtʃ ˌtiː ˈviː/", cat:"五上U2", zh:"看电视", def:"观看电视节目。", ex:"I watch TV for half an hour after dinner.", exZh:"晚饭后我看半小时电视。", ety:"watch（看）+ TV（电视，television 的缩写）。", ext:"TV 电视；watch a film 看电影"},
+  {id:"b-g5s-water-bottle", word:"water bottle", ipa:"/ˈwɔːtə ˌbɒtl/", cat:"五上U5", zh:"水瓶", def:"装水的瓶子。", ex:"My water bottle is beside the computer.", exZh:"我的水瓶在电脑旁边。", ety:"water（水）+ bottle（瓶子），合成名词。", ext:"bottle 瓶子；a bottle of water 一瓶水"},
+  {id:"b-g5s-we'll", word:"we'll", ipa:"/wiːl/", cat:"五上U4", zh:"we will 的缩写：我们将", def:"表示“我们将会”。", ex:"We'll have a good time at the party.", exZh:"我们将在聚会上玩得开心。", ety:"we（我们）+ will（将要）的缩写形式。", ext:"will 将要；we're 我们是"},
+  {id:"b-g5s-wednesday", word:"Wednesday", ipa:"/ˈwenzdeɪ/", cat:"五上U2", zh:"星期三", def:"一周中的第三天。", ex:"We have an art class on Wednesday.", exZh:"我们星期三有一节美术课。", ety:"Wednesday 来自古英语 Wōdnesdæg，意为“Woden 的日子”。", ext:"on Wednesday 在星期三；Wednesday morning 星期三上午"},
+  {id:"b-g5s-weekend", word:"weekend", ipa:"/ˈwiːkend/", cat:"五上U2", zh:"周末", def:"星期六和星期日。", ex:"I play sports with friends on the weekend.", exZh:"周末我和朋友一起做运动。", ety:"week（周）+ end（末尾），合成“周末”。", ext:"on the weekend 在周末；weekday 工作日"},
+  {id:"b-g5s-will", word:"will", ipa:"/wɪl/", cat:"五上U4", zh:"（谈及将来）将要", def:"表示将来会发生的事。", ex:"It will be sunny tomorrow, so let's go boating.", exZh:"明天晴天，我们去划船吧。", ety:"will 来自古英语 wille（意愿），后用作将来时助动词。", ext:"would 将会（过去式）；we'll 我们将"},
+  {id:"b-g5s-wonderful", word:"wonderful", ipa:"/ˈwʌndəfl/", cat:"五上U4", zh:"极好的；了不起的", def:"非常好、令人赞叹。", ex:"The school show was wonderful last Friday.", exZh:"上星期五的学校演出精彩极了。", ety:"wonder（惊奇）+ -ful（形容词后缀），表示“精彩的”。", ext:"wonderful 精彩的；wonder 惊奇"},
+  {id:"b-g5s-young", word:"young", ipa:"/jʌŋ/", cat:"五上U1", zh:"年轻的；岁数不大的", def:"年纪小、不老。", ex:"Our young teacher often plays games with us.", exZh:"我们年轻的老师经常和我们玩游戏。", ety:"young 来自古英语 geong，与“年轻”同源。", ext:"young 年轻的；old 年老的"},
+  {id:"b-g5x-a-m", word:"a.m.", ipa:"/ˈeɪˈem/", cat:"五下U1", zh:"午前；上午", def:"表示中午十二点以前的时间，也就是上午。", ex:"I get up at seven a.m. every school day.", exZh:"我每个上学日早上七点起床。", ety:"来自拉丁语 ante meridiem，意为“中午之前”。", ext:"p.m. 下午；at 7 a.m. 在早上七点"},
+  {id:"b-g5x-a-few", word:"a few", ipa:"/ə fjuː/", cat:"五下U3", zh:"一些；几个", def:"表示少量的人或物，后面接可数名词复数。", ex:"We have a few fun things at school in spring.", exZh:"春天我们学校有几项有趣的活动。", ety:"few 源自古英语 fēaw，意为“少”，加不定冠词 a 表示“有几个”。", ext:"a few books 几本书；few 很少的"},
+  {id:"b-g5x-after", word:"after", ipa:"/ˈɑːftə(r)/", cat:"五下U1", zh:"在（时间）后", def:"表示在某件事或某个时间点之后。", ex:"I often play basketball after school.", exZh:"放学后我经常打篮球。", ety:"古英语 æfter，原义“在后面”，后来也用于时间。", ext:"after dinner 晚饭后；before 在……之前"},
+  {id:"b-g5x-all", word:"all", ipa:"/ɔːl/", cat:"五下U1", zh:"全；完全", def:"表示整体的全部，也可用作副词表示“完全地”。", ex:"All my classmates like the school trip.", exZh:"我所有的同学都喜欢这次学校旅行。", ety:"古英语 eall，意为“全部、整个”。", ext:"all day 一整天；all of us 我们所有人"},
+  {id:"b-g5x-also", word:"also", ipa:"/ˈɔːlsəʊ/", cat:"五下U1", zh:"还；也", def:"用于补充说明，表示“同样、另外”。", ex:"I like summer; I also like winter.", exZh:"我喜欢夏天，也喜欢冬天。", ety:"由古英语 eall（全）和 swā（如此）合成，原义“完全如此”。", ext:"too 也（用于句末）；as well 也"},
+  {id:"b-g5x-always", word:"always", ipa:"/ˈɔːlwɪz/", cat:"五下U1", zh:"总是；一直", def:"表示动作每次都发生，频率最高。", ex:"My mother always makes breakfast for me.", exZh:"我妈妈总是给我做早餐。", ety:"由 all（全部）加 ways（方式）构成，意为“在所有情况下”。", ext:"usually 通常；never 从不"},
+  {id:"b-g5x-american", word:"American", ipa:"/əˈmerɪkən/", cat:"五下U3", zh:"美国的；美国人", def:"与美国有关的人或事物，也可指美国人。", ex:"Thanksgiving is a special day in American history.", exZh:"感恩节在美国历史上是一个特别的日子。", ety:"由 America（美洲；美国）加形容词后缀 -an 构成。", ext:"America 美国；Canadian 加拿大的"},
+  {id:"b-g5x-anything", word:"anything", ipa:"/ˈeniθɪŋ/", cat:"五下U6", zh:"任何事物；任何东西", def:"指不确定的任何一件事物，常用于疑问句和否定句。", ex:"Can you tell me anything about the rules?", exZh:"你能告诉我一些关于规则的事吗？", ety:"由 any（任何）和 thing（东西）合成的复合词。", ext:"anything else 还有别的吗；nothing 没有什么"},
+  {id:"b-g5x-april", word:"April", ipa:"/ˈeɪprəl/", cat:"五下U3", zh:"四月", def:"一年中的第四个月。", ex:"Our school trip is in April this year.", exZh:"今年我们的学校旅行在四月。", ety:"源自拉丁语 Aprilis，与 aperire（开放）有关，指万物开放的月份。", ext:"April Fool's Day 愚人节；in April 在四月"},
+  {id:"b-g5x-august", word:"August", ipa:"/ˈɔːɡəst/", cat:"五下U3", zh:"八月", def:"一年中的第八个月。", ex:"We have a long vacation in August.", exZh:"我们八月有一个长假。", ety:"以罗马皇帝奥古斯都（Augustus）的名字命名。", ext:"in August 在八月；August 8th 八月八日"},
+  {id:"b-g5x-autumn", word:"autumn", ipa:"/ˈɔːtəm/", cat:"五下U2", zh:"秋天", def:"一年中天气变凉、树叶变色的季节。", ex:"Autumn is my favourite season because leaves turn yellow.", exZh:"秋天是我最喜欢的季节，因为树叶变黄了。", ety:"源自拉丁语 autumnus，意为“收获的季节”。", ext:"fall 秋天（美式）；in autumn 在秋天"},
+  {id:"b-g5x-bamboo", word:"bamboo", ipa:"/ˌbæmˈbuː/", cat:"五下U5", zh:"竹子", def:"一种空心、有节、长得很快的植物，熊猫爱吃它。", ex:"The pandas are eating bamboo at the zoo.", exZh:"熊猫们正在动物园里吃竹子。", ety:"经荷兰语从马来语 bambu 传入英语，原指一种竹子。", ext:"bamboo shoots 竹笋；panda 熊猫"},
+  {id:"b-g5x-because", word:"because", ipa:"/bɪˈkɒz/", cat:"五下U1", zh:"因为", def:"用来说明原因或理由的连词。", ex:"I stay home because it is raining hard.", exZh:"我待在家里，因为雨下得很大。", ety:"由 be（是）和 cause（原因）组合而成，意为“是由于”。", ext:"because of 因为（后接名词）；why 为什么"},
+  {id:"b-g5x-best", word:"best", ipa:"/best/", cat:"五下U2", zh:"最；最高程度地", def:"good 或 well 的最高级，表示“最好地”或“最”。", ex:"I like spring best because the flowers are beautiful.", exZh:"我最喜欢春天，因为花很漂亮。", ety:"古英语 betst，是 good 的最高级形式。", ext:"like ... best 最喜欢；good 好的"},
+  {id:"b-g5x-bunny", word:"bunny", ipa:"/ˈbʌni/", cat:"五下U3", zh:"小兔子", def:"对兔子、尤其是小兔子的亲昵叫法。", ex:"The Easter bunny hides colourful eggs for children.", exZh:"复活节小兔子为孩子们藏彩蛋。", ety:"源自方言 bun（圆胖的小动物）加昵称后缀 -y，原指小松鼠，后指小兔。", ext:"rabbit 兔子；Easter bunny 复活节小兔"},
+  {id:"b-g5x-busy", word:"busy", ipa:"/ˈbɪzi/", cat:"五下U1", zh:"忙的", def:"表示有很多事情要做，没有空闲。", ex:"My dad is busy with his work this morning.", exZh:"我爸爸今天早上工作很忙。", ety:"古英语 bysig，意为“忙于做事的”。", ext:"be busy with 忙于；free 空闲的"},
+  {id:"b-g5x-by", word:"by", ipa:"/baɪ/", cat:"五下U3", zh:"在……之前；不迟于", def:"表示“在某一时间之前”，也可表示“通过某种方式”。", ex:"Please send me the card by Friday.", exZh:"请在星期五之前把卡片寄给我。", ety:"古英语 bī，意为“在……旁边”，后来引申出时间上的“不迟于”。", ext:"by bus 乘公交车；by the way 顺便说"},
+  {id:"b-g5x-canadian", word:"Canadian", ipa:"/kəˈneɪdiən/", cat:"五下U6", zh:"加拿大的；加拿大人", def:"与加拿大有关的人或事物，也可指加拿大人。", ex:"The Canadian robot is drawing a picture for us.", exZh:"那个加拿大机器人正在给我们画一幅画。", ety:"由 Canada（加拿大）加形容词后缀 -n 构成。", ext:"Canada 加拿大；American 美国的"},
+  {id:"b-g5x-cave", word:"cave", ipa:"/keɪv/", cat:"五下U1", zh:"山洞；洞穴", def:"山体或地下天然形成的空洞。", ex:"Robin lives in a cave near the river.", exZh:"罗宾住在河边的一个山洞里。", ety:"源自拉丁语 cavum，意为“中空的地方”。", ext:"in the cave 在山洞里；cave in 塌方"},
+  {id:"b-g5x-chocolate", word:"chocolate", ipa:"/ˈtʃɒklət/", cat:"五下U3", zh:"巧克力", def:"用可可豆制成的甜食，常做成糖果或蛋形。", ex:"Each child gets a chocolate egg at Easter.", exZh:"每个孩子在复活节都会得到一个巧克力蛋。", ety:"经西班牙语从纳瓦特尔语 chocolātl 传入英语，原指可可饮料。", ext:"chocolate eggs 巧克力蛋；a bar of chocolate 一块巧克力"},
+  {id:"b-g5x-christmas", word:"Christmas", ipa:"/ˈkrɪsməs/", cat:"五下U3", zh:"圣诞节", def:"每年十二月二十五日庆祝的节日。", ex:"We sing songs together on Christmas Day.", exZh:"圣诞节那天我们一起唱歌。", ety:"由 Christ（基督）和 mass（弥撒）合成，意为“基督的弥撒”。", ext:"Christmas tree 圣诞树；on Christmas Day 在圣诞节"},
+  {id:"b-g5x-clean-my-room", word:"clean my room", ipa:"/kliːn maɪ ruːm/", cat:"五下U1", zh:"打扫我的房间", def:"整理并清扫自己房间的一项日常活动。", ex:"I clean my room every Saturday morning.", exZh:"我每个星期六早上都打扫我的房间。", ety:"clean 源自古英语 clǣne（干净的），room 意为“房间”。", ext:"clean the classroom 打扫教室；tidy 整理"},
+  {id:"b-g5x-climbing", word:"climbing", ipa:"/ˈklaɪmɪŋ/", cat:"五下U5", zh:"（正在）攀登；攀爬", def:"climb 的现在分词，表示正在往高处爬。", ex:"Look! The little monkey is climbing the tree.", exZh:"看！那只小猴子正在爬树。", ety:"climb 源自古英语 climban，意为“攀登”，加 -ing 构成现在分词。", ext:"climb mountains 爬山；climber 攀登者"},
+  {id:"b-g5x-contest", word:"contest", ipa:"/ˈkɒntest/", cat:"五下U3", zh:"比赛；竞赛", def:"人们比拼本领或知识的一项活动。", ex:"Our class has a speaking contest in May.", exZh:"我们班五月有一场演讲比赛。", ety:"由 con（共同）和 test（测试）构成，原义“共同角逐”。", ext:"speech contest 演讲比赛；match 比赛"},
+  {id:"b-g5x-dancing", word:"dancing", ipa:"/ˈdænsɪŋ/", cat:"五下U1", zh:"跳舞；舞蹈", def:"dance 的 -ing 形式，指跳舞这项活动。", ex:"I take a dancing class after school on Fridays.", exZh:"我每周五放学后上舞蹈课。", ety:"dance 源自古法语 dancer（跳舞），加 -ing 变为动名词。", ext:"take a dancing class 上舞蹈课；dancer 舞者"},
+  {id:"b-g5x-december", word:"December", ipa:"/dɪˈsembə(r)/", cat:"五下U3", zh:"十二月", def:"一年中的第十二个月。", ex:"Christmas is in December, my favourite month.", exZh:"圣诞节在十二月，那是我最喜欢的月份。", ety:"源自拉丁语 December，意为“第十月”，因为古罗马历法以三月为岁首。", ext:"in December 在十二月；December 25th 十二月二十五日"},
+  {id:"b-g5x-diary", word:"diary", ipa:"/ˈdaɪəri/", cat:"五下U4", zh:"日记", def:"每天记录自己经历和想法的本子。", ex:"I write a diary entry about my busy day.", exZh:"我写一篇日记记录我忙碌的一天。", ety:"源自拉丁语 diarium，意为“每日的记录”，词根 dies 意为“日”。", ext:"keep a diary 记日记；write a diary 写日记"},
+  {id:"b-g5x-doing-morning-exercises", word:"doing morning exercises", ipa:"/ˈduːɪŋ ˈmɔːnɪŋ ˈeksəsaɪzɪz/", cat:"五下U6", zh:"（正在）做早操", def:"描述某人此刻正在做早操。", ex:"The students are doing morning exercises on the playground.", exZh:"学生们正在操场上做早操。", ety:"do（做）+ morning（早晨）+ exercises（练习）组合，加 -ing 表示正在进行。", ext:"do morning exercises 做早操；exercise 运动"},
+  {id:"b-g5x-do-morning-exercise", word:"do morning exercise", ipa:"/duː ˈmɔːnɪŋ ˈeksəsaɪz/", cat:"五下U1", zh:"做早操", def:"早晨做的体操活动，帮助身体醒来。", ex:"We do morning exercise at eight every school day.", exZh:"每个上学日我们八点做早操。", ety:"do（做）+ morning（早晨）+ exercise（锻炼）构成动词短语。", ext:"doing morning exercises 正在做早操；play sports 做运动"},
+  {id:"b-g5x-drinking", word:"drinking", ipa:"/ˈdrɪŋkɪŋ/", cat:"五下U5", zh:"（正在）喝（水）", def:"drink 的现在分词，表示正在喝东西。", ex:"The baby elephant is drinking water with its trunk.", exZh:"小象正在用鼻子喝水。", ety:"drink 源自古英语 drincan，加 -ing 构成现在分词。", ext:"drink water 喝水；drink 饮料"},
+  {id:"b-g5x-each", word:"each", ipa:"/iːtʃ/", cat:"五下U5", zh:"每一；各个", def:"指两个或两个以上的人或物中的每一个。", ex:"Each student has a new book on the desk.", exZh:"每个学生桌上都有一本新书。", ety:"古英语 ǣlc，由 ā（永远）和 līc（身体、同类）合成。", ext:"each other 互相；every 每个"},
+  {id:"b-g5x-each-other", word:"each other", ipa:"/iːtʃ ˈʌðə(r)/", cat:"五下U5", zh:"相互；彼此", def:"表示两个人或更多的人彼此之间做某事。", ex:"My friends and I help each other with homework.", exZh:"我和朋友们在作业上互相帮助。", ety:"each（各自）+ other（另一个）构成相互代词。", ext:"help each other 互相帮助；one another 彼此"},
+  {id:"b-g5x-easter", word:"Easter", ipa:"/ˈiːstə(r)/", cat:"五下U3", zh:"复活节", def:"春天庆祝的节日，孩子们常玩找彩蛋的游戏。", ex:"Easter is in April and children look for eggs.", exZh:"复活节在四月，孩子们会找彩蛋。", ety:"源自古英语 Ēastre，是春日女神的名字，后来指复活节。", ext:"Easter egg 复活节彩蛋；Easter bunny 复活节小兔"},
+  {id:"b-g5x-eat-breakfast", word:"eat breakfast", ipa:"/iːt ˈbrekfəst/", cat:"五下U1", zh:"吃早饭", def:"早上吃的第一顿饭。", ex:"I eat breakfast at seven before going to school.", exZh:"我上学前七点吃早饭。", ety:"eat（吃）+ breakfast（早餐），breakfast 由 break（打破）和 fast（禁食）合成。", ext:"have breakfast 吃早饭；eat dinner 吃晚饭"},
+  {id:"b-g5x-eat-dinner", word:"eat dinner", ipa:"/iːt ˈdɪnə(r)/", cat:"五下U1", zh:"吃晚饭", def:"晚上吃的一顿正餐。", ex:"My family eats dinner together at six thirty.", exZh:"我们家六点半一起吃晚饭。", ety:"eat（吃）+ dinner（正餐），dinner 源自古法语 disner。", ext:"have dinner 吃晚饭；eat lunch 吃午饭"},
+  {id:"b-g5x-eating", word:"eating", ipa:"/ˈiːtɪŋ/", cat:"五下U5", zh:"（正在）吃", def:"eat 的现在分词，表示正在吃东西。", ex:"The cat is eating fish under the table.", exZh:"那只猫正在桌子下面吃鱼。", ety:"eat 源自古英语 etan，加 -ing 构成现在分词。", ext:"eat lunch 吃午饭；eating lunch 正在吃午饭"},
+  {id:"b-g5x-eating-lunch", word:"eating lunch", ipa:"/ˈiːtɪŋ lʌntʃ/", cat:"五下U6", zh:"（正在）吃午饭", def:"描述某人此刻正在吃午饭。", ex:"We are eating lunch in the school dining hall.", exZh:"我们正在学校食堂吃午饭。", ety:"eat（吃）的 -ing 形式加 lunch（午餐）构成。", ext:"eat lunch 吃午饭；have lunch 吃午饭"},
+  {id:"b-g5x-else", word:"else", ipa:"/els/", cat:"五下U6", zh:"另外；其他", def:"表示“除……之外还”或“别的”。", ex:"Anything else we should do in the library?", exZh:"在图书馆我们还应该做别的什么吗？", ety:"古英语 elles，意为“否则、另外”。", ext:"anything else 别的事；someone else 别人"},
+  {id:"b-g5x-excited", word:"excited", ipa:"/ɪkˈsaɪtɪd/", cat:"五下U6", zh:"兴奋的；激动的", def:"形容人因为好事而感到非常高兴和期待。", ex:"The children are excited about the school trip.", exZh:"孩子们对学校旅行感到很兴奋。", ety:"excite 源自拉丁语 excitare（唤起），加 -d 构成形容词。", ext:"be excited about 对……感到兴奋；excitement 兴奋"},
+  {id:"b-g5x-exercise", word:"exercise", ipa:"/ˈeksəsaɪz/", cat:"五下U1", zh:"活动；运动", def:"为保持健康而做的身体活动或练习。", ex:"I do exercise for half an hour every morning.", exZh:"我每天早上运动半个小时。", ety:"源自拉丁语 exercere，意为“使保持忙碌、训练”。", ext:"do exercise 做运动；morning exercises 早操"},
+  {id:"b-g5x-exhibition", word:"exhibition", ipa:"/ˌeksɪˈbɪʃn/", cat:"五下U6", zh:"展览", def:"把艺术作品或物品摆出来给人看的活动。", ex:"There is an art exhibition at the museum today.", exZh:"今天博物馆里有一个美术展览。", ety:"exhibit（展出）加名词后缀 -ion 构成。", ext:"art exhibition 美术展；show 展览"},
+  {id:"b-g5x-fall", word:"fall", ipa:"/fɔːl/", cat:"五下U2", zh:"落下；秋天", def:"作动词指落下，作名词在美式英语中指秋天。", ex:"Leaves fall from the trees in fall.", exZh:"秋天树叶从树上落下来。", ety:"古英语 feallan，意为“落下”；美式英语用 fall 指秋天。", ext:"fall leaves 落叶；autumn 秋天"},
+  {id:"b-g5x-february", word:"February", ipa:"/ˈfebruəri/", cat:"五下U3", zh:"二月", def:"一年中的第二个月。", ex:"February is cold, but we still play outside.", exZh:"二月很冷，但我们仍然在外面玩。", ety:"源自拉丁语 Februarius，与古罗马的净化仪式 februa 有关。", ext:"in February 在二月；February 14th 二月十四日"},
+  {id:"b-g5x-few", word:"few", ipa:"/fjuː/", cat:"五下U3", zh:"不多；很少", def:"表示数量很少，几乎接近于零。", ex:"Few students are in the classroom after school.", exZh:"放学后教室里没几个学生。", ety:"古英语 fēaw，意为“少的”。", ext:"a few 几个；fewer 更少的"},
+  {id:"b-g5x-fifth", word:"fifth", ipa:"/fɪfθ/", cat:"五下U4", zh:"第五（的）", def:"表示顺序第五的序数词。", ex:"My birthday is on the fifth of May.", exZh:"我的生日是五月五日。", ety:"five（五）加序数词后缀 -th 构成，拼写中 ve 变为 f。", ext:"5th 第五；five 五"},
+  {id:"b-g5x-first", word:"first", ipa:"/fɜːst/", cat:"五下U4", zh:"第一（的）", def:"表示顺序第一的序数词。", ex:"Tom is the first student to get to school.", exZh:"汤姆是第一个到学校的学生。", ety:"古英语 fyrst，是 fore（在……之前）的最高级。", ext:"1st 第一；at first 起初"},
+  {id:"b-g5x-fool", word:"fool", ipa:"/fuːl/", cat:"五下U4", zh:"傻瓜；愚弄", def:"指愚蠢的人，也可作动词表示“欺骗、愚弄”。", ex:"We play a joke on April Fool's Day.", exZh:"我们在愚人节开玩笑。", ety:"源自拉丁语 follis（风箱），引申为“脑袋空空的人”。", ext:"April Fool's Day 愚人节；foolish 愚蠢的"},
+  {id:"b-g5x-fourth", word:"fourth", ipa:"/fɔːθ/", cat:"五下U4", zh:"第四（的）", def:"表示顺序第四的序数词。", ex:"The fourth lesson on Monday is music.", exZh:"星期一的第四节课是音乐课。", ety:"four（四）加序数词后缀 -th 构成。", ext:"4th 第四；four 四"},
+  {id:"b-g5x-fur", word:"fur", ipa:"/ˈfɜː(r)/", cat:"五下U5", zh:"（某些动物的）浓密的软毛", def:"某些动物身上柔软浓密的毛。", ex:"The little cat has soft white fur.", exZh:"那只小猫有柔软的白毛。", ety:"源自古法语 forrer（用毛皮衬里），后来指动物的毛皮。", ext:"fur coat 毛皮大衣；hair 头发"},
+  {id:"b-g5x-game", word:"game", ipa:"/ɡeɪm/", cat:"五下U1", zh:"游戏；比赛", def:"有规则、供人玩乐或竞赛的活动。", ex:"We play a fun game in PE class today.", exZh:"今天体育课上我们玩了一个有趣的游戏。", ety:"古英语 gamen，意为“游戏、娱乐”。", ext:"play a game 玩游戏；sports meet 运动会"},
+  {id:"b-g5x-go-for-a-walk", word:"go for a walk", ipa:"/ɡəʊ fɔːr ə wɔːk/", cat:"五下U1", zh:"散步", def:"为了放松或锻炼而慢慢地走一走。", ex:"My grandparents go for a walk after dinner.", exZh:"我的祖父母晚饭后去散步。", ety:"go（去）+ for（为了）+ a walk（一次步行）构成固定搭配。", ext:"take a walk 散步；walk 行走"},
+  {id:"b-g5x-good-job", word:"good job", ipa:"/ɡʊd dʒɒb/", cat:"五下U1", zh:"做得好", def:"用来表扬别人把事情做得很好。", ex:"You cleaned the blackboard. Good job!", exZh:"你把黑板擦干净了，做得好！", ety:"good（好的）+ job（工作、事情）构成常用表扬语。", ext:"well done 做得好；great 太棒了"},
+  {id:"b-g5x-go-on-a-picnic", word:"go on a picnic", ipa:"/ɡəʊ ɒn ə ˈpɪknɪk/", cat:"五下U2", zh:"去野餐", def:"带上食物到户外吃饭游玩。", ex:"We go on a picnic in the park this Sunday.", exZh:"这个星期天我们去公园野餐。", ety:"go on（去进行）+ a picnic（野餐）构成短语，picnic 源自法语 pique-nique。", ext:"have a picnic 野餐；picnic 野餐"},
+  {id:"b-g5x-go-shopping", word:"go shopping", ipa:"/ɡəʊ ˈʃɒpɪŋ/", cat:"五下U1", zh:"去买东西；购物", def:"到商店去购买需要的东西。", ex:"I go shopping with my mother on Sundays.", exZh:"我星期天和妈妈去购物。", ety:"go（去）+ shopping（购物），shop 源自古英语 shoppa（店铺）。", ext:"shop 商店；do some shopping 买东西"},
+  {id:"b-g5x-go-swimming", word:"go swimming", ipa:"/ɡəʊ ˈswɪmɪŋ/", cat:"五下U2", zh:"去游泳", def:"到水里游泳这项夏季常见的活动。", ex:"I go swimming with my friends in summer.", exZh:"夏天我和朋友们去游泳。", ety:"go（去）+ swimming（游泳），swim 源自古英语 swimman。", ext:"swim 游泳；go boating 去划船"},
+  {id:"b-g5x-have-class", word:"have ... class", ipa:"/hæv klɑːs/", cat:"五下U1", zh:"上……课", def:"表示参加某一门课程的学习。", ex:"We have an English class at nine o'clock.", exZh:"我们九点上英语课。", ety:"have（进行、上）+ class（课）构成固定表达。", ext:"have a music class 上音乐课；class 课"},
+  {id:"b-g5x-have-a-look", word:"have a look", ipa:"/hæv ə lʊk/", cat:"五下U1", zh:"看一看", def:"表示简单地看一下某物。", ex:"Can I have a look at your new picture?", exZh:"我能看一下你的新画吗？", ety:"have（进行）+ a look（看一下）构成常用短语。", ext:"take a look 看一看；look at 看"},
+  {id:"b-g5x-having-class", word:"having ... class", ipa:"/ˈhævɪŋ klɑːs/", cat:"五下U6", zh:"（正在）上……课", def:"描述某人此刻正在上课。", ex:"The students are having a maths class now.", exZh:"学生们现在正在上数学课。", ety:"have 的现在分词 having 加 class 构成。", ext:"have ... class 上……课；having lunch 正在吃午饭"},
+  {id:"b-g5x-hers", word:"hers", ipa:"/hɜːz/", cat:"五下U5", zh:"她的", def:"名词性物主代词，指代属于她的东西。", ex:"This red schoolbag is hers, not mine.", exZh:"这个红色书包是她的，不是我的。", ety:"her（她的）加 -s 构成名词性物主代词。", ext:"her 她的；mine 我的"},
+  {id:"b-g5x-his", word:"his", ipa:"/hɪz/", cat:"五下U5", zh:"他的", def:"既可作形容词性物主代词，也可作名词性物主代词。", ex:"The blue pen on the desk is his.", exZh:"桌上那支蓝色钢笔是他的。", ety:"古英语 his，是 he（他）的所有格形式。", ext:"he 他；hers 她的"},
+  {id:"b-g5x-holiday", word:"holiday", ipa:"/ˈhɒlədeɪ/", cat:"五下U3", zh:"假日；节日", def:"不用上学或上班的休息日或节日。", ex:"We have a seven-day holiday in October.", exZh:"我们十月有一个七天的假期。", ety:"由古英语 hāligdæg（神圣的日子）合成，原指宗教节日。", ext:"on holiday 在度假；vacation 假期"},
+  {id:"b-g5x-island", word:"island", ipa:"/ˈaɪlənd/", cat:"五下U1", zh:"岛", def:"四周被水包围的一块陆地。", ex:"Robin lives alone on a small island.", exZh:"罗宾独自住在一个小岛上。", ety:"源自古英语 īgland，其中 īg 意为“岛”，后来拼写受法语 isle 影响加了 s。", ext:"on the island 在岛上；islander 岛民"},
+  {id:"b-g5x-its", word:"its", ipa:"/ɪts/", cat:"五下U5", zh:"它的", def:"it 的所有格，表示属于某物或某动物。", ex:"The dog is washing its face now.", exZh:"那只狗现在正在洗脸。", ety:"it（它）加 -s 构成所有格，与 it's（it is）不同。", ext:"it 它；it's 它是"},
+  {id:"b-g5x-january", word:"January", ipa:"/ˈdʒænjuəri/", cat:"五下U3", zh:"一月", def:"一年中的第一个月。", ex:"New Year's Day is on January 1st.", exZh:"元旦是一月一日。", ety:"以罗马神话中的门神 Janus 命名，象征新年的开始。", ext:"in January 在一月；January 1st 一月一日"},
+  {id:"b-g5x-july", word:"July", ipa:"/dʒuːˈlaɪ/", cat:"五下U3", zh:"七月", def:"一年中的第七个月。", ex:"We start our summer vacation in July.", exZh:"我们七月开始放暑假。", ety:"以罗马统治者尤利乌斯·恺撒（Julius Caesar）的名字命名。", ext:"in July 在七月；July 4th 七月四日"},
+  {id:"b-g5x-jumping", word:"jumping", ipa:"/ˈdʒʌmpɪŋ/", cat:"五下U5", zh:"（正在）跳", def:"jump 的现在分词，表示正在跳跃。", ex:"The rabbits are jumping happily on the grass.", exZh:"兔子们正在草地上开心地跳来跳去。", ety:"jump 可能源自中古英语 jumpen，加 -ing 构成现在分词。", ext:"jump 跳；jump rope 跳绳"},
+  {id:"b-g5x-june", word:"June", ipa:"/dʒuːn/", cat:"五下U3", zh:"六月", def:"一年中的第六个月。", ex:"Children's Day is on June 1st.", exZh:"儿童节是六月一日。", ety:"以罗马女神 Juno（朱诺）的名字命名。", ext:"in June 在六月；June 1st 六月一日"},
+  {id:"b-g5x-keep", word:"keep", ipa:"/kiːp/", cat:"五下U6", zh:"保持某种状态", def:"使某人或某物一直处于某种状态。", ex:"Please keep quiet in the reading room.", exZh:"请在阅览室保持安静。", ety:"古英语 cēpan，意为“看守、保持”。", ext:"keep clean 保持干净；keep to the right 靠右"},
+  {id:"b-g5x-keep-to-the-right", word:"keep to the right", ipa:"/kiːp tə ðə raɪt/", cat:"五下U6", zh:"靠右", def:"走路或开车时靠右侧通行的一条规则。", ex:"We must keep to the right on the stairs.", exZh:"我们在楼梯上必须靠右行走。", ety:"keep（保持）+ to the right（在右边）构成规则用语。", ext:"keep to the left 靠左；traffic rules 交通规则"},
+  {id:"b-g5x-keep-your-desk-clean", word:"keep your desk clean", ipa:"/kiːp jɔː desk kliːn/", cat:"五下U6", zh:"保持你的课桌干净", def:"要求把自己的书桌整理干净的一条规则。", ex:"Please keep your desk clean in class.", exZh:"上课时请保持你的课桌干净。", ety:"keep（保持）+ your desk（你的书桌）+ clean（干净）构成。", ext:"keep quiet 保持安静；clean 干净的"},
+  {id:"b-g5x-kitten", word:"kitten", ipa:"/ˈkɪtn/", cat:"五下U5", zh:"小猫", def:"出生不久的小猫，也叫幼猫。", ex:"The kitten is sleeping in a warm box.", exZh:"那只小猫正在一个温暖的箱子里睡觉。", ety:"由 cat（猫）加表示“小”的后缀 -en 构成。", ext:"cat 猫；puppy 小狗"},
+  {id:"b-g5x-last", word:"last", ipa:"/lɑːst/", cat:"五下U1", zh:"上一个的；刚过去的", def:"指紧接着现在之前的一个时间。", ex:"I visited my grandma last weekend.", exZh:"我上周末去看望了奶奶。", ety:"古英语 lasta，意为“最后的、最近的”。", ext:"last night 昨晚；next 下一个的"},
+  {id:"b-g5x-late", word:"late", ipa:"/leɪt/", cat:"五下U1", zh:"晚；迟", def:"表示比规定的时间更晚。", ex:"Don't be late for school tomorrow.", exZh:"明天上学不要迟到。", ety:"古英语 lat，意为“慢的、迟的”。", ext:"be late for 迟到；early 早的"},
+  {id:"b-g5x-leaf", word:"leaf", ipa:"/liːf/", cat:"五下U2", zh:"叶子", def:"树上或植物上扁平的绿色部分，复数是 leaves。", ex:"A yellow leaf falls from the tree.", exZh:"一片黄叶从树上落下来。", ety:"古英语 lēaf，意为“叶子”，复数形式为 leaves。", ext:"leaves 叶子（复数）；fallen leaves 落叶"},
+  {id:"b-g5x-letter", word:"letter", ipa:"/ˈletə(r)/", cat:"五下U1", zh:"信", def:"写在纸上寄给别人的文字消息。", ex:"I write a letter to my pen pal every month.", exZh:"我每个月给我的笔友写一封信。", ety:"源自拉丁语 littera（字母），后引申为“书信”。", ext:"write a letter 写信；email 电子邮件"},
+  {id:"b-g5x-like", word:"like", ipa:"/laɪk/", cat:"五下U5", zh:"像……那样", def:"表示相似或用于询问情况。", ex:"The little cloud looks like a white sheep.", exZh:"那朵小云看起来像一只白绵羊。", ety:"古英语 līc，意为“身体、相似”，与 gelīc（相像）同源。", ext:"look like 看起来像；like 喜欢"},
+  {id:"b-g5x-listening-to-music", word:"listening to music", ipa:"/ˈlɪsnɪŋ tə ˈmjuːzɪk/", cat:"五下U6", zh:"（正在）听音乐", def:"描述某人此刻正在听音乐。", ex:"She is listening to music in her room.", exZh:"她正在她的房间里听音乐。", ety:"listen（听）的 -ing 形式加 to music（音乐）构成。", ext:"listen to music 听音乐；music 音乐"},
+  {id:"b-g5x-look-for", word:"look for", ipa:"/lʊk fɔː(r)/", cat:"五下U3", zh:"寻找", def:"试着找到某个丢失或需要的东西。", ex:"The children look for Easter eggs in the garden.", exZh:"孩子们在花园里寻找复活节彩蛋。", ety:"look（看）+ for（为了）构成短语动词，表示“寻找”。", ext:"find 找到；look after 照顾"},
+  {id:"b-g5x-lovely", word:"lovely", ipa:"/ˈlʌvli/", cat:"五下U2", zh:"可爱的；令人愉快的", def:"形容人或事物美好、讨人喜欢。", ex:"What a lovely spring morning it is!", exZh:"这是一个多么可爱的春天早晨啊！", ety:"love（爱）加形容词后缀 -ly 构成，原义“充满爱的”。", ext:"lovely flowers 可爱的花；cute 可爱的"},
+  {id:"b-g5x-make-a-snowman", word:"make a snowman", ipa:"/meɪk ə ˈsnəʊmæn/", cat:"五下U2", zh:"堆雪人", def:"把雪堆成人形的一项冬季活动。", ex:"We make a snowman after the heavy snow.", exZh:"大雪过后我们堆了一个雪人。", ety:"make（制作）+ a snowman（雪人）构成，snowman 由 snow 和 man 合成。", ext:"snowman 雪人；throw snowballs 打雪仗"},
+  {id:"b-g5x-march", word:"March", ipa:"/mɑːtʃ/", cat:"五下U3", zh:"三月", def:"一年中的第三个月。", ex:"We plant trees on Tree Planting Day in March.", exZh:"我们三月在植树节种树。", ety:"以罗马战神马尔斯（Mars）的名字命名。", ext:"in March 在三月；March 12th 三月十二日"},
+  {id:"b-g5x-may", word:"May", ipa:"/meɪ/", cat:"五下U3", zh:"五月", def:"一年中的第五个月。", ex:"My mother's birthday is in May.", exZh:"我妈妈的生日在五月。", ety:"以罗马神话中的春天女神迈亚（Maia）命名。", ext:"in May 在五月；May Day 劳动节"},
+  {id:"b-g5x-meet", word:"meet", ipa:"/miːt/", cat:"五下U3", zh:"集会；开会；遇见", def:"人们聚在一起或首次见到某人。", ex:"We meet our friends at the sports meet.", exZh:"我们在运动会上见到了朋友们。", ety:"古英语 mētan，意为“遇见、相会”。", ext:"sports meet 运动会；meeting 会议"},
+  {id:"b-g5x-mine", word:"mine", ipa:"/maɪn/", cat:"五下U5", zh:"我的", def:"名词性物主代词，指代属于我的东西。", ex:"That storybook on the chair is mine.", exZh:"椅子上那本故事书是我的。", ety:"古英语 mīn，是 I（我）的所有格形式。", ext:"my 我的；yours 你的"},
+  {id:"b-g5x-national", word:"national", ipa:"/ˈnæʃənəl/", cat:"五下U3", zh:"国家的", def:"与整个国家有关的。", ex:"National Day is a happy day for all Chinese.", exZh:"国庆节对所有中国人来说都是一个开心的日子。", ety:"nation（国家）加形容词后缀 -al 构成。", ext:"National Day 国庆节；nation 国家"},
+  {id:"b-g5x-national-day", word:"National Day", ipa:"/ˈnæʃənəl deɪ/", cat:"五下U3", zh:"国庆日；国庆节", def:"庆祝国家成立的节日，中国的国庆节在十月一日。", ex:"We have a long holiday on National Day.", exZh:"国庆节我们有一个长假。", ety:"national（国家的）+ Day（日子）构成节日名称。", ext:"October 1st 十月一日；New Year's Day 元旦"},
+  {id:"b-g5x-need", word:"need", ipa:"/niːd/", cat:"五下U1", zh:"需要", def:"表示某人是必需的或必须做某事。", ex:"I need more time to finish my homework.", exZh:"我需要更多时间来完成作业。", ety:"古英语 nēod，意为“需要、必需品”。", ext:"need help 需要帮助；must 必须"},
+  {id:"b-g5x-noise", word:"noise", ipa:"/nɔɪz/", cat:"五下U6", zh:"声音；响声；噪音", def:"听到的声音，常指吵闹的噪音。", ex:"Please don't make noise in the library.", exZh:"请不要在图书馆里吵闹。", ety:"源自拉丁语 nausea（晕船、恶心），后指“令人不快的声音”。", ext:"make noise 制造噪音；noisy 吵闹的"},
+  {id:"b-g5x-november", word:"November", ipa:"/nəʊˈvembə(r)/", cat:"五下U3", zh:"十一月", def:"一年中的第十一个月。", ex:"It gets cold in November, so wear a coat.", exZh:"十一月天气变冷了，所以穿件外套吧。", ety:"源自拉丁语 November，意为“第九月”，因古历以三月为岁首。", ext:"in November 在十一月；November 11th 十一月十一日"},
+  {id:"b-g5x-october", word:"October", ipa:"/ɒkˈtəʊbə(r)/", cat:"五下U3", zh:"十月", def:"一年中的第十个月。", ex:"National Day comes in October every year.", exZh:"国庆节每年都在十月。", ety:"源自拉丁语 October，意为“第八月”，因古历以三月为岁首。", ext:"in October 在十月；October 1st 十月一日"},
+  {id:"b-g5x-open", word:"open", ipa:"/ˈəʊpən/", cat:"五下U6", zh:"开着的", def:"形容门、窗等不关闭的状态。", ex:"Please keep the window open in the morning.", exZh:"早上请让窗户开着。", ety:"古英语 open，意为“敞开的”。", ext:"open the door 开门；close 关着的"},
+  {id:"b-g5x-other", word:"other", ipa:"/ˈʌðə(r)/", cat:"五下U6", zh:"其他；另外的", def:"指除此以外的人或事物。", ex:"Two boys are reading; the other boys are writing.", exZh:"两个男孩在读书，其他男孩在写字。", ety:"古英语 ōther，意为“二者中的另一个”。", ext:"each other 互相；another 另一个"},
+  {id:"b-g5x-ours", word:"ours", ipa:"/aʊəz/", cat:"五下U5", zh:"我们的", def:"名词性物主代词，指代属于我们的东西。", ex:"This big classroom is ours.", exZh:"这间大教室是我们的。", ety:"our（我们的）加 -s 构成名词性物主代词。", ext:"our 我们的；theirs 他们的"},
+  {id:"b-g5x-p-m", word:"p.m.", ipa:"/ˈpiːˈem/", cat:"五下U1", zh:"午后；下午", def:"表示中午十二点以后的时间，即下午。", ex:"School finishes at four p.m. on Friday.", exZh:"星期五学校下午四点放学。", ety:"来自拉丁语 post meridiem，意为“中午之后”。", ext:"a.m. 上午；at 4 p.m. 在下午四点"},
+  {id:"b-g5x-paint", word:"paint", ipa:"/peɪnt/", cat:"五下U6", zh:"用颜料绘画", def:"用颜料在纸上或墙上画画。", ex:"The robot is painting a picture of a flower.", exZh:"那个机器人正在画一幅花的画。", ety:"源自古法语 peindre（绘画），来自拉丁语 pingere。", ext:"paint a picture 画画；painting 绘画"},
+  {id:"b-g5x-pick", word:"pick", ipa:"/pɪk/", cat:"五下U2", zh:"摘；采集", def:"用手把水果、花等从植物上取下来。", ex:"We pick apples on the farm in autumn.", exZh:"秋天我们在农场摘苹果。", ety:"中古英语 piken，意为“啄、挑选”，后引申为“采摘”。", ext:"pick apples 摘苹果；pick up 捡起"},
+  {id:"b-g5x-pick-apples", word:"pick apples", ipa:"/pɪk ˈæplz/", cat:"五下U2", zh:"摘苹果", def:"从苹果树上把成熟的苹果摘下来。", ex:"I pick apples with my grandpa every October.", exZh:"我每年十月和爷爷一起摘苹果。", ety:"pick（摘）+ apples（苹果）构成动宾短语。", ext:"apple 苹果；pick flowers 摘花"},
+  {id:"b-g5x-picnic", word:"picnic", ipa:"/ˈpɪknɪk/", cat:"五下U2", zh:"野餐", def:"在户外带着食物进行的轻松聚餐。", ex:"Our picnic basket is full of sandwiches and fruit.", exZh:"我们的野餐篮里装满了三明治和水果。", ety:"源自法语 pique-nique，原指各自带食物的聚餐。", ext:"go on a picnic 去野餐；have a picnic 野餐"},
+  {id:"b-g5x-pink", word:"pink", ipa:"/pɪŋk/", cat:"五下U2", zh:"粉色；粉色的", def:"像桃花或晚霞那样的浅红色。", ex:"My sister wears a pink coat to school.", exZh:"我姐姐穿着一件粉色外套去上学。", ety:"源自石竹花的名字 pink，因其花色而得名。", ext:"pink flowers 粉色的花；red 红色"},
+  {id:"b-g5x-playing", word:"playing", ipa:"/ˈpleɪɪŋ/", cat:"五下U5", zh:"（正在）玩耍", def:"play 的现在分词，表示正在玩或正在运动。", ex:"The children are playing football on the playground.", exZh:"孩子们正在操场上踢足球。", ety:"play 加 -ing 构成现在分词。", ext:"play 玩；playing sports 正在做运动"},
+  {id:"b-g5x-reading-a-book", word:"reading a book", ipa:"/ˈriːdɪŋ ə bʊk/", cat:"五下U6", zh:"（正在）看书", def:"描述某人此刻正在读书。", ex:"Lily is reading a book under the tree.", exZh:"莉莉正在树下看书。", ety:"read（读）的 -ing 形式加 a book（一本书）构成。", ext:"read a book 看书；reading 阅读"},
+  {id:"b-g5x-roll", word:"roll", ipa:"/rəʊl/", cat:"五下U3", zh:"卷；滚动", def:"使物体翻滚或卷成圆形。", ex:"The children roll Easter eggs down the hill.", exZh:"孩子们把复活节彩蛋滚下山。", ety:"源自古法语 roler，来自拉丁语 rotula（小轮子）。", ext:"roll a ball 滚球；Easter egg roll 滚彩蛋"},
+  {id:"b-g5x-rsvp", word:"RSVP", ipa:"/ˌɑːr es viː ˈpiː/", cat:"五下U3", zh:"（尤用于请柬）请赐复", def:"写在请柬上，请被邀请的人回复是否参加。", ex:"The party card says RSVP before April 10th.", exZh:"请柬上写着请在四月十日之前回复。", ety:"来自法语 Répondez s'il vous plaît，意为“请回复”。", ext:"invitation 请柬；reply 回复"},
+  {id:"b-g5x-say", word:"say", ipa:"/seɪ/", cat:"五下U6", zh:"说；讲", def:"用语言表达想法或信息。", ex:"Please say hello to your new classmates.", exZh:"请向你的新同学们问好。", ety:"古英语 secgan，意为“说、讲述”。", ext:"say hello 问好；speak 说（语言）"},
+  {id:"b-g5x-season", word:"season", ipa:"/ˈsiːzən/", cat:"五下U2", zh:"季节", def:"一年中按天气划分的四个时期之一。", ex:"Which season do you like best in your city?", exZh:"在你的城市你最喜欢哪个季节？", ety:"源自拉丁语 satio（播种），后来指一年中的时节。", ext:"four seasons 四季；seasons 季节（复数）"},
+  {id:"b-g5x-second", word:"second", ipa:"/ˈsekənd/", cat:"五下U4", zh:"第二（的）", def:"表示顺序第二的序数词。", ex:"The second picture on the wall is mine.", exZh:"墙上第二幅画是我的。", ety:"源自拉丁语 secundus（第二），来自 sequi（跟随）。", ext:"2nd 第二；two 二"},
+  {id:"b-g5x-september", word:"September", ipa:"/sepˈtembə(r)/", cat:"五下U3", zh:"九月", def:"一年中的第九个月。", ex:"We go back to school in September.", exZh:"我们九月回到学校。", ety:"源自拉丁语 September，意为“第七月”，因古历以三月为岁首。", ext:"in September 在九月；September 10th 九月十日"},
+  {id:"b-g5x-shop", word:"shop", ipa:"/ʃɒp/", cat:"五下U1", zh:"商店；购物", def:"卖东西的地方，也可作动词表示购物。", ex:"There is a small shop near our school.", exZh:"我们学校附近有一家小商店。", ety:"源自古英语 shoppa（店铺）。", ext:"go shopping 去购物；shopping 购物"},
+  {id:"b-g5x-show", word:"show", ipa:"/ʃəʊ/", cat:"五下U6", zh:"展览；给人看", def:"把东西摆出来让别人看，或演示某物。", ex:"Can you show me your new schoolbag?", exZh:"你能给我看看你的新书包吗？", ety:"古英语 scēawian，意为“看、展示”。", ext:"show 演出；art show 美术展"},
+  {id:"b-g5x-sleeping", word:"sleeping", ipa:"/ˈsliːpɪŋ/", cat:"五下U5", zh:"（正在）睡觉", def:"sleep 的现在分词，表示正在睡觉。", ex:"The baby panda is sleeping under a tree.", exZh:"熊猫宝宝正在树下睡觉。", ety:"古英语 slǣpan（睡觉），加 -ing 构成现在分词。", ext:"sleep 睡觉；go to sleep 入睡"},
+  {id:"b-g5x-snow", word:"snow", ipa:"/snəʊ/", cat:"五下U2", zh:"雪", def:"冬天从天上落下的白色冰晶。", ex:"The snow is white and cold on the ground.", exZh:"地上的雪又白又冷。", ety:"古英语 snāw，意为“雪”。", ext:"snowman 雪人；snowy 下雪的"},
+  {id:"b-g5x-snowman", word:"snowman", ipa:"/ˈsnəʊmæn/", cat:"五下U2", zh:"雪人", def:"用雪堆成的人形玩偶。", ex:"We put a hat on the snowman's head.", exZh:"我们给雪人的头上戴了一顶帽子。", ety:"由 snow（雪）和 man（人）合成的复合词。", ext:"make a snowman 堆雪人；snowball 雪球"},
+  {id:"b-g5x-sound", word:"sound", ipa:"/saʊnd/", cat:"五下U1", zh:"听起来好像", def:"作系动词表示“听起来”，也可作名词指声音。", ex:"That sounds like a lot of fun to me.", exZh:"那对我来说听起来很有趣。", ety:"源自拉丁语 sonus（声音），经古法语 son 进入英语。", ext:"sound good 听起来不错；noise 噪音"},
+  {id:"b-g5x-spain", word:"Spain", ipa:"/speɪn/", cat:"五下U6", zh:"西班牙", def:"欧洲西南部的一个国家。", ex:"My pen pal lives in Spain with her family.", exZh:"我的笔友和她的家人住在西班牙。", ety:"源自拉丁语 Hispania，是西班牙的古称。", ext:"Spanish 西班牙的；Spanish 西班牙语"},
+  {id:"b-g5x-spanish", word:"Spanish", ipa:"/ˈspænɪʃ/", cat:"五下U6", zh:"西班牙的；西班牙语", def:"与西班牙有关的，或指西班牙语。", ex:"The Spanish robot is playing music for us.", exZh:"那个西班牙机器人正在为我们演奏音乐。", ety:"Spain（西班牙）加形容词后缀 -ish 构成。", ext:"Spain 西班牙；speak Spanish 说西班牙语"},
+  {id:"b-g5x-special", word:"special", ipa:"/ˈspeʃl/", cat:"五下U3", zh:"特殊的；特别的", def:"与平常不同、有特别意义的。", ex:"Mother's Day is a special day in May.", exZh:"母亲节是五月里一个特别的日子。", ety:"源自拉丁语 specialis，来自 species（种类、外观）。", ext:"special day 特别的日子；specially 特别地"},
+  {id:"b-g5x-sports-meet", word:"sports meet", ipa:"/spɔːts miːt/", cat:"五下U3", zh:"运动会", def:"学校举办的体育比赛活动。", ex:"Our sports meet is on the last Friday of April.", exZh:"我们的运动会在四月最后一个星期五。", ety:"sports（体育）+ meet（集会）构成复合词。", ext:"sports 运动；meet 集合；开会"},
+  {id:"b-g5x-spring", word:"spring", ipa:"/sprɪŋ/", cat:"五下U2", zh:"春天", def:"一年中天气变暖、植物生长的季节。", ex:"Spring comes after winter and flowers bloom.", exZh:"春天在冬天之后到来，花儿开放。", ety:"古英语 springan，意为“跳跃、涌出”，指万物萌发的季节。", ext:"in spring 在春天；spring flowers 春花"},
+  {id:"b-g5x-start", word:"start", ipa:"/stɑːt/", cat:"五下U1", zh:"开始", def:"某件事从某一点发生或进行。", ex:"Our English class starts at eight thirty.", exZh:"我们的英语课八点半开始。", ety:"古英语 steort，原指“尾巴、起点”，后引申为“开始”。", ext:"start school 开学；begin 开始"},
+  {id:"b-g5x-still", word:"still", ipa:"/stɪl/", cat:"五下U6", zh:"仍然；依旧；还是", def:"表示某种情况持续没有改变。", ex:"It is raining, but we are still playing outside.", exZh:"天在下雨，但我们仍在外面玩。", ety:"古英语 stille，意为“静止的、不动的”，引申为“仍然”。", ext:"still 静止的；yet 还"},
+  {id:"b-g5x-summer", word:"summer", ipa:"/ˈsʌmə(r)/", cat:"五下U2", zh:"夏天", def:"一年中最热的季节。", ex:"In summer I eat ice cream and go swimming.", exZh:"夏天我吃冰激凌、去游泳。", ety:"古英语 sumor，意为“夏天”。", ext:"in summer 在夏天；summer vacation 暑假"},
+  {id:"b-g5x-sure", word:"sure", ipa:"/ʃʊə(r)/", cat:"五下U6", zh:"当然；确实", def:"表示同意或肯定。", ex:"Sure, I can help you clean the classroom.", exZh:"当然，我可以帮你打扫教室。", ety:"源自古法语 sur，来自拉丁语 securus（安全的、确定的）。", ext:"of course 当然；surely 肯定地"},
+  {id:"b-g5x-sushi", word:"sushi", ipa:"/ˈsuːʃi/", cat:"五下U6", zh:"寿司", def:"用醋饭和鱼、蔬菜等做成的日本食品。", ex:"The Japanese robot is making sushi for lunch.", exZh:"那个日本机器人正在做寿司当午餐。", ety:"借自日语 sushi，原指用醋腌过的米饭。", ext:"sushi roll 寿司卷；Japanese 日本的"},
+  {id:"b-g5x-take", word:"take", ipa:"/teɪk/", cat:"五下U1", zh:"学习；上（课）", def:"在这里表示参加课程学习。", ex:"I take a dancing class every Tuesday afternoon.", exZh:"我每周二下午上舞蹈课。", ety:"古英语 tacan，意为“拿、取”，引申为“上（课）”。", ext:"take a class 上课；take turns 按顺序来"},
+  {id:"b-g5x-take-a-dancing-class", word:"take a dancing class", ipa:"/teɪk ə ˈdɑːnsɪŋ klɑːs/", cat:"五下U1", zh:"上舞蹈课", def:"参加学习跳舞的课程。", ex:"She takes a dancing class at the weekend.", exZh:"她周末上舞蹈课。", ety:"take（上）+ a dancing class（一节舞蹈课）构成。", ext:"dancing 跳舞；take a class 上课"},
+  {id:"b-g5x-take-turns", word:"take turns", ipa:"/teɪk tɜːnz/", cat:"五下U6", zh:"按顺序来；轮流", def:"大家一个接一个地做某事。", ex:"We take turns to speak in English class.", exZh:"我们在英语课上轮流发言。", ety:"take（拿）+ turns（轮次）构成，turn 意为“轮流”。", ext:"turn 顺序；in turn 依次"},
+  {id:"b-g5x-talk-quietly", word:"talk quietly", ipa:"/tɔːk ˈkwaɪətli/", cat:"五下U6", zh:"小声讲话", def:"用很低的声音说话，不打扰别人。", ex:"Please talk quietly in the school library.", exZh:"在学校图书馆请小声讲话。", ety:"talk（说话）+ quietly（安静地）构成，quiet 源自拉丁语 quietus。", ext:"quiet 安静的；keep quiet 保持安静"},
+  {id:"b-g5x-teach", word:"teach", ipa:"/tiːtʃ/", cat:"五下U6", zh:"教", def:"把知识或技能传授给别人。", ex:"My aunt teaches English at a middle school.", exZh:"我姑姑在一所中学教英语。", ety:"古英语 tǣcan，意为“教、展示”。", ext:"teacher 老师；learn 学"},
+  {id:"b-g5x-thanksgiving", word:"Thanksgiving", ipa:"/ˌθæŋksˈɡɪvɪŋ/", cat:"五下U3", zh:"感恩节", def:"美国和加拿大在秋天庆祝的节日，人们感谢收获。", ex:"American families eat turkey on Thanksgiving.", exZh:"美国家庭在感恩节吃火鸡。", ety:"thanks（感谢）+ giving（给予）合成，意为“感恩的节日”。", ext:"Thanksgiving Day 感恩节；thank 感谢"},
+  {id:"b-g5x-the-great-wall", word:"the Great Wall", ipa:"/ðə ɡreɪt wɔːl/", cat:"五下U3", zh:"长城", def:"中国古代修建的著名城墙，是世界上最长的城墙。", ex:"We will visit the Great Wall next spring.", exZh:"明年春天我们将参观长城。", ety:"the（定冠词）+ great（伟大的）+ Wall（墙）构成专有名词。", ext:"the Great Wall of China 中国长城；wall 墙"},
+  {id:"b-g5x-theirs", word:"theirs", ipa:"/ðeəz/", cat:"五下U5", zh:"他们的；她们的；它们的", def:"名词性物主代词，指代属于他们的东西。", ex:"The two dogs under the tree are theirs.", exZh:"树下的那两只狗是他们的。", ety:"their（他们的）加 -s 构成名词性物主代词。", ext:"their 他们的；ours 我们的"},
+  {id:"b-g5x-thing", word:"thing", ipa:"/θɪŋ/", cat:"五下U3", zh:"事情；东西", def:"泛指任何事物或事情。", ex:"I have many things to do before the trip.", exZh:"旅行前我有很多事情要做。", ety:"古英语 þing，原指“集会、会议”，后泛指“事物”。", ext:"a few things 几件事；something 某事"},
+  {id:"b-g5x-third", word:"third", ipa:"/θɜːd/", cat:"五下U4", zh:"第三（的）", def:"表示顺序第三的序数词。", ex:"The third month of the year is March.", exZh:"一年中的第三个月是三月。", ety:"three（三）加序数词后缀 -th 构成，拼写特殊。", ext:"3rd 第三；three 三"},
+  {id:"b-g5x-thirtieth", word:"thirtieth", ipa:"/ˈθɜːtiəθ/", cat:"五下U4", zh:"第三十（的）", def:"表示顺序第三十的序数词。", ex:"My school sports meet is on the thirtieth of April.", exZh:"我的学校运动会在四月三十日。", ety:"thirty（三十）加序数词后缀 -th 构成，y 变为 ie。", ext:"30th 第三十；thirty 三十"},
+  {id:"b-g5x-trip", word:"trip", ipa:"/trɪp/", cat:"五下U3", zh:"旅行", def:"到别处短暂停留游玩的活动。", ex:"Our class trip to the farm is in May.", exZh:"我们班去农场的旅行在五月。", ety:"中古英语 trippen，意为“轻快行走、绊倒”，后指“旅行”。", ext:"school trip 学校旅行；travel 旅行"},
+  {id:"b-g5x-turn", word:"turn", ipa:"/tɜːn/", cat:"五下U6", zh:"顺序；轮到", def:"指按顺序该某人做某事的机会。", ex:"It is my turn to clean the blackboard today.", exZh:"今天轮到我擦黑板了。", ety:"古英语 turnian，源自拉丁语 tornare（旋转），引申为“轮流”。", ext:"take turns 轮流；in turn 依次"},
+  {id:"b-g5x-twelfth", word:"twelfth", ipa:"/twelfθ/", cat:"五下U4", zh:"第十二（的）", def:"表示顺序第十二的序数词。", ex:"The twelfth of May is my best friend's birthday.", exZh:"五月十二日我最好的朋友的生日。", ety:"twelve（十二）加序数词后缀 -th 构成，ve 变为 f。", ext:"12th 第十二；twelve 十二"},
+  {id:"b-g5x-twentieth", word:"twentieth", ipa:"/ˈtwentiəθ/", cat:"五下U4", zh:"第二十（的）", def:"表示顺序第二十的序数词。", ex:"We have a test on the twentieth of this month.", exZh:"这个月二十号我们有一场考试。", ety:"twenty（二十）加序数词后缀 -th 构成，y 变为 ie。", ext:"20th 第二十；twenty 二十"},
+  {id:"b-g5x-twenty-first", word:"twenty-first", ipa:"/ˈtwenti fɜːst/", cat:"五下U4", zh:"第二十一（的）", def:"表示顺序第二十一的序数词。", ex:"My birthday is on April twenty-first.", exZh:"我的生日是四月二十一日。", ety:"twenty（二十）加连字符和 first（第一）构成复合序数词。", ext:"21st 第二十一；twenty 二十"},
+  {id:"b-g5x-twenty-third", word:"twenty-third", ipa:"/ˈtwenti θɜːd/", cat:"五下U4", zh:"第二十三（的）", def:"表示顺序第二十三的序数词。", ex:"The sports meet is on May twenty-third.", exZh:"运动会在五月二十三日。", ety:"twenty（二十）加连字符和 third（第三）构成复合序数词。", ext:"23rd 第二十三；third 第三"},
+  {id:"b-g5x-usually", word:"usually", ipa:"/ˈjuːʒuəli/", cat:"五下U1", zh:"通常地；惯常地", def:"表示事情在大多数时候发生。", ex:"I usually finish my homework before dinner.", exZh:"我通常在晚饭前完成作业。", ety:"源自拉丁语 usualis（通常的），来自 usus（使用、习惯）。", ext:"usual 通常的；always 总是"},
+  {id:"b-g5x-vacation", word:"vacation", ipa:"/vəˈkeɪʃn/", cat:"五下U2", zh:"假期", def:"不上学或不工作的休息时间。", ex:"We take a vacation at the beach in summer.", exZh:"夏天我们去海滩度假。", ety:"源自拉丁语 vacatio，意为“空出来、腾出时间”。", ext:"summer vacation 暑假；holiday 假日"},
+  {id:"b-g5x-walk", word:"walk", ipa:"/wɔːk/", cat:"五下U1", zh:"行走；散步", def:"用脚慢慢地移动，也指短距离散步。", ex:"I walk to school with my friend every morning.", exZh:"我每天早上和朋友走路去上学。", ety:"古英语 wealcan，意为“滚动、走动”。", ext:"go for a walk 散步；walk to school 走路上学"},
+  {id:"b-g5x-when", word:"when", ipa:"/wen/", cat:"五下U1", zh:"什么时候；何时", def:"用来询问时间。", ex:"When do you get up on school days?", exZh:"上学日你什么时候起床？", ety:"古英语 hwænne，是疑问词 hwa（谁）的时间形式。", ext:"what time 几点；when 当……时"},
+  {id:"b-g5x-which", word:"which", ipa:"/wɪtʃ/", cat:"五下U2", zh:"哪一个", def:"用来从几个选项中选择一个。", ex:"Which season do you like best, spring or autumn?", exZh:"春天和秋天，你更喜欢哪个季节？", ety:"古英语 hwilc，由 hwa（谁）和 līc（样子）合成。", ext:"which one 哪一个；what 什么"},
+  {id:"b-g5x-why", word:"why", ipa:"/waɪ/", cat:"五下U1", zh:"为什么", def:"用来询问原因。", ex:"Why do you like winter so much?", exZh:"你为什么这么喜欢冬天？", ety:"古英语 hwī，是 hwæt（什么）的工具格形式。", ext:"because 因为；why not 为什么不"},
+  {id:"b-g5x-win", word:"win", ipa:"/wɪn/", cat:"五下U1", zh:"获胜；赢", def:"在比赛或竞争中取得第一名。", ex:"Our team wins the football game today.", exZh:"我们队今天赢得了足球比赛。", ety:"古英语 winnan，意为“努力争取、赢得”。", ext:"winner 获胜者；win a game 赢得比赛"},
+  {id:"b-g5x-winter", word:"winter", ipa:"/ˈwɪntə(r)/", cat:"五下U2", zh:"冬天", def:"一年中最冷的季节。", ex:"Winter is cold, but we can make a snowman.", exZh:"冬天很冷，但我们可以堆雪人。", ety:"古英语 winter，意为“冬天”。", ext:"in winter 在冬天；winter vacation 寒假"},
+  {id:"b-g5x-work", word:"work", ipa:"/wɜːk/", cat:"五下U1", zh:"工作", def:"指人们为谋生而做的事情，也可指学习任务。", ex:"My father goes to work at seven thirty.", exZh:"我爸爸七点半去上班。", ety:"古英语 weorc，意为“工作、劳动”。", ext:"go to work 去上班；worker 工人"},
+  {id:"b-g5x-year", word:"year", ipa:"/jɪə(r)/", cat:"五下U3", zh:"年", def:"地球绕太阳一周的时间，约十二个月。", ex:"There are four seasons in a year.", exZh:"一年有四个季节。", ety:"古英语 gēar，意为“年”。", ext:"new year 新年；every year 每年"},
+  {id:"b-g5x-yours", word:"yours", ipa:"/jɔːz/", cat:"五下U5", zh:"你（们）的", def:"名词性物主代词，指代属于你或你们的东西。", ex:"Is this pencil box yours or mine?", exZh:"这个铅笔盒是你的还是我的？", ety:"you（你）加 -s 构成名词性物主代词。", ext:"your 你的；mine 我的"}
+];
+
+const EXTRA = {
+  "a": {word:"a", ipa:"/ˈa/", zh:"例句中常见词，点击听发音", note:""},
+  "about": {word:"about", ipa:"/əˈbaʊt/", zh:"关于", note:""},
+  "above": {word:"above", ipa:"/əˈbʌv/", zh:"在……上方", note:""},
+  "across": {word:"across", ipa:"/əˈkrɒs/", zh:"在对面；穿过", note:""},
+  "after": {word:"after", ipa:"/ˈɑːftə(r)/", zh:"在……之后", note:""},
+  "afternoon": {word:"afternoon", ipa:"/ˌæftɜnˈun/", zh:"例句中常见词，点击听发音", note:""},
+  "age": {word:"age", ipa:"/age/", zh:"例句中常见词，点击听发音", note:""},
+  "airport": {word:"airport", ipa:"/ˈɛrpˌɔrt/", zh:"例句中常见词，点击听发音", note:""},
+  "all": {word:"all", ipa:"/ˈall/", zh:"例句中常见词，点击听发音", note:""},
+  "alone": {word:"alone", ipa:"/alone/", zh:"例句中常见词，点击听发音", note:""},
+  "am": {word:"am", ipa:"/ˈæm/", zh:"例句中常见词，点击听发音", note:""},
+  "amy": {word:"amy", ipa:"/amy/", zh:"例句中常见词，点击听发音", note:""},
+  "an": {word:"an", ipa:"/ˈæn/", zh:"例句中常见词，点击听发音", note:""},
+  "and": {word:"and", ipa:"/ˈæn/", zh:"例句中常见词，点击听发音", note:""},
+  "animals": {word:"animals", ipa:"/ˈænəməlz/", zh:"例句中常见词，点击听发音", note:""},
+  "apple": {word:"apple", ipa:"/ˈæpəl/", zh:"例句中常见词，点击听发音", note:""},
+  "apples": {word:"apples", ipa:"/ˈæpəlz/", zh:"苹果（复数）", note:""},
+  "are": {word:"are", ipa:"/ˈare/", zh:"例句中常见词，点击听发音", note:""},
+  "aren": {word:"aren", ipa:"/aren/", zh:"例句中常见词，点击听发音", note:""},
+  "around": {word:"around", ipa:"/ɜˈaʊnd/", zh:"例句中常见词，点击听发音", note:""},
+  "art": {word:"art", ipa:"/ˈɑrt/", zh:"例句中常见词，点击听发音", note:""},
+  "as": {word:"as", ipa:"/ˈas/", zh:"例句中常见词，点击听发音", note:""},
+  "asia": {word:"Asia", ipa:"/ˈeɪʒə/", zh:"例句中常见词，点击听发音", note:""},
+  "asks": {word:"ask", ipa:"/ɑːsk/", zh:"问", note:"asks 是第三人称单数"},
+  "at": {word:"at", ipa:"/ˈat/", zh:"例句中常见词，点击听发音", note:""},
+  "aunt": {word:"aunt", ipa:"/ˈænt/", zh:"例句中常见词，点击听发音", note:""},
+  "australia": {word:"Australia", ipa:"/ˈaustralia/", zh:"例句中常见词，点击听发音", note:""},
+  "autumn": {word:"Autumn", ipa:"/ˈɔːtəm/", zh:"例句中常见词，点击听发音", note:""},
+  "baby": {word:"baby", ipa:"/bˈeɪbi/", zh:"例句中常见词，点击听发音", note:""},
+  "back": {word:"back", ipa:"/back/", zh:"例句中常见词，点击听发音", note:""},
+  "bag": {word:"bag", ipa:"/bæɡ/", zh:"包，袋子", note:""},
+  "bags": {word:"bags", ipa:"/bˈæg/", zh:"例句中常见词，点击听发音", note:""},
+  "ball": {word:"ball", ipa:"/bɔːl/", zh:"球", note:""},
+  "banana": {word:"banana", ipa:"/bənˈænə/", zh:"香蕉", note:""},
+  "bank": {word:"bank", ipa:"/bæŋk/", zh:"银行", note:""},
+  "barked": {word:"barked", ipa:"/bˈɑrkt/", zh:"吠叫（过去式）", note:""},
+  "basket": {word:"basket", ipa:"/basket/", zh:"例句中常见词，点击听发音", note:""},
+  "basketball": {word:"basketball", ipa:"/ˈbɑːskɪtbɔːl/", zh:"篮球", note:""},
+  "be": {word:"be", ipa:"/bˈi/", zh:"例句中常见词，点击听发音", note:""},
+  "beach": {word:"beach", ipa:"/biːtʃ/", zh:"海滩", note:""},
+  "beautiful": {word:"beautiful", ipa:"/bjˈutəfəl/", zh:"例句中常见词，点击听发音", note:""},
+  "beautifully": {word:"beautifully", ipa:"/beautifully/", zh:"例句中常见词，点击听发音", note:""},
+  "because": {word:"because", ipa:"/bɪˈkɒz/", zh:"因为", note:""},
+  "bed": {word:"bed", ipa:"/bed/", zh:"床", note:""},
+  "beef": {word:"beef", ipa:"/beef/", zh:"例句中常见词，点击听发音", note:""},
+  "before": {word:"before", ipa:"/bɪˈfɔː(r)/", zh:"在……之前", note:""},
+  "beijing": {word:"Beijing", ipa:"/bˌeɪʒˈɪŋ/", zh:"例句中常见词，点击听发音", note:""},
+  "big": {word:"big", ipa:"/bˈɪg/", zh:"大的", note:""},
+  "bike": {word:"bike", ipa:"/bˈaɪk/", zh:"例句中常见词，点击听发音", note:""},
+  "bird": {word:"bird", ipa:"/bɜːd/", zh:"鸟", note:""},
+  "birthday": {word:"birthday", ipa:"/bˈɜθdˌeɪ/", zh:"生日", note:""},
+  "black": {word:"black", ipa:"/blˈæk/", zh:"黑色的", note:""},
+  "blackboard": {word:"blackboard", ipa:"/blˈækbˌɔrd/", zh:"黑板", note:""},
+  "blocks": {word:"blocks", ipa:"/blˈɑks/", zh:"例句中常见词，点击听发音", note:""},
+  "bloom": {word:"bloom", ipa:"/bloom/", zh:"例句中常见词，点击听发音", note:""},
+  "blue": {word:"blue", ipa:"/bluː/", zh:"蓝色的", note:""},
+  "book": {word:"book", ipa:"/bʊk/", zh:"书", note:""},
+  "books": {word:"books", ipa:"/bˈʊks/", zh:"书（复数）", note:""},
+  "boring": {word:"boring", ipa:"/ˈboring/", zh:"例句中常见词，点击听发音", note:""},
+  "box": {word:"box", ipa:"/bɒks/", zh:"箱子", note:""},
+  "boy": {word:"boy", ipa:"/boy/", zh:"例句中常见词，点击听发音", note:""},
+  "boys": {word:"boys", ipa:"/boys/", zh:"例句中常见词，点击听发音", note:""},
+  "bread": {word:"bread", ipa:"/brˈɛd/", zh:"例句中常见词，点击听发音", note:""},
+  "breakfast": {word:"breakfast", ipa:"/brˈɛkfəst/", zh:"早餐", note:""},
+  "bridge": {word:"bridge", ipa:"/ˈbridge/", zh:"例句中常见词，点击听发音", note:""},
+  "bright": {word:"bright", ipa:"/braɪt/", zh:"明亮的", note:""},
+  "bring": {word:"bring", ipa:"/bring/", zh:"例句中常见词，点击听发音", note:""},
+  "brings": {word:"bring", ipa:"/brɪŋ/", zh:"带来", note:"brings 是第三人称单数"},
+  "brother": {word:"brother", ipa:"/ˈbrʌðə(r)/", zh:"哥哥；弟弟", note:""},
+  "brothers": {word:"brothers", ipa:"/brˈʌðɜz/", zh:"例句中常见词，点击听发音", note:""},
+  "brown": {word:"brown", ipa:"/brˈaʊn/", zh:"棕色的", note:""},
+  "bus": {word:"bus", ipa:"/bʌs/", zh:"公共汽车", note:""},
+  "busy": {word:"busy", ipa:"/ˈbɪzi/", zh:"忙碌的", note:""},
+  "but": {word:"but", ipa:"/bˈʌt/", zh:"例句中常见词，点击听发音", note:""},
+  "button": {word:"button", ipa:"/ˈbutton/", zh:"例句中常见词，点击听发音", note:""},
+  "buy": {word:"buy", ipa:"/baɪ/", zh:"买", note:""},
+  "buys": {word:"buys", ipa:"/bˈaɪ/", zh:"例句中常见词，点击听发音", note:""},
+  "cake": {word:"cake", ipa:"/kˈeɪk/", zh:"例句中常见词，点击听发音", note:""},
+  "came": {word:"came", ipa:"/kˈeɪm/", zh:"例句中常见词，点击听发音", note:""},
+  "camera": {word:"camera", ipa:"/kˈæmɜə/", zh:"例句中常见词，点击听发音", note:""},
+  "camping": {word:"camp", ipa:"/kæmp/", zh:"露营", note:"camping 是动名词"},
+  "can": {word:"Can", ipa:"/ˈcan/", zh:"例句中常见词，点击听发音", note:""},
+  "capital": {word:"capital", ipa:"/kˈæpətəl/", zh:"例句中常见词，点击听发音", note:""},
+  "car": {word:"car", ipa:"/kɑː/", zh:"汽车", note:""},
+  "card": {word:"card", ipa:"/card/", zh:"例句中常见词，点击听发音", note:""},
+  "careful": {word:"careful", ipa:"/kˈɛrfəl/", zh:"例句中常见词，点击听发音", note:""},
+  "carefully": {word:"carefully", ipa:"/ˈcarefully/", zh:"例句中常见词，点击听发音", note:""},
+  "carries": {word:"carries", ipa:"/ˈcarries/", zh:"例句中常见词，点击听发音", note:""},
+  "cartoons": {word:"cartoons", ipa:"/cartoons/", zh:"例句中常见词，点击听发音", note:""},
+  "cat": {word:"cat", ipa:"/kˈæt/", zh:"猫", note:""},
+  "catch": {word:"catch", ipa:"/kˈætʃ/", zh:"例句中常见词，点击听发音", note:""},
+  "catches": {word:"catch", ipa:"/kætʃ/", zh:"捕捞；抓住", note:"catches 是第三人称单数"},
+  "cats": {word:"cats", ipa:"/kˈæt/", zh:"例句中常见词，点击听发音", note:""},
+  "chair": {word:"chair", ipa:"/tʃˈɛr/", zh:"例句中常见词，点击听发音", note:""},
+  "chairs": {word:"chairs", ipa:"/tʃˈɛrz/", zh:"椅子（复数）", note:""},
+  "cheap": {word:"cheap", ipa:"/ˈcheap/", zh:"例句中常见词，点击听发音", note:""},
+  "cheese": {word:"cheese", ipa:"/ˈcheese/", zh:"例句中常见词，点击听发音", note:""},
+  "chicken": {word:"chicken", ipa:"/chicken/", zh:"例句中常见词，点击听发音", note:""},
+  "child": {word:"child", ipa:"/child/", zh:"例句中常见词，点击听发音", note:""},
+  "children": {word:"children", ipa:"/tʃˈɪldrən/", zh:"孩子们", note:""},
+  "china": {word:"China", ipa:"/tʃˈaɪnə/", zh:"例句中常见词，点击听发音", note:""},
+  "chinese": {word:"Chinese", ipa:"/Chinese/", zh:"例句中常见词，点击听发音", note:""},
+  "chopsticks": {word:"chopsticks", ipa:"/tʃˈɑpstˌɪks/", zh:"筷子", note:""},
+  "city": {word:"city", ipa:"/sˈɪti/", zh:"例句中常见词，点击听发音", note:""},
+  "class": {word:"class", ipa:"/ˈclass/", zh:"例句中常见词，点击听发音", note:""},
+  "classmates": {word:"classmate", ipa:"/ˈklɑːsmeɪt/", zh:"同学", note:"classmates 是复数形式"},
+  "classroom": {word:"classroom", ipa:"/ˈklɑːsruːm/", zh:"教室", note:""},
+  "clean": {word:"clean", ipa:"/kliːn/", zh:"干净的", note:""},
+  "cleaned": {word:"cleaned", ipa:"/cleaned/", zh:"例句中常见词，点击听发音", note:""},
+  "clear": {word:"clear", ipa:"/klɪə(r)/", zh:"晴朗的；清澈的", note:""},
+  "clothes": {word:"clothes", ipa:"/kləʊðz/", zh:"衣服", note:""},
+  "cloud": {word:"cloud", ipa:"/cloud/", zh:"例句中常见词，点击听发音", note:""},
+  "clouds": {word:"cloud", ipa:"/klaʊd/", zh:"云", note:"clouds 是复数形式"},
+  "coat": {word:"coat", ipa:"/kəʊt/", zh:"外套", note:""},
+  "cold": {word:"cold", ipa:"/ˈcold/", zh:"例句中常见词，点击听发音", note:""},
+  "collect": {word:"collect", ipa:"/kəˈlekt/", zh:"收集", note:""},
+  "colour": {word:"colour", ipa:"/colour/", zh:"例句中常见词，点击听发音", note:""},
+  "colourful": {word:"colourful", ipa:"/colourful/", zh:"例句中常见词，点击听发音", note:""},
+  "com": {word:"com", ipa:"/com/", zh:"例句中常见词，点击听发音", note:""},
+  "comes": {word:"comes", ipa:"/comes/", zh:"例句中常见词，点击听发音", note:""},
+  "comfortable": {word:"comfortable", ipa:"/ˈcomfortable/", zh:"例句中常见词，点击听发音", note:""},
+  "computer": {word:"computer", ipa:"/kəmpjˈutɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "cook": {word:"cook", ipa:"/kʊk/", zh:"做饭；厨师", note:""},
+  "cooks": {word:"cooks", ipa:"/kˈʊks/", zh:"做饭（第三人称单数）", note:""},
+  "corner": {word:"corner", ipa:"/ˈcorner/", zh:"例句中常见词，点击听发音", note:""},
+  "countries": {word:"country", ipa:"/ˈkʌntri/", zh:"国家", note:"countries 是复数形式"},
+  "cousin": {word:"cousin", ipa:"/cousin/", zh:"例句中常见词，点击听发音", note:""},
+  "covered": {word:"covered", ipa:"/kˈʌvɜd/", zh:"例句中常见词，点击听发音", note:""},
+  "cow": {word:"cow", ipa:"/kˈaʊ/", zh:"例句中常见词，点击听发音", note:""},
+  "cream": {word:"cream", ipa:"/cream/", zh:"例句中常见词，点击听发音", note:""},
+  "cross": {word:"cross", ipa:"/krˈɔs/", zh:"例句中常见词，点击听发音", note:""},
+  "cup": {word:"cup", ipa:"/cup/", zh:"例句中常见词，点击听发音", note:""},
+  "cute": {word:"cute", ipa:"/cute/", zh:"例句中常见词，点击听发音", note:""},
+  "d": {word:"d", ipa:"/d/", zh:"例句中常见词，点击听发音", note:""},
+  "dad": {word:"dad", ipa:"/dad/", zh:"例句中常见词，点击听发音", note:""},
+  "dark": {word:"dark", ipa:"/dɑːk/", zh:"黑暗", note:""},
+  "day": {word:"day", ipa:"/dˈeɪ/", zh:"天", note:""},
+  "days": {word:"days", ipa:"/dˈeɪz/", zh:"日子（复数）", note:""},
+  "deep": {word:"deep", ipa:"/diːp/", zh:"深的", note:""},
+  "desk": {word:"desk", ipa:"/desk/", zh:"例句中常见词，点击听发音", note:""},
+  "desks": {word:"desks", ipa:"/dˈɛsks/", zh:"书桌（复数）", note:""},
+  "did": {word:"did", ipa:"/dˈɪd/", zh:"例句中常见词，点击听发音", note:""},
+  "different": {word:"different", ipa:"/ˈdɪfrənt/", zh:"不同的", note:""},
+  "difficult": {word:"difficult", ipa:"/difficult/", zh:"例句中常见词，点击听发音", note:""},
+  "dining": {word:"dining", ipa:"/ˈdining/", zh:"例句中常见词，点击听发音", note:""},
+  "dinner": {word:"dinner", ipa:"/ˈdɪnə(r)/", zh:"晚餐", note:""},
+  "do": {word:"do", ipa:"/dˈu/", zh:"例句中常见词，点击听发音", note:""},
+  "doctor": {word:"doctor", ipa:"/dˈɑktɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "dog": {word:"dog", ipa:"/dˈɔg/", zh:"例句中常见词，点击听发音", note:""},
+  "dogs": {word:"dogs", ipa:"/dogs/", zh:"例句中常见词，点击听发音", note:""},
+  "doing": {word:"do", ipa:"/duː/", zh:"做", note:"doing 是动名词"},
+  "don": {word:"Don", ipa:"/dˈɑn/", zh:"例句中常见词，点击听发音", note:""},
+  "door": {word:"door", ipa:"/dˈɔr/", zh:"例句中常见词，点击听发音", note:""},
+  "down": {word:"down", ipa:"/down/", zh:"例句中常见词，点击听发音", note:""},
+  "drank": {word:"drink", ipa:"/drɪŋk/", zh:"喝", note:"drank 是过去式"},
+  "draw": {word:"draw", ipa:"/drˈɔ/", zh:"画", note:""},
+  "drawing": {word:"drawing", ipa:"/drawing/", zh:"例句中常见词，点击听发音", note:""},
+  "drink": {word:"drink", ipa:"/drˈɪŋk/", zh:"喝", note:""},
+  "drinks": {word:"drinks", ipa:"/drinks/", zh:"例句中常见词，点击听发音", note:""},
+  "dry": {word:"dry", ipa:"/drˈaɪ/", zh:"例句中常见词，点击听发音", note:""},
+  "duck": {word:"duck", ipa:"/dˈʌk/", zh:"例句中常见词，点击听发音", note:""},
+  "ducks": {word:"ducks", ipa:"/ducks/", zh:"例句中常见词，点击听发音", note:""},
+  "during": {word:"during", ipa:"/ˈdjʊərɪŋ/", zh:"在……期间", note:""},
+  "each": {word:"each", ipa:"/ˈitʃ/", zh:"例句中常见词，点击听发音", note:""},
+  "early": {word:"early", ipa:"/ˈɜːli/", zh:"早地", note:""},
+  "ears": {word:"ears", ipa:"/ˈɪrz/", zh:"例句中常见词，点击听发音", note:""},
+  "eat": {word:"eat", ipa:"/ˈit/", zh:"吃", note:""},
+  "eats": {word:"eat", ipa:"/iːt/", zh:"吃", note:"eats 是第三人称单数"},
+  "egg": {word:"egg", ipa:"/ˈɛg/", zh:"例句中常见词，点击听发音", note:""},
+  "eggs": {word:"egg", ipa:"/eɡ/", zh:"鸡蛋", note:"eggs 是复数形式"},
+  "eight": {word:"eight", ipa:"/ˈeɪt/", zh:"例句中常见词，点击听发音", note:""},
+  "elephant": {word:"elephant", ipa:"/ˈelephant/", zh:"例句中常见词，点击听发音", note:""},
+  "english": {word:"English", ipa:"/ˈɪŋɡlɪʃ/", zh:"英语", note:""},
+  "entry": {word:"entry", ipa:"/entry/", zh:"例句中常见词，点击听发音", note:""},
+  "evening": {word:"evening", ipa:"/evening/", zh:"例句中常见词，点击听发音", note:""},
+  "every": {word:"every", ipa:"/ˈevri/", zh:"每个", note:""},
+  "everyone": {word:"everyone", ipa:"/everyone/", zh:"例句中常见词，点击听发音", note:""},
+  "example": {word:"example", ipa:"/example/", zh:"例句中常见词，点击听发音", note:""},
+  "excuse": {word:"Excuse", ipa:"/ɪkskjˈus/", zh:"例句中常见词，点击听发音", note:""},
+  "exercise": {word:"exercise", ipa:"/ˈeksəsaɪz/", zh:"例句中常见词，点击听发音", note:""},
+  "exercises": {word:"exercises", ipa:"/exercises/", zh:"例句中常见词，点击听发音", note:""},
+  "eyes": {word:"eyes", ipa:"/ˈaɪz/", zh:"例句中常见词，点击听发音", note:""},
+  "face": {word:"face", ipa:"/face/", zh:"例句中常见词，点击听发音", note:""},
+  "fall": {word:"fall", ipa:"/fɔːl/", zh:"落下；秋天", note:""},
+  "falls": {word:"falls", ipa:"/fˈɔlz/", zh:"落下（第三人称单数）", note:""},
+  "families": {word:"families", ipa:"/families/", zh:"例句中常见词，点击听发音", note:""},
+  "family": {word:"family", ipa:"/fˈæməli/", zh:"家庭", note:""},
+  "famous": {word:"famous", ipa:"/fˈeɪməs/", zh:"例句中常见词，点击听发音", note:""},
+  "farm": {word:"farm", ipa:"/fɑːm/", zh:"农场", note:""},
+  "fast": {word:"fast", ipa:"/fˈæst/", zh:"快地", note:""},
+  "father": {word:"father", ipa:"/ˈfɑːðə(r)/", zh:"爸爸", note:""},
+  "feel": {word:"feel", ipa:"/feel/", zh:"例句中常见词，点击听发音", note:""},
+  "feels": {word:"feel", ipa:"/fiːl/", zh:"感觉", note:"feels 是第三人称单数"},
+  "feet": {word:"feet", ipa:"/fˈit/", zh:"例句中常见词，点击听发音", note:""},
+  "festival": {word:"Festival", ipa:"/ˈfestɪvl/", zh:"例句中常见词，点击听发音", note:""},
+  "film": {word:"film", ipa:"/fɪlm/", zh:"电影", note:""},
+  "find": {word:"find", ipa:"/fˈaɪnd/", zh:"例句中常见词，点击听发音", note:""},
+  "finish": {word:"finish", ipa:"/ˈfinish/", zh:"例句中常见词，点击听发音", note:""},
+  "finishes": {word:"finishes", ipa:"/finishes/", zh:"例句中常见词，点击听发音", note:""},
+  "first": {word:"first", ipa:"/fˈɜst/", zh:"例句中常见词，点击听发音", note:""},
+  "fish": {word:"fish", ipa:"/fˈɪʃ/", zh:"例句中常见词，点击听发音", note:""},
+  "fishing": {word:"fishing", ipa:"/fˈɪʃɪŋ/", zh:"例句中常见词，点击听发音", note:""},
+  "five": {word:"five", ipa:"/fˈaɪv/", zh:"例句中常见词，点击听发音", note:""},
+  "flies": {word:"fly", ipa:"/flaɪ/", zh:"飞行", note:"flies 是第三人称单数"},
+  "floor": {word:"floor", ipa:"/flˈɔr/", zh:"例句中常见词，点击听发音", note:""},
+  "flower": {word:"flower", ipa:"/flˈaʊɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "flowers": {word:"flowers", ipa:"/flˈaʊɜz/", zh:"花（复数）", note:""},
+  "flying": {word:"fly", ipa:"/flaɪ/", zh:"飞", note:"flying 是现在分词"},
+  "follows": {word:"follows", ipa:"/fˈɑloʊ/", zh:"例句中常见词，点击听发音", note:""},
+  "foot": {word:"foot", ipa:"/ˈfoot/", zh:"例句中常见词，点击听发音", note:""},
+  "football": {word:"football", ipa:"/ˈfʊtbɔːl/", zh:"足球", note:""},
+  "for": {word:"for", ipa:"/ˈfor/", zh:"例句中常见词，点击听发音", note:""},
+  "forest": {word:"forest", ipa:"/ˈfɒrɪst/", zh:"森林", note:""},
+  "four": {word:"four", ipa:"/fˈɔr/", zh:"例句中常见词，点击听发音", note:""},
+  "fresh": {word:"fresh", ipa:"/frˈɛʃ/", zh:"新鲜的", note:""},
+  "fridays": {word:"Fridays", ipa:"/Fridays/", zh:"例句中常见词，点击听发音", note:""},
+  "friend": {word:"friend", ipa:"/frend/", zh:"朋友", note:""},
+  "friends": {word:"friend", ipa:"/frend/", zh:"朋友", note:"friends 是复数形式"},
+  "from": {word:"from", ipa:"/ˈfrom/", zh:"例句中常见词，点击听发音", note:""},
+  "front": {word:"front", ipa:"/frˈʌnt/", zh:"例句中常见词，点击听发音", note:""},
+  "fruit": {word:"fruit", ipa:"/frˈut/", zh:"例句中常见词，点击听发音", note:""},
+  "fu": {word:"fu", ipa:"/fu/", zh:"例句中常见词，点击听发音", note:""},
+  "full": {word:"full", ipa:"/full/", zh:"例句中常见词，点击听发音", note:""},
+  "fun": {word:"fun", ipa:"/fun/", zh:"例句中常见词，点击听发音", note:""},
+  "funny": {word:"funny", ipa:"/fˈʌni/", zh:"例句中常见词，点击听发音", note:""},
+  "games": {word:"games", ipa:"/games/", zh:"例句中常见词，点击听发音", note:""},
+  "garden": {word:"garden", ipa:"/gˈɑrdən/", zh:"花园", note:""},
+  "gate": {word:"gate", ipa:"/gate/", zh:"例句中常见词，点击听发音", note:""},
+  "gave": {word:"gave", ipa:"/gˈeɪv/", zh:"给（过去式）", note:""},
+  "get": {word:"get", ipa:"/ɡet/", zh:"到达；得到", note:""},
+  "gets": {word:"gets", ipa:"/gets/", zh:"例句中常见词，点击听发音", note:""},
+  "girl": {word:"girl", ipa:"/gˈɜl/", zh:"女孩", note:""},
+  "girls": {word:"girl", ipa:"/ɡɜːl/", zh:"女孩", note:"girls 是复数形式"},
+  "gives": {word:"give", ipa:"/ɡɪv/", zh:"给", note:"gives 是第三人称单数"},
+  "glass": {word:"glass", ipa:"/glˈæs/", zh:"玻璃杯", note:""},
+  "go": {word:"go", ipa:"/gˈoʊ/", zh:"去", note:""},
+  "goes": {word:"goes", ipa:"/goes/", zh:"例句中常见词，点击听发音", note:""},
+  "going": {word:"go", ipa:"/ɡəʊ/", zh:"去", note:"going 是现在分词"},
+  "good": {word:"good", ipa:"/gˈʊd/", zh:"例句中常见词，点击听发音", note:""},
+  "grandfather": {word:"grandfather", ipa:"/grˈændfˌɑðɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "grandma": {word:"Grandma", ipa:"/Grandma/", zh:"例句中常见词，点击听发音", note:""},
+  "grandmother": {word:"grandmother", ipa:"/ˈɡrænmʌðə(r)/", zh:"奶奶；外婆", note:""},
+  "grandpa": {word:"grandpa", ipa:"/grandpa/", zh:"例句中常见词，点击听发音", note:""},
+  "grandparents": {word:"grandparent", ipa:"/ˈɡrænpeərənt/", zh:"祖父母", note:"grandparents 是复数"},
+  "grass": {word:"grass", ipa:"/grˈæs/", zh:"草", note:""},
+  "great": {word:"Great", ipa:"/Great/", zh:"例句中常见词，点击听发音", note:""},
+  "green": {word:"green", ipa:"/ɡriːn/", zh:"绿色的", note:""},
+  "ground": {word:"ground", ipa:"/grˈaʊnd/", zh:"地面", note:""},
+  "grows": {word:"grows", ipa:"/grˈoʊz/", zh:"生长（第三人称单数）", note:""},
+  "gym": {word:"gym", ipa:"/gym/", zh:"例句中常见词，点击听发音", note:""},
+  "half": {word:"half", ipa:"/half/", zh:"例句中常见词，点击听发音", note:""},
+  "hall": {word:"hall", ipa:"/hall/", zh:"例句中常见词，点击听发音", note:""},
+  "hands": {word:"hands", ipa:"/hˈændz/", zh:"例句中常见词，点击听发音", note:""},
+  "happily": {word:"happily", ipa:"/happily/", zh:"例句中常见词，点击听发音", note:""},
+  "happy": {word:"happy", ipa:"/hˈæpi/", zh:"快乐的", note:""},
+  "hard": {word:"hard", ipa:"/hard/", zh:"例句中常见词，点击听发音", note:""},
+  "has": {word:"has", ipa:"/ˈhas/", zh:"例句中常见词，点击听发音", note:""},
+  "hat": {word:"hat", ipa:"/hat/", zh:"例句中常见词，点击听发音", note:""},
+  "have": {word:"have", ipa:"/hˈæv/", zh:"例句中常见词，点击听发音", note:""},
+  "having": {word:"having", ipa:"/having/", zh:"例句中常见词，点击听发音", note:""},
+  "he": {word:"He", ipa:"/ˈhe/", zh:"例句中常见词，点击听发音", note:""},
+  "head": {word:"head", ipa:"/hˈɛd/", zh:"例句中常见词，点击听发音", note:""},
+  "healthy": {word:"healthy", ipa:"/ˈhelθi/", zh:"健康的", note:""},
+  "heavy": {word:"heavy", ipa:"/ˈheavy/", zh:"例句中常见词，点击听发音", note:""},
+  "hello": {word:"hello", ipa:"/hello/", zh:"例句中常见词，点击听发音", note:""},
+  "help": {word:"help", ipa:"/help/", zh:"例句中常见词，点击听发音", note:""},
+  "helps": {word:"helps", ipa:"/hˈɛlps/", zh:"帮助（第三人称单数）", note:""},
+  "hen": {word:"hen", ipa:"/hˈɛn/", zh:"母鸡", note:""},
+  "her": {word:"her", ipa:"/ˈher/", zh:"例句中常见词，点击听发音", note:""},
+  "here": {word:"here", ipa:"/here/", zh:"例句中常见词，点击听发音", note:""},
+  "hides": {word:"hides", ipa:"/hides/", zh:"例句中常见词，点击听发音", note:""},
+  "high": {word:"high", ipa:"/haɪ/", zh:"高高地", note:""},
+  "hill": {word:"hill", ipa:"/hˈɪl/", zh:"例句中常见词，点击听发音", note:""},
+  "his": {word:"His", ipa:"/ˈhis/", zh:"例句中常见词，点击听发音", note:""},
+  "history": {word:"history", ipa:"/history/", zh:"例句中常见词，点击听发音", note:""},
+  "home": {word:"home", ipa:"/həʊm/", zh:"家", note:""},
+  "homework": {word:"homework", ipa:"/hˈoʊmwˌɜk/", zh:"作业", note:""},
+  "horse": {word:"horse", ipa:"/hˈɔrs/", zh:"例句中常见词，点击听发音", note:""},
+  "hot": {word:"hot", ipa:"/hˈɑt/", zh:"热的", note:""},
+  "hour": {word:"hour", ipa:"/ˈaʊə(r)/", zh:"小时", note:""},
+  "hours": {word:"hours", ipa:"/ˈaʊɜz/", zh:"小时（复数）", note:""},
+  "how": {word:"how", ipa:"/ˈhow/", zh:"例句中常见词，点击听发音", note:""},
+  "hurt": {word:"hurt", ipa:"/hˈɜt/", zh:"刺痛", note:""},
+  "hurts": {word:"hurt", ipa:"/hɜːt/", zh:"疼，受伤", note:"hurts 是第三人称单数"},
+  "i": {word:"I", ipa:"/ˈi/", zh:"例句中常见词，点击听发音", note:""},
+  "ice": {word:"ice", ipa:"/aɪs/", zh:"例句中常见词，点击听发音", note:""},
+  "in": {word:"in", ipa:"/ˈin/", zh:"例句中常见词，点击听发音", note:""},
+  "interesting": {word:"interesting", ipa:"/ˈɪntrəstɪŋ/", zh:"有趣的", note:""},
+  "into": {word:"into", ipa:"/ˈɪntu/", zh:"例句中常见词，点击听发音", note:""},
+  "is": {word:"is", ipa:"/ˈis/", zh:"例句中常见词，点击听发音", note:""},
+  "island": {word:"island", ipa:"/ˈisland/", zh:"例句中常见词，点击听发音", note:""},
+  "it": {word:"it", ipa:"/ˈit/", zh:"例句中常见词，点击听发音", note:""},
+  "its": {word:"its", ipa:"/ˈɪts/", zh:"例句中常见词，点击听发音", note:""},
+  "japanese": {word:"Japanese", ipa:"/Japanese/", zh:"例句中常见词，点击听发音", note:""},
+  "job": {word:"job", ipa:"/job/", zh:"例句中常见词，点击听发音", note:""},
+  "joke": {word:"joke", ipa:"/joke/", zh:"例句中常见词，点击听发音", note:""},
+  "juice": {word:"juice", ipa:"/juice/", zh:"例句中常见词，点击听发音", note:""},
+  "juicy": {word:"juicy", ipa:"/dʒˈusi/", zh:"多汁的", note:""},
+  "jump": {word:"jump", ipa:"/dʒˈʌmp/", zh:"例句中常见词，点击听发音", note:""},
+  "jumps": {word:"jumps", ipa:"/dʒˈʌmps/", zh:"跳跃（第三人称单数）", note:""},
+  "keeps": {word:"keep", ipa:"/kiːp/", zh:"保持", note:"keeps 是第三人称单数"},
+  "kilograms": {word:"kilograms", ipa:"/ˈkɪləɡræm/", zh:"例句中常见词，点击听发音", note:""},
+  "kind": {word:"kind", ipa:"/kaɪnd/", zh:"友善的", note:""},
+  "kite": {word:"kite", ipa:"/kite/", zh:"例句中常见词，点击听发音", note:""},
+  "kung": {word:"kung", ipa:"/kung/", zh:"例句中常见词，点击听发音", note:""},
+  "laboratory": {word:"laboratory", ipa:"/ləˈbɒrətri/", zh:"实验室", note:""},
+  "lake": {word:"lake", ipa:"/lˈeɪk/", zh:"湖", note:""},
+  "lakes": {word:"lakes", ipa:"/lˈeɪk/", zh:"例句中常见词，点击听发音", note:""},
+  "large": {word:"large", ipa:"/ˈlarge/", zh:"例句中常见词，点击听发音", note:""},
+  "last": {word:"last", ipa:"/lɑːst/", zh:"上一个的", note:""},
+  "laugh": {word:"laugh", ipa:"/laugh/", zh:"例句中常见词，点击听发音", note:""},
+  "lays": {word:"lays", ipa:"/lˈeɪz/", zh:"下（蛋）（第三人称单数）", note:""},
+  "learn": {word:"learn", ipa:"/ˈlearn/", zh:"例句中常见词，点击听发音", note:""},
+  "learning": {word:"learning", ipa:"/lˈɜnɪŋ/", zh:"例句中常见词，点击听发音", note:""},
+  "leaves": {word:"leave", ipa:"/liːv/", zh:"离开", note:"leaves 是第三人称单数"},
+  "left": {word:"left", ipa:"/left/", zh:"左边", note:""},
+  "lesson": {word:"lesson", ipa:"/lesson/", zh:"例句中常见词，点击听发音", note:""},
+  "let": {word:"let", ipa:"/let/", zh:"让", note:""},
+  "letters": {word:"letter", ipa:"/ˈletə(r)/", zh:"信件", note:"letters 是复数形式"},
+  "library": {word:"library", ipa:"/lˈaɪbrɛrˌi/", zh:"图书馆", note:""},
+  "light": {word:"light", ipa:"/laɪt/", zh:"灯", note:""},
+  "lights": {word:"lights", ipa:"/lˈaɪts/", zh:"灯（复数）", note:""},
+  "like": {word:"like", ipa:"/laɪk/", zh:"喜欢", note:""},
+  "likes": {word:"like", ipa:"/laɪk/", zh:"喜欢", note:"likes 是第三人称单数"},
+  "lily": {word:"Lily", ipa:"/Lily/", zh:"例句中常见词，点击听发音", note:""},
+  "line": {word:"line", ipa:"/lˈaɪn/", zh:"线", note:""},
+  "listen": {word:"listen", ipa:"/lˈɪsən/", zh:"例句中常见词，点击听发音", note:""},
+  "listening": {word:"listening", ipa:"/listening/", zh:"例句中常见词，点击听发音", note:""},
+  "little": {word:"little", ipa:"/ˈlɪtl/", zh:"小的", note:""},
+  "liu": {word:"Liu", ipa:"/Liu/", zh:"例句中常见词，点击听发音", note:""},
+  "live": {word:"live", ipa:"/lˈaɪv/", zh:"例句中常见词，点击听发音", note:""},
+  "lives": {word:"lives", ipa:"/lˈɪvz/", zh:"居住（第三人称单数）", note:""},
+  "ll": {word:"ll", ipa:"/ll/", zh:"例句中常见词，点击听发音", note:""},
+  "long": {word:"long", ipa:"/lˈɔŋ/", zh:"长久地", note:""},
+  "look": {word:"look", ipa:"/lʊk/", zh:"看", note:""},
+  "looks": {word:"looks", ipa:"/looks/", zh:"例句中常见词，点击听发音", note:""},
+  "lost": {word:"lose", ipa:"/luːz/", zh:"丢失", note:"lost 是过去式"},
+  "lots": {word:"lots", ipa:"/lots/", zh:"例句中常见词，点击听发音", note:""},
+  "love": {word:"love", ipa:"/lʌv/", zh:"爱", note:""},
+  "loves": {word:"loves", ipa:"/loves/", zh:"例句中常见词，点击听发音", note:""},
+  "lucy": {word:"Lucy", ipa:"/Lucy/", zh:"例句中常见词，点击听发音", note:""},
+  "lunch": {word:"lunch", ipa:"/lˈʌntʃ/", zh:"午餐", note:""},
+  "m": {word:"m", ipa:"/m/", zh:"例句中常见词，点击听发音", note:""},
+  "made": {word:"make", ipa:"/meɪk/", zh:"进行；制作", note:"made 是过去式"},
+  "main": {word:"main", ipa:"/mˈeɪn/", zh:"例句中常见词，点击听发音", note:""},
+  "make": {word:"make", ipa:"/make/", zh:"例句中常见词，点击听发音", note:""},
+  "makes": {word:"makes", ipa:"/mˈeɪks/", zh:"制作（第三人称单数）", note:""},
+  "making": {word:"making", ipa:"/making/", zh:"例句中常见词，点击听发音", note:""},
+  "many": {word:"many", ipa:"/ˈmeni/", zh:"许多", note:""},
+  "mat": {word:"mat", ipa:"/mæt/", zh:"垫子，小地毯", note:""},
+  "maths": {word:"maths", ipa:"/maths/", zh:"例句中常见词，点击听发音", note:""},
+  "may": {word:"May", ipa:"/mˈeɪ/", zh:"例句中常见词，点击听发音", note:""},
+  "me": {word:"me", ipa:"/ˈme/", zh:"例句中常见词，点击听发音", note:""},
+  "meal": {word:"meal", ipa:"/meal/", zh:"例句中常见词，点击听发音", note:""},
+  "metres": {word:"metres", ipa:"/ˈmiːtə/", zh:"例句中常见词，点击听发音", note:""},
+  "mid": {word:"Mid", ipa:"/mɪd/", zh:"例句中常见词，点击听发音", note:""},
+  "middle": {word:"middle", ipa:"/middle/", zh:"例句中常见词，点击听发音", note:""},
+  "milk": {word:"milk", ipa:"/mɪlk/", zh:"牛奶", note:""},
+  "minutes": {word:"minutes", ipa:"/minutes/", zh:"例句中常见词，点击听发音", note:""},
+  "miss": {word:"Miss", ipa:"/Miss/", zh:"例句中常见词，点击听发音", note:""},
+  "modern": {word:"modern", ipa:"/ˈmɒdn/", zh:"现代的", note:""},
+  "mom": {word:"Mom", ipa:"/Mom/", zh:"例句中常见词，点击听发音", note:""},
+  "monday": {word:"Monday", ipa:"/mˈʌndi/", zh:"例句中常见词，点击听发音", note:""},
+  "monkey": {word:"monkey", ipa:"/mˈʌŋki/", zh:"猴子", note:""},
+  "month": {word:"month", ipa:"/month/", zh:"例句中常见词，点击听发音", note:""},
+  "moon": {word:"moon", ipa:"/mˈun/", zh:"例句中常见词，点击听发音", note:""},
+  "mooncakes": {word:"mooncakes", ipa:"/ˈmuːnkeɪk/", zh:"例句中常见词，点击听发音", note:""},
+  "more": {word:"more", ipa:"/mɔː(r)/", zh:"更多的", note:""},
+  "morning": {word:"morning", ipa:"/mˈɔrnɪŋ/", zh:"早晨", note:""},
+  "mother": {word:"mother", ipa:"/mˈʌðɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "mountain": {word:"mountain", ipa:"/mˈaʊntən/", zh:"例句中常见词，点击听发音", note:""},
+  "mountains": {word:"mountains", ipa:"/mˈaʊntənz/", zh:"例句中常见词，点击听发音", note:""},
+  "mouse": {word:"mouse", ipa:"/mˈaʊs/", zh:"例句中常见词，点击听发音", note:""},
+  "much": {word:"much", ipa:"/mʌtʃ/", zh:"……得多", note:""},
+  "mud": {word:"mud", ipa:"/mˈʌd/", zh:"泥巴", note:""},
+  "mum": {word:"Mum", ipa:"/ˈmum/", zh:"例句中常见词，点击听发音", note:""},
+  "museum": {word:"museum", ipa:"/museum/", zh:"例句中常见词，点击听发音", note:""},
+  "music": {word:"music", ipa:"/mjˈuzɪk/", zh:"例句中常见词，点击听发音", note:""},
+  "must": {word:"must", ipa:"/must/", zh:"例句中常见词，点击听发音", note:""},
+  "my": {word:"my", ipa:"/mˈaɪ/", zh:"例句中常见词，点击听发音", note:""},
+  "name": {word:"name", ipa:"/nˈeɪm/", zh:"名字", note:""},
+  "near": {word:"near", ipa:"/nˈɪr/", zh:"例句中常见词，点击听发音", note:""},
+  "nearest": {word:"nearest", ipa:"/nˈɪrəst/", zh:"例句中常见词，点击听发音", note:""},
+  "need": {word:"need", ipa:"/niːd/", zh:"需要", note:""},
+  "new": {word:"new", ipa:"/njuː/", zh:"新的", note:""},
+  "news": {word:"news", ipa:"/nˈuz/", zh:"例句中常见词，点击听发音", note:""},
+  "newspaper": {word:"newspaper", ipa:"/nˈuzpˌeɪpɜ/", zh:"报纸", note:""},
+  "next": {word:"next", ipa:"/nekst/", zh:"下一个", note:""},
+  "night": {word:"night", ipa:"/naɪt/", zh:"夜晚", note:""},
+  "nine": {word:"nine", ipa:"/nine/", zh:"例句中常见词，点击听发音", note:""},
+  "no": {word:"no", ipa:"/nˈoʊ/", zh:"例句中常见词，点击听发音", note:""},
+  "noodles": {word:"noodles", ipa:"/noodles/", zh:"例句中常见词，点击听发音", note:""},
+  "noon": {word:"noon", ipa:"/nuːn/", zh:"中午", note:""},
+  "nose": {word:"nose", ipa:"/nˈoʊz/", zh:"例句中常见词，点击听发音", note:""},
+  "not": {word:"not", ipa:"/ˈnot/", zh:"例句中常见词，点击听发音", note:""},
+  "nothing": {word:"nothing", ipa:"/nothing/", zh:"例句中常见词，点击听发音", note:""},
+  "now": {word:"now", ipa:"/nˈaʊ/", zh:"例句中常见词，点击听发音", note:""},
+  "o": {word:"o", ipa:"/o/", zh:"例句中常见词，点击听发音", note:""},
+  "of": {word:"of", ipa:"/ˈof/", zh:"例句中常见词，点击听发音", note:""},
+  "off": {word:"off", ipa:"/ɒf/", zh:"离开", note:""},
+  "office": {word:"office", ipa:"/ˈɒfɪs/", zh:"办公室", note:""},
+  "officer": {word:"officer", ipa:"/ˈofficer/", zh:"例句中常见词，点击听发音", note:""},
+  "old": {word:"old", ipa:"/əʊld/", zh:"年长的；旧的", note:""},
+  "on": {word:"on", ipa:"/ˈon/", zh:"例句中常见词，点击听发音", note:""},
+  "one": {word:"one", ipa:"/wʌn/", zh:"一个（指代前文同类物）", note:""},
+  "onions": {word:"onions", ipa:"/onions/", zh:"例句中常见词，点击听发音", note:""},
+  "open": {word:"open", ipa:"/ˈoʊpən/", zh:"例句中常见词，点击听发音", note:""},
+  "or": {word:"or", ipa:"/ˈɔr/", zh:"例句中常见词，点击听发音", note:""},
+  "orange": {word:"orange", ipa:"/ˈɔrəndʒ/", zh:"例句中常见词，点击听发音", note:""},
+  "other": {word:"other", ipa:"/ˈʌðɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "our": {word:"our", ipa:"/ˈaʊɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "outside": {word:"outside", ipa:"/ˈaʊtsˈaɪd/", zh:"例句中常见词，点击听发音", note:""},
+  "over": {word:"over", ipa:"/ˈəʊvə(r)/", zh:"越过", note:""},
+  "p": {word:"p", ipa:"/p/", zh:"例句中常见词，点击听发音", note:""},
+  "painting": {word:"painting", ipa:"/painting/", zh:"例句中常见词，点击听发音", note:""},
+  "pal": {word:"pal", ipa:"/pˈæl/", zh:"例句中常见词，点击听发音", note:""},
+  "panda": {word:"panda", ipa:"/panda/", zh:"例句中常见词，点击听发音", note:""},
+  "pandas": {word:"pandas", ipa:"/pandas/", zh:"例句中常见词，点击听发音", note:""},
+  "papa": {word:"Papa", ipa:"/ˈpɑːpə/", zh:"例句中常见词，点击听发音", note:""},
+  "paper": {word:"paper", ipa:"/pˈeɪpɜ/", zh:"纸", note:""},
+  "park": {word:"park", ipa:"/pˈɑrk/", zh:"公园", note:""},
+  "party": {word:"party", ipa:"/ˈpɑːti/", zh:"聚会", note:""},
+  "passes": {word:"pass", ipa:"/pɑːs/", zh:"传递", note:"passes 是第三人称单数"},
+  "paws": {word:"paws", ipa:"/ˈpaws/", zh:"例句中常见词，点击听发音", note:""},
+  "pay": {word:"pay", ipa:"/pˈeɪ/", zh:"例句中常见词，点击听发音", note:""},
+  "pe": {word:"PE", ipa:"/PE/", zh:"例句中常见词，点击听发音", note:""},
+  "pen": {word:"pen", ipa:"/pˈɛn/", zh:"例句中常见词，点击听发音", note:""},
+  "pencil": {word:"pencil", ipa:"/ˈpensl/", zh:"铅笔", note:""},
+  "pencils": {word:"pencils", ipa:"/pencils/", zh:"例句中常见词，点击听发音", note:""},
+  "people": {word:"People", ipa:"/pˈipəl/", zh:"例句中常见词，点击听发音", note:""},
+  "phone": {word:"phone", ipa:"/fˈoʊn/", zh:"例句中常见词，点击听发音", note:""},
+  "photos": {word:"photo", ipa:"/ˈfəʊtəʊ/", zh:"照片", note:"photos 是复数形式"},
+  "picnic": {word:"picnic", ipa:"/pˈɪknˌɪk/", zh:"例句中常见词，点击听发音", note:""},
+  "picture": {word:"picture", ipa:"/picture/", zh:"例句中常见词，点击听发音", note:""},
+  "pictures": {word:"pictures", ipa:"/pˈɪktʃɜz/", zh:"例句中常见词，点击听发音", note:""},
+  "piece": {word:"piece", ipa:"/pˈis/", zh:"例句中常见词，点击听发音", note:""},
+  "pig": {word:"pig", ipa:"/pˈɪg/", zh:"例句中常见词，点击听发音", note:""},
+  "ping": {word:"ping", ipa:"/ping/", zh:"例句中常见词，点击听发音", note:""},
+  "pink": {word:"pink", ipa:"/pˈɪŋk/", zh:"粉红色的", note:""},
+  "pipa": {word:"pipa", ipa:"/pipa/", zh:"例句中常见词，点击听发音", note:""},
+  "planting": {word:"Planting", ipa:"/Planting/", zh:"例句中常见词，点击听发音", note:""},
+  "plants": {word:"plants", ipa:"/plˈænts/", zh:"例句中常见词，点击听发音", note:""},
+  "play": {word:"play", ipa:"/pleɪ/", zh:"玩；踢（球）", note:""},
+  "player": {word:"player", ipa:"/plˈeɪɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "playground": {word:"playground", ipa:"/playground/", zh:"例句中常见词，点击听发音", note:""},
+  "plays": {word:"plays", ipa:"/plˈeɪz/", zh:"玩（第三人称单数）", note:""},
+  "please": {word:"please", ipa:"/pliːz/", zh:"请", note:""},
+  "police": {word:"police", ipa:"/pəlˈis/", zh:"例句中常见词，点击听发音", note:""},
+  "pong": {word:"pong", ipa:"/pong/", zh:"例句中常见词，点击听发音", note:""},
+  "pool": {word:"pool", ipa:"/pˈul/", zh:"游泳池", note:""},
+  "popular": {word:"popular", ipa:"/popular/", zh:"例句中常见词，点击听发音", note:""},
+  "post": {word:"post", ipa:"/pˈoʊst/", zh:"例句中常见词，点击听发音", note:""},
+  "postcard": {word:"postcard", ipa:"/postcard/", zh:"例句中常见词，点击听发音", note:""},
+  "potato": {word:"potato", ipa:"/pətˈeɪtˌoʊ/", zh:"例句中常见词，点击听发音", note:""},
+  "pretty": {word:"pretty", ipa:"/prˈɪti/", zh:"漂亮的", note:""},
+  "problems": {word:"problems", ipa:"/problems/", zh:"例句中常见词，点击听发音", note:""},
+  "put": {word:"put", ipa:"/put/", zh:"例句中常见词，点击听发音", note:""},
+  "puzzles": {word:"puzzles", ipa:"/ˈpʌzəl/", zh:"例句中常见词，点击听发音", note:""},
+  "question": {word:"question", ipa:"/ˈkwestʃən/", zh:"问题", note:""},
+  "quickly": {word:"quickly", ipa:"/quickly/", zh:"例句中常见词，点击听发音", note:""},
+  "quiet": {word:"quiet", ipa:"/quiet/", zh:"例句中常见词，点击听发音", note:""},
+  "quietly": {word:"quietly", ipa:"/quietly/", zh:"例句中常见词，点击听发音", note:""},
+  "rabbit": {word:"rabbit", ipa:"/rˈæbət/", zh:"兔子", note:""},
+  "rabbits": {word:"rabbits", ipa:"/rabbits/", zh:"例句中常见词，点击听发音", note:""},
+  "rained": {word:"rained", ipa:"/ˈrained/", zh:"例句中常见词，点击听发音", note:""},
+  "raining": {word:"raining", ipa:"/raining/", zh:"例句中常见词，点击听发音", note:""},
+  "rains": {word:"rains", ipa:"/rˈeɪnz/", zh:"例句中常见词，点击听发音", note:""},
+  "rainy": {word:"rainy", ipa:"/rˈeɪni/", zh:"例句中常见词，点击听发音", note:""},
+  "read": {word:"read", ipa:"/rˈɛd/", zh:"读", note:""},
+  "reading": {word:"read", ipa:"/riːd/", zh:"阅读", note:"reading 是动名词"},
+  "reads": {word:"read", ipa:"/riːd/", zh:"读", note:"reads 是第三人称单数"},
+  "really": {word:"really", ipa:"/rˈɪli/", zh:"真正地", note:""},
+  "red": {word:"red", ipa:"/rˈɛd/", zh:"红色的", note:""},
+  "restaurant": {word:"restaurant", ipa:"/ˈrestərɒnt/", zh:"饭馆", note:""},
+  "rice": {word:"rice", ipa:"/rˈaɪs/", zh:"例句中常见词，点击听发音", note:""},
+  "ride": {word:"ride", ipa:"/ˈride/", zh:"例句中常见词，点击听发音", note:""},
+  "rides": {word:"rides", ipa:"/rides/", zh:"例句中常见词，点击听发音", note:""},
+  "right": {word:"right", ipa:"/raɪt/", zh:"正好；右边", note:""},
+  "river": {word:"river", ipa:"/rˈɪvɜ/", zh:"河流", note:""},
+  "robin": {word:"Robin", ipa:"/Robin/", zh:"例句中常见词，点击听发音", note:""},
+  "robot": {word:"robot", ipa:"/rˈoʊbˌɑt/", zh:"例句中常见词，点击听发音", note:""},
+  "rocket": {word:"rocket", ipa:"/ˈrocket/", zh:"例句中常见词，点击听发音", note:""},
+  "room": {word:"room", ipa:"/ruːm/", zh:"房间", note:""},
+  "round": {word:"round", ipa:"/rˈaʊnd/", zh:"圆的", note:""},
+  "ruler": {word:"ruler", ipa:"/ˈruːlə(r)/", zh:"尺子", note:""},
+  "rules": {word:"rules", ipa:"/rules/", zh:"例句中常见词，点击听发音", note:""},
+  "run": {word:"run", ipa:"/rˈʌn/", zh:"例句中常见词，点击听发音", note:""},
+  "running": {word:"running", ipa:"/running/", zh:"例句中常见词，点击听发音", note:""},
+  "runs": {word:"runs", ipa:"/rˈʌnz/", zh:"跑（第三人称单数）", note:""},
+  "rush": {word:"rush", ipa:"/rʌʃ/", zh:"冲；繁忙", note:"rush hour 高峰期"},
+  "s": {word:"s", ipa:"/s/", zh:"例句中常见词，点击听发音", note:""},
+  "sails": {word:"sail", ipa:"/seɪl/", zh:"航行", note:"sails 是第三人称单数"},
+  "sandwiches": {word:"sandwiches", ipa:"/sandwiches/", zh:"例句中常见词，点击听发音", note:""},
+  "saturday": {word:"Saturday", ipa:"/ˈsætədeɪ/", zh:"星期六", note:""},
+  "says": {word:"says", ipa:"/says/", zh:"例句中常见词，点击听发音", note:""},
+  "school": {word:"school", ipa:"/skuːl/", zh:"学校", note:""},
+  "schoolbag": {word:"schoolbag", ipa:"/schoolbag/", zh:"例句中常见词，点击听发音", note:""},
+  "schools": {word:"schools", ipa:"/skˈulz/", zh:"例句中常见词，点击听发音", note:""},
+  "science": {word:"science", ipa:"/ˈsaɪəns/", zh:"科学", note:""},
+  "sea": {word:"sea", ipa:"/siː/", zh:"大海", note:""},
+  "seasons": {word:"seasons", ipa:"/seasons/", zh:"例句中常见词，点击听发音", note:""},
+  "second": {word:"second", ipa:"/sˈɛkənd/", zh:"例句中常见词，点击听发音", note:""},
+  "see": {word:"see", ipa:"/sˈi/", zh:"看见", note:""},
+  "seed": {word:"seed", ipa:"/sˈid/", zh:"例句中常见词，点击听发音", note:""},
+  "send": {word:"send", ipa:"/send/", zh:"寄；发送", note:""},
+  "sends": {word:"sends", ipa:"/sˈɛnd/", zh:"例句中常见词，点击听发音", note:""},
+  "seven": {word:"seven", ipa:"/ˈseven/", zh:"例句中常见词，点击听发音", note:""},
+  "sharp": {word:"sharp", ipa:"/ʃˈɑrp/", zh:"尖的", note:""},
+  "she": {word:"She", ipa:"/ˈshe/", zh:"例句中常见词，点击听发音", note:""},
+  "sheep": {word:"sheep", ipa:"/ˈsheep/", zh:"例句中常见词，点击听发音", note:""},
+  "shines": {word:"shines", ipa:"/ʃˈaɪnz/", zh:"照耀（第三人称单数）", note:""},
+  "shoes": {word:"shoes", ipa:"/ʃˈuz/", zh:"例句中常见词，点击听发音", note:""},
+  "shopping": {word:"shopping", ipa:"/shopping/", zh:"例句中常见词，点击听发音", note:""},
+  "shops": {word:"shops", ipa:"/ʃˈɑps/", zh:"例句中常见词，点击听发音", note:""},
+  "sing": {word:"sing", ipa:"/sˈɪŋ/", zh:"例句中常见词，点击听发音", note:""},
+  "singing": {word:"singing", ipa:"/sˈɪŋɪŋ/", zh:"例句中常见词，点击听发音", note:""},
+  "sings": {word:"sings", ipa:"/sˈɪŋz/", zh:"唱歌（第三人称单数）", note:""},
+  "sister": {word:"sister", ipa:"/ˈsɪstə(r)/", zh:"姐姐；妹妹", note:""},
+  "sit": {word:"sit", ipa:"/sˈɪt/", zh:"坐", note:""},
+  "sits": {word:"sit", ipa:"/sɪt/", zh:"坐", note:"sits 是第三人称单数"},
+  "six": {word:"six", ipa:"/sˈɪks/", zh:"例句中常见词，点击听发音", note:""},
+  "skate": {word:"skate", ipa:"/ˈskate/", zh:"例句中常见词，点击听发音", note:""},
+  "skirt": {word:"skirt", ipa:"/skˈɜt/", zh:"裙子", note:""},
+  "sky": {word:"sky", ipa:"/skˈaɪ/", zh:"天空", note:""},
+  "sleep": {word:"sleep", ipa:"/slˈip/", zh:"例句中常见词，点击听发音", note:""},
+  "sleeps": {word:"sleeps", ipa:"/slˈips/", zh:"睡觉（第三人称单数）", note:""},
+  "slow": {word:"slow", ipa:"/sləʊ/", zh:"慢的", note:""},
+  "slowly": {word:"slowly", ipa:"/slˈoʊli/", zh:"例句中常见词，点击听发音", note:""},
+  "small": {word:"small", ipa:"/smɔːl/", zh:"小的", note:""},
+  "smell": {word:"smell", ipa:"/smˈɛl/", zh:"闻", note:""},
+  "smells": {word:"smells", ipa:"/smˈɛlz/", zh:"闻起来（第三人称单数）", note:""},
+  "smile": {word:"smile", ipa:"/smˈaɪl/", zh:"例句中常见词，点击听发音", note:""},
+  "smiles": {word:"smiles", ipa:"/smiles/", zh:"例句中常见词，点击听发音", note:""},
+  "so": {word:"so", ipa:"/ˈso/", zh:"例句中常见词，点击听发音", note:""},
+  "sofa": {word:"sofa", ipa:"/sofa/", zh:"例句中常见词，点击听发音", note:""},
+  "soft": {word:"soft", ipa:"/sˈɑft/", zh:"柔软的", note:""},
+  "solve": {word:"solve", ipa:"/solve/", zh:"例句中常见词，点击听发音", note:""},
+  "some": {word:"some", ipa:"/sʌm/", zh:"一些", note:""},
+  "something": {word:"something", ipa:"/sˈʌmθɪŋ/", zh:"例句中常见词，点击听发音", note:""},
+  "song": {word:"song", ipa:"/sˈɔŋ/", zh:"歌曲", note:""},
+  "songs": {word:"songs", ipa:"/songs/", zh:"例句中常见词，点击听发音", note:""},
+  "sounds": {word:"sounds", ipa:"/sounds/", zh:"例句中常见词，点击听发音", note:""},
+  "soup": {word:"soup", ipa:"/suːp/", zh:"汤", note:""},
+  "speak": {word:"speak", ipa:"/spiːk/", zh:"说话", note:""},
+  "speaking": {word:"speaking", ipa:"/speaking/", zh:"例句中常见词，点击听发音", note:""},
+  "special": {word:"special", ipa:"/spˈɛʃəl/", zh:"例句中常见词，点击听发音", note:""},
+  "spider": {word:"spider", ipa:"/spˈaɪdɜ/", zh:"蜘蛛", note:""},
+  "sports": {word:"sports", ipa:"/sports/", zh:"例句中常见词，点击听发音", note:""},
+  "spring": {word:"spring", ipa:"/sprˈɪŋ/", zh:"春天", note:""},
+  "st": {word:"st", ipa:"/st/", zh:"例句中常见词，点击听发音", note:""},
+  "stairs": {word:"stairs", ipa:"/stairs/", zh:"例句中常见词，点击听发音", note:""},
+  "stamps": {word:"stamp", ipa:"/stæmp/", zh:"邮票", note:"stamps 是复数形式"},
+  "stands": {word:"stands", ipa:"/stands/", zh:"例句中常见词，点击听发音", note:""},
+  "stars": {word:"stars", ipa:"/stˈɑrz/", zh:"例句中常见词，点击听发音", note:""},
+  "started": {word:"started", ipa:"/stˈɑrtɪd/", zh:"例句中常见词，点击听发音", note:""},
+  "starts": {word:"starts", ipa:"/stˈɑrts/", zh:"例句中常见词，点击听发音", note:""},
+  "station": {word:"station", ipa:"/ˈsteɪʃn/", zh:"车站", note:""},
+  "stay": {word:"stay", ipa:"/stay/", zh:"例句中常见词，点击听发音", note:""},
+  "stays": {word:"stays", ipa:"/stˈeɪ/", zh:"例句中常见词，点击听发音", note:""},
+  "stories": {word:"stories", ipa:"/stories/", zh:"例句中常见词，点击听发音", note:""},
+  "story": {word:"story", ipa:"/ˈstɔːri/", zh:"例句中常见词，点击听发音", note:""},
+  "storybook": {word:"storybook", ipa:"/storybook/", zh:"例句中常见词，点击听发音", note:""},
+  "straight": {word:"straight", ipa:"/strˈeɪt/", zh:"直的", note:""},
+  "street": {word:"street", ipa:"/striːt/", zh:"街道", note:""},
+  "stripes": {word:"stripes", ipa:"/strˈaɪps/", zh:"条纹（复数）", note:""},
+  "strong": {word:"strong", ipa:"/strɒŋ/", zh:"强壮的", note:""},
+  "student": {word:"student", ipa:"/stˈudənt/", zh:"例句中常见词，点击听发音", note:""},
+  "students": {word:"students", ipa:"/students/", zh:"例句中常见词，点击听发音", note:""},
+  "summer": {word:"summer", ipa:"/ˈsʌmə(r)/", zh:"夏天", note:""},
+  "sun": {word:"sun", ipa:"/sˈʌn/", zh:"例句中常见词，点击听发音", note:""},
+  "sunday": {word:"Sunday", ipa:"/ˈsʌndeɪ/", zh:"星期天", note:""},
+  "sundays": {word:"Sundays", ipa:"/Sundays/", zh:"例句中常见词，点击听发音", note:""},
+  "sunny": {word:"sunny", ipa:"/sˈʌni/", zh:"晴朗的", note:""},
+  "sweet": {word:"sweet", ipa:"/swˈit/", zh:"甜的", note:""},
+  "swim": {word:"swim", ipa:"/swˈɪm/", zh:"游泳", note:""},
+  "swimming": {word:"swimming", ipa:"/swimming/", zh:"例句中常见词，点击听发音", note:""},
+  "swims": {word:"swims", ipa:"/swˈɪmz/", zh:"游泳（第三人称单数）", note:""},
+  "t": {word:"t", ipa:"/ˈt/", zh:"例句中常见词，点击听发音", note:""},
+  "table": {word:"table", ipa:"/ˈtable/", zh:"例句中常见词，点击听发音", note:""},
+  "take": {word:"take", ipa:"/teɪk/", zh:"乘坐；拿", note:""},
+  "takes": {word:"takes", ipa:"/takes/", zh:"例句中常见词，点击听发音", note:""},
+  "talk": {word:"talk", ipa:"/talk/", zh:"例句中常见词，点击听发音", note:""},
+  "tall": {word:"tall", ipa:"/tˈɔl/", zh:"高的", note:""},
+  "tallest": {word:"tallest", ipa:"/ˈtallest/", zh:"例句中常见词，点击听发音", note:""},
+  "tastes": {word:"tastes", ipa:"/tastes/", zh:"例句中常见词，点击听发音", note:""},
+  "tea": {word:"tea", ipa:"/tˈi/", zh:"例句中常见词，点击听发音", note:""},
+  "teacher": {word:"teacher", ipa:"/ˈteacher/", zh:"例句中常见词，点击听发音", note:""},
+  "teachers": {word:"teachers", ipa:"/tˈitʃɜz/", zh:"例句中常见词，点击听发音", note:""},
+  "teaches": {word:"teach", ipa:"/tiːtʃ/", zh:"教", note:"teaches 是第三人称单数"},
+  "team": {word:"team", ipa:"/team/", zh:"例句中常见词，点击听发音", note:""},
+  "tell": {word:"tell", ipa:"/tell/", zh:"例句中常见词，点击听发音", note:""},
+  "tells": {word:"tell", ipa:"/tel/", zh:"讲；告诉", note:"tells 是第三人称单数"},
+  "ten": {word:"ten", ipa:"/ten/", zh:"十", note:""},
+  "term": {word:"term", ipa:"/term/", zh:"例句中常见词，点击听发音", note:""},
+  "test": {word:"test", ipa:"/test/", zh:"测验", note:""},
+  "th": {word:"th", ipa:"/th/", zh:"例句中常见词，点击听发音", note:""},
+  "than": {word:"than", ipa:"/ðæn/", zh:"比", note:""},
+  "thank": {word:"thank", ipa:"/ˈthank/", zh:"例句中常见词，点击听发音", note:""},
+  "that": {word:"That", ipa:"/ðˈæt/", zh:"例句中常见词，点击听发音", note:""},
+  "the": {word:"the", ipa:"/ˈthe/", zh:"例句中常见词，点击听发音", note:""},
+  "theirs": {word:"theirs", ipa:"/ðeəz/", zh:"他们的（东西）", note:""},
+  "them": {word:"them", ipa:"/them/", zh:"例句中常见词，点击听发音", note:""},
+  "there": {word:"There", ipa:"/ðˈɛr/", zh:"例句中常见词，点击听发音", note:""},
+  "these": {word:"These", ipa:"/These/", zh:"例句中常见词，点击听发音", note:""},
+  "they": {word:"They", ipa:"/ðˈeɪ/", zh:"例句中常见词，点击听发音", note:""},
+  "things": {word:"things", ipa:"/things/", zh:"例句中常见词，点击听发音", note:""},
+  "third": {word:"third", ipa:"/θˈɜd/", zh:"例句中常见词，点击听发音", note:""},
+  "thirty": {word:"thirty", ipa:"/θˈɜdˌi/", zh:"例句中常见词，点击听发音", note:""},
+  "this": {word:"This", ipa:"/ˈthis/", zh:"例句中常见词，点击听发音", note:""},
+  "three": {word:"three", ipa:"/θrˈi/", zh:"例句中常见词，点击听发音", note:""},
+  "tiger": {word:"tiger", ipa:"/tˈaɪgɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "time": {word:"time", ipa:"/taɪm/", zh:"时光；时间", note:""},
+  "to": {word:"to", ipa:"/ˈto/", zh:"例句中常见词，点击听发音", note:""},
+  "today": {word:"today", ipa:"/təˈdeɪ/", zh:"今天", note:""},
+  "together": {word:"together", ipa:"/təgˈɛðɜ/", zh:"一起", note:""},
+  "tom": {word:"Tom", ipa:"/tɒm/", zh:"汤姆（人名）", note:""},
+  "tomato": {word:"tomato", ipa:"/təmˈeɪtˌoʊ/", zh:"例句中常见词，点击听发音", note:""},
+  "tomatoes": {word:"tomatoes", ipa:"/ˈtomatoes/", zh:"例句中常见词，点击听发音", note:""},
+  "tomorrow": {word:"tomorrow", ipa:"/tomorrow/", zh:"例句中常见词，点击听发音", note:""},
+  "tonight": {word:"tonight", ipa:"/təˈnaɪt/", zh:"今晚", note:""},
+  "too": {word:"too", ipa:"/tˈu/", zh:"例句中常见词，点击听发音", note:""},
+  "town": {word:"town", ipa:"/tˈaʊn/", zh:"城镇", note:""},
+  "toy": {word:"toy", ipa:"/tˈɔɪ/", zh:"玩具", note:""},
+  "toys": {word:"toys", ipa:"/toys/", zh:"例句中常见词，点击听发音", note:""},
+  "tree": {word:"tree", ipa:"/trˈi/", zh:"树", note:""},
+  "trees": {word:"trees", ipa:"/trees/", zh:"例句中常见词，点击听发音", note:""},
+  "trunk": {word:"trunk", ipa:"/trunk/", zh:"例句中常见词，点击听发音", note:""},
+  "turkey": {word:"turkey", ipa:"/turkey/", zh:"例句中常见词，点击听发音", note:""},
+  "turn": {word:"turn", ipa:"/tɜːn/", zh:"转弯", note:""},
+  "turns": {word:"turns", ipa:"/turns/", zh:"例句中常见词，点击听发音", note:""},
+  "tv": {word:"TV", ipa:"/TV/", zh:"例句中常见词，点击听发音", note:""},
+  "twenty": {word:"twenty", ipa:"/twˈɛnti/", zh:"例句中常见词，点击听发音", note:""},
+  "two": {word:"two", ipa:"/tuː/", zh:"二", note:""},
+  "types": {word:"type", ipa:"/taɪp/", zh:"打字", note:"types 是第三人称单数"},
+  "uncle": {word:"uncle", ipa:"/ˈʌŋkl/", zh:"叔叔", note:""},
+  "under": {word:"under", ipa:"/ˈʌndɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "up": {word:"up", ipa:"/ʌp/", zh:"向上", note:""},
+  "us": {word:"us", ipa:"/ˈus/", zh:"例句中常见词，点击听发音", note:""},
+  "use": {word:"use", ipa:"/jˈus/", zh:"使用", note:""},
+  "uses": {word:"uses", ipa:"/jˈusəz/", zh:"例句中常见词，点击听发音", note:""},
+  "vegetables": {word:"vegetables", ipa:"/vegetables/", zh:"例句中常见词，点击听发音", note:""},
+  "very": {word:"very", ipa:"/ˈvery/", zh:"例句中常见词，点击听发音", note:""},
+  "view": {word:"view", ipa:"/vjˈu/", zh:"例句中常见词，点击听发音", note:""},
+  "visit": {word:"visit", ipa:"/ˈvɪzɪt/", zh:"拜访；参观", note:""},
+  "visited": {word:"visited", ipa:"/ˈvɪzɪt/", zh:"例句中常见词，点击听发音", note:""},
+  "waited": {word:"waited", ipa:"/wˈeɪtɪd/", zh:"例句中常见词，点击听发音", note:""},
+  "wall": {word:"wall", ipa:"/wall/", zh:"例句中常见词，点击听发音", note:""},
+  "wang": {word:"Wang", ipa:"/Wang/", zh:"例句中常见词，点击听发音", note:""},
+  "want": {word:"want", ipa:"/wˈɑnt/", zh:"例句中常见词，点击听发音", note:""},
+  "warm": {word:"warm", ipa:"/wɔːm/", zh:"暖和的", note:""},
+  "was": {word:"was", ipa:"/ˈwas/", zh:"例句中常见词，点击听发音", note:""},
+  "wash": {word:"wash", ipa:"/wˈɑʃ/", zh:"洗", note:""},
+  "washing": {word:"washing", ipa:"/washing/", zh:"例句中常见词，点击听发音", note:""},
+  "water": {word:"water", ipa:"/wˈɔtɜ/", zh:"水", note:""},
+  "way": {word:"way", ipa:"/wˈeɪ/", zh:"例句中常见词，点击听发音", note:""},
+  "we": {word:"We", ipa:"/ˈwe/", zh:"例句中常见词，点击听发音", note:""},
+  "wear": {word:"wear", ipa:"/wear/", zh:"例句中常见词，点击听发音", note:""},
+  "wears": {word:"wears", ipa:"/wears/", zh:"例句中常见词，点击听发音", note:""},
+  "weather": {word:"weather", ipa:"/wˈɛðɜ/", zh:"例句中常见词，点击听发音", note:""},
+  "week": {word:"week", ipa:"/wiːk/", zh:"星期", note:""},
+  "weekend": {word:"weekend", ipa:"/ˌwiːkˈend/", zh:"周末", note:""},
+  "weekends": {word:"weekends", ipa:"/weekends/", zh:"例句中常见词，点击听发音", note:""},
+  "weighs": {word:"weighs", ipa:"/ˈweighs/", zh:"例句中常见词，点击听发音", note:""},
+  "well": {word:"well", ipa:"/wel/", zh:"好地；健康的", note:""},
+  "westray": {word:"Westray", ipa:"/ˈwestreɪ/", zh:"例句中常见词，点击听发音", note:""},
+  "whale": {word:"whale", ipa:"/ˈwhale/", zh:"例句中常见词，点击听发音", note:""},
+  "what": {word:"What", ipa:"/wˈʌt/", zh:"例句中常见词，点击听发音", note:""},
+  "when": {word:"when", ipa:"/ˈwhen/", zh:"例句中常见词，点击听发音", note:""},
+  "where": {word:"where", ipa:"/wˈɛr/", zh:"例句中常见词，点击听发音", note:""},
+  "white": {word:"white", ipa:"/wˈaɪt/", zh:"白色的", note:""},
+  "will": {word:"will", ipa:"/wɪl/", zh:"将要", note:""},
+  "window": {word:"window", ipa:"/window/", zh:"例句中常见词，点击听发音", note:""},
+  "wins": {word:"wins", ipa:"/wins/", zh:"例句中常见词，点击听发音", note:""},
+  "winter": {word:"winter", ipa:"/ˈwɪntə(r)/", zh:"冬天", note:""},
+  "with": {word:"with", ipa:"/wɪð/", zh:"用；和……一起", note:""},
+  "won": {word:"won", ipa:"/wˈʌn/", zh:"例句中常见词，点击听发音", note:""},
+  "wonderful": {word:"wonderful", ipa:"/ˈwʌndəfl/", zh:"极好的", note:""},
+  "wooden": {word:"wooden", ipa:"/wˈʊdən/", zh:"木制的", note:""},
+  "word": {word:"word", ipa:"/wɜːd/", zh:"单词", note:""},
+  "words": {word:"words", ipa:"/wˈɜdz/", zh:"例句中常见词，点击听发音", note:""},
+  "wore": {word:"wore", ipa:"/wˈɔr/", zh:"穿（过去式）", note:""},
+  "work": {word:"work", ipa:"/wˈɜk/", zh:"例句中常见词，点击听发音", note:""},
+  "working": {word:"working", ipa:"/working/", zh:"例句中常见词，点击听发音", note:""},
+  "works": {word:"work", ipa:"/wɜːk/", zh:"工作", note:"works 是第三人称单数"},
+  "world": {word:"world", ipa:"/wˈɜld/", zh:"例句中常见词，点击听发音", note:""},
+  "would": {word:"Would", ipa:"/wˈʊd/", zh:"例句中常见词，点击听发音", note:""},
+  "write": {word:"write", ipa:"/rˈaɪt/", zh:"写", note:""},
+  "writes": {word:"writes", ipa:"/rˈaɪts/", zh:"写（第三人称单数）", note:""},
+  "writing": {word:"writing", ipa:"/writing/", zh:"例句中常见词，点击听发音", note:""},
+  "year": {word:"year", ipa:"/jɪə(r)/", zh:"年；岁", note:""},
+  "years": {word:"year", ipa:"/jɪə(r)/", zh:"岁；年", note:"years 是复数形式"},
+  "yellow": {word:"yellow", ipa:"/ˈjeləʊ/", zh:"黄色的", note:""},
+  "yesterday": {word:"yesterday", ipa:"/ˈjestədeɪ/", zh:"昨天", note:""},
+  "you": {word:"you", ipa:"/ˈyou/", zh:"例句中常见词，点击听发音", note:""},
+  "your": {word:"your", ipa:"/jˈɔr/", zh:"例句中常见词，点击听发音", note:""},
+  "yourself": {word:"yourself", ipa:"/jɜsˈɛlf/", zh:"例句中常见词，点击听发音", note:""},
+  "yuan": {word:"yuan", ipa:"/juˈɑn/", zh:"例句中常见词，点击听发音", note:""},
+  "zoo": {word:"zoo", ipa:"/zoo/", zh:"例句中常见词，点击听发音", note:""}
+};
+
+const KEY = "eng-grade5.v1";
+const INTERVALS = [10, 1440, 2880, 5760, 10080, 21600, 43200, 86400];
+const INTERVAL_TEXT = ["10 分钟", "1 天", "2 天", "4 天", "7 天", "15 天", "30 天", "60 天"];
+const defaults = () => ({custom:[],removed:[],progress:{},theme:"dawn",accent:"#2563eb",voice:"en-US",mode:"study",category:"全部",query:"",sort:"default",onlyDue:false,index:0,batchSize:10,batchStart:0,batchMode:"preset",batchCustom:10,showLead:false,showCurve:false,showSettings:false,focus:true,uiVersion:2});
+
+
+let state = defaults();
+let DICT = {};
+let toastTimer;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+/* USER SYSTEM START */
+
+/* ===== 本机多用户系统 ===== */
+const USER_KEY = "eng-users.v1";
+const SESSION_KEY = "eng-session.v1";
+function hashPass(s){
+  let h = 5381;
+  for (let i=0;i<String(s).length;i++) h = ((h<<5) + h + String(s).charCodeAt(i)) >>> 0;
+  return String(h);
+}
+const DEFAULT_ADMIN = {name:"admin", pass:hashPass("admin"), role:"admin"};
+
+function readUsers(){
+  try {
+    const raw = JSON.parse(localStorage.getItem(USER_KEY));
+    if (Array.isArray(raw) && raw.length) return raw;
+  } catch(e) {}
+  const seed = [Object.assign({}, DEFAULT_ADMIN)];
+  try { localStorage.setItem(USER_KEY, JSON.stringify(seed)); } catch(e) {}
+  return seed;
+}
+function writeUsers(list){ try { localStorage.setItem(USER_KEY, JSON.stringify(list)); } catch(e) {} }
+function sessionUser(){ try { return localStorage.getItem(SESSION_KEY) || ""; } catch(e) { return ""; } }
+function dataKey(){ return KEY + "::" + (sessionUser() || "guest"); }
+function getUserByName(name){
+  return readUsers().find(u => u.name.toLowerCase() === String(name).toLowerCase());
+}
+function loadAppState(){
+  try {
+    const raw = JSON.parse(localStorage.getItem(dataKey()));
+    if (raw && typeof raw === "object") {
+      const s = Object.assign(defaults(), raw);
+      if (!raw.uiVersion || raw.uiVersion < 2) { s.showLead = false; s.showCurve = false; s.showSettings = false; }
+      s.uiVersion = 2;
+      if (!Array.isArray(s.custom)) s.custom = [];
+      if (!Array.isArray(s.removed)) s.removed = [];
+      if (!s.progress || typeof s.progress !== "object") s.progress = {};
+      if (["list", "browse", "card", "recite"].includes(s.mode)) s.mode = "study";
+      if (s.mode !== "study" && s.mode !== "manage") s.mode = "study";
+      if (s.batchMode === "custom") s.batchSize = Math.max(1, Math.min(500, Number(s.batchCustom) || 10));
+      else if (![5,10,15,20,30,0].includes(Number(s.batchSize))) s.batchSize = 10;
+      s.batchSize = Number(s.batchSize);
+      s.batchStart = Math.max(0, Number(s.batchStart) || 0);
+      return s;
+    }
+  } catch(e) {}
+  return defaults();
+}
+function saveAppState(){ try { localStorage.setItem(dataKey(), JSON.stringify(state)); } catch(e) {} }
+
+let authMode = "login";
+function openAuth(mode){
+  authMode = mode || "login";
+  $("#authTitle").textContent = authMode === "register" ? "注册本机账号" : "登录单词卡";
+  $("#authDesc").textContent = authMode === "register"
+    ? "新账号的进度会单独保存，不影响其他用户。" : "本机账号，学习进度按用户分别保存。";
+  $("#authSubmit").textContent = authMode === "register" ? "注册并登录" : "登录";
+  $("#authCancel").hidden = !(sessionUser() && authMode === "register");
+  $("#authError").textContent = "";
+  const alt = $("#authAlt");
+  if (alt) alt.textContent = authMode === "register" ? "已有账号？直接登录" : "没有账号？注册一个";
+  const guest = $("#authGuest");
+  if (guest) guest.hidden = !!sessionUser();
+  $("#authModal").hidden = false;
+  setTimeout(() => $("#authName").focus(), 0);
+}
+function currentRole(){ const u = getUserByName(sessionUser()); return u ? u.role : "user"; }
+function updateUserBar(){
+  const name = sessionUser();
+  $("#userBar").hidden = false;
+  $("#currentUserName").textContent = name || "游客";
+  $("#userSwitchBtn").textContent = name ? "切换用户" : "登录 / 注册";
+  $("#userLogoutBtn").hidden = !name;
+  $("#roleBadge").hidden = currentRole() !== "admin";
+  $("#userManageBtn").hidden = currentRole() !== "admin";
+}
+function applySession(){
+  state = loadAppState();
+  updateUserBar();
+  renderAll();
+}
+function doLogout(){
+  flushSave();
+  try { localStorage.removeItem(SESSION_KEY); } catch(e) {}
+  state = defaults();
+  updateUserBar();
+  openAuth("login");
+}
+$("#authForm").addEventListener("submit", ev => {
+  ev.preventDefault();
+  const name = $("#authName").value.trim();
+  const pass = $("#authPass").value;
+  if (!name || !pass) { $("#authError").textContent = "请输入用户名和密码"; return; }
+  const list = readUsers();
+  if (authMode === "register") {
+    if (getUserByName(name)) { $("#authError").textContent = "用户名已存在"; return; }
+    list.push({name:name, pass:hashPass(pass), role:"user"});
+    writeUsers(list);
+    flushSave();
+    try { localStorage.setItem(SESSION_KEY, name); } catch(e) {}
+    $("#authModal").hidden = true;
+    applySession();
+    toast("已注册并登录：" + name);
+    return;
+  }
+  const u = getUserByName(name);
+  if (!u || u.pass !== hashPass(pass)) { $("#authError").textContent = "用户名或密码错误"; return; }
+  flushSave();
+  try { localStorage.setItem(SESSION_KEY, u.name); } catch(e) {}
+  $("#authModal").hidden = true;
+  applySession();
+  toast("欢迎回来，" + u.name);
+});
+$("#authCancel").addEventListener("click", () => { $("#authModal").hidden = true; });
+$("#authAlt").addEventListener("click", () => openAuth(authMode === "register" ? "login" : "register"));
+$("#authGuest").addEventListener("click", () => { flushSave(); $("#authModal").hidden = true; state = loadAppState(); updateUserBar(); renderAll(); });
+$("#userSwitchBtn").addEventListener("click", () => { openAuth("login"); });
+$("#userManageBtn").addEventListener("click", () => { renderUserList(); $("#userModal").hidden = false; });
+$("#userLogoutBtn").addEventListener("click", doLogout);
+$("#closeUserModal").addEventListener("click", () => { $("#userModal").hidden = true; });
+$("#userModal").addEventListener("click", ev => { if (ev.target.id === "userModal") $("#userModal").hidden = true; });
+
+function renderUserList(){
+  const list = readUsers();
+  $("#userList").innerHTML = list.map(u => {
+    let learned = 0, mastered = 0;
+    try {
+      const data = JSON.parse(localStorage.getItem(KEY + "::" + u.name) || "{}");
+      const prog = data.progress || {};
+      learned = Object.keys(prog).length;
+      mastered = Object.values(prog).filter(p => (p.level || 0) >= 4).length;
+    } catch(e) {}
+    return '<div class="user-row"><span class="nm">' + esc(u.name) + '</span>' +
+      '<span class="muted">' + (u.role === "admin" ? "管理员" : "普通用户") + '</span>' +
+      '<span class="muted">已学 ' + learned + ' · 已掌握 ' + mastered + '</span>' +
+      (u.name === "admin" ? '<span class="muted">内置账号</span>' :
+        '<button class="btn small" type="button" data-user-reset="' + esc(u.name) + '">重置密码</button>' +
+        '<button class="btn small danger" type="button" data-user-del="' + esc(u.name) + '">删除</button>') +
+      '</div>';
+  }).join("");
+}
+$("#userAddForm").addEventListener("submit", ev => {
+  ev.preventDefault();
+  const name = $("#newUserName").value.trim();
+  const pass = $("#newUserPass").value;
+  if (!name || !pass) return;
+  if (getUserByName(name)) { toast("用户名已存在"); return; }
+  const list = readUsers();
+  list.push({name:name, pass:hashPass(pass), role:"user"});
+  writeUsers(list);
+  $("#newUserName").value = ""; $("#newUserPass").value = "";
+  renderUserList();
+  toast("已添加用户：" + name);
+});
+document.addEventListener("click", ev => {
+  const del = ev.target.closest("[data-user-del]");
+  if (del) {
+    const name = del.dataset.userDel;
+    writeUsers(readUsers().filter(u => u.name !== name));
+    try { localStorage.removeItem(KEY + "::" + name); } catch(e) {}
+    if (sessionUser() === name) doLogout(); else renderUserList();
+    return;
+  }
+  const reset = ev.target.closest("[data-user-reset]");
+  if (reset) {
+    const name = reset.dataset.userReset;
+    const pass = prompt("为 " + name + " 设置新密码：");
+    if (!pass) return;
+    const list = readUsers();
+    const u = list.find(x => x.name === name);
+    if (u) { u.pass = hashPass(pass); writeUsers(list); toast("已重置 " + name + " 的密码"); }
+  }
+});
+
+/* 旧数据迁移：原来的单用户进度归到 admin */
+try {
+  const old = localStorage.getItem(KEY);
+  const adminKey = KEY + "::admin";
+  if (old && !localStorage.getItem(adminKey)) localStorage.setItem(adminKey, old);
+} catch(e) {}
+
+
+/* USER SYSTEM END */
+let saveTimer = 0;
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){ saveTimer = 0; saveAppState(); }, 260);
+}
+function flushSave(){
+  if (saveTimer) { clearTimeout(saveTimer); saveTimer = 0; }
+  saveAppState();
+}
+window.addEventListener("pagehide", flushSave);
+document.addEventListener("visibilitychange", function(){ if (document.hidden) flushSave(); });
+
+function catalog(){
+  return BASE_WORDS.concat(state.custom).filter(w => !state.removed.includes(w.id));
+}
+let DICT_SIG = "";
+function ensureDict(){
+  const sig = BASE_WORDS.length + "|" + state.custom.length + "|" + state.removed.length;
+  if (!DICT || sig !== DICT_SIG) { DICT = buildDict(); DICT_SIG = sig; }
+}
+function buildDict(){
+  const m = {};
+  catalog().forEach(w => { m[w.word.toLowerCase()] = {word:w.word,ipa:w.ipa,zh:w.zh,note:""}; });
+  Object.keys(EXTRA).forEach(k => { if (!m[k]) m[k] = EXTRA[k]; });
+  return m;
+}
+function progressOf(w){ return state.progress[w.id] || null; }
+function levelOf(w){ return progressOf(w) ? (progressOf(w).level || 0) : -1; }
+function isDue(w){ const p = progressOf(w); return !p || (p.due || 0) <= Date.now(); }
+function dueLabel(w){
+  const p = progressOf(w);
+  if (!p) return "新词";
+  if (p.due <= Date.now()) return "待复习";
+  const d = new Date(p.due);
+  const today = new Date();
+  const sameDay = d.toDateString() === today.toDateString();
+  const time = String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
+  return sameDay ? ("下次 " + time) : ("下次 " + (d.getMonth()+1) + "/" + d.getDate());
+}
+function toast(msg){
+  const el = $("#toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2000);
+}
+
+function speak(text){
+  text = String(text || "").trim();
+  if (!text) return;
+  if (!("speechSynthesis" in window)) { toast("当前浏览器不支持语音朗读"); return; }
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = state.voice;
+    u.rate = 0.85;
+    const voices = window.speechSynthesis.getVoices();
+    const exact = voices.find(v => v.lang && v.lang.replace("_","-").toLowerCase() === state.voice.toLowerCase());
+    const near = exact || voices.find(v => v.lang && v.lang.toLowerCase().startsWith(state.voice.slice(0,2)));
+    if (near) u.voice = near;
+    window.speechSynthesis.speak(u);
+    toast("正在朗读：" + text);
+  } catch(e) { toast("朗读失败，请检查浏览器语音设置"); }
+}
+
+function exampleHtml(text){
+  return String(text || "").split(/([A-Za-z]+)/).map(part => {
+    if (/^[A-Za-z]+$/.test(part)) {
+      const key = part.toLowerCase();
+      if (DICT[key]) return '<span class="hit" data-k="' + key + '" tabindex="0" role="button" title="点击查看意思和发音">' + esc(part) + '</span>';
+    }
+    return esc(part);
+  }).join("");
+}
+
+function filtered(ignoreDue){
+  let list = catalog();
+  if (state.category !== "全部") list = list.filter(w => w.cat === state.category);
+  if (state.query) {
+    const q = state.query.toLowerCase();
+    list = list.filter(w => (w.word + " " + w.zh + " " + w.ipa + " " + w.def).toLowerCase().includes(q));
+  }
+  if (state.onlyDue && !ignoreDue) list = list.filter(isDue);
+  if (state.sort === "alpha") list.sort((a,b) => a.word.localeCompare(b.word));
+  if (state.sort === "level") list.sort((a,b) => levelOf(b) - levelOf(a));
+  if (state.sort === "due") list.sort((a,b) => (progressOf(a) ? progressOf(a).due : 0) - (progressOf(b) ? progressOf(b).due : 0));
+  return list;
+}
+
+function batchList(){
+  const list = filtered();
+  const size = Number(state.batchSize) || 0;
+  if (!list.length || !size || size >= list.length) return list;
+  const start = Math.min(Math.max(0, state.batchStart), list.length - size);
+  return list.slice(start, start + size);
+}
+
+function rateButtons(w){
+  return '<div class="rate">' +
+    '<button class="btn small" data-rate="forget" data-id="' + esc(w.id) + '"><b>忘记</b></button>' +
+    '<button class="btn small" data-rate="hard" data-id="' + esc(w.id) + '"><i>模糊</i></button>' +
+    '<button class="btn small" data-rate="good" data-id="' + esc(w.id) + '"><em>记住</em></button>' +
+    '</div>';
+}
+
+let currentWord = null;
+function backHtml(w){
+  const lv = levelOf(w);
+  const strength = lv < 0 ? 0 : Math.round((Math.min(lv, 7) + 1) / 8 * 100);
+  return '<div class="wc-top"><span class="tag">' + esc(w.cat) + '</span><span class="level">' + dueLabel(w) + '</span></div>' +
+    '<h3 class="back-word">' + esc(w.word) + ' <button class="btn small" type="button" data-say="' + esc(w.word) + '">发音</button></h3>' +
+    '<div class="ipa">' + esc(w.ipa || "—") + '<span class="reveal-zh">' + esc(w.zh) + '</span></div>' +
+    '<div class="bar"><i style="width:' + strength + '%"></i></div>' +
+    detailsHtml(w);
+}
+/* 背面较重（3 条例句 + 词源 + 扩展），翻面时才生成；切卡只重建正面 */
+function ensureBack(){
+  const card = $("#flipCard");
+  if (!card || !currentWord) return;
+  const back = card.querySelector(".face.back");
+  if (!back || back.dataset.filled === "1") return;
+  back.innerHTML = backHtml(currentWord);
+  back.dataset.filled = "1";
+}
+function reducedMotion(){
+  try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e) { return false; }
+}
+/* 用 Web Animations 入场：避免 void offsetWidth 强制同步布局整棵卡片树 */
+function animCardIn(dir){
+  const card = $("#flipCard");
+  if (!card) return;
+  if (typeof card.animate === "function" && !reducedMotion()) {
+    if (card.getAnimations) card.getAnimations().forEach(a => a.cancel());
+    const from = dir > 0 ? 46 : -46;
+    card.animate([
+      { opacity: .25, transform: "translate3d(" + from + "%,0,0) scale(.965)" },
+      { opacity: 1, transform: "none" }
+    ], { duration: 240, easing: "cubic-bezier(.22,.86,.3,1)" });
+    return;
+  }
+  card.classList.remove("slide-next", "slide-prev");
+  void card.offsetWidth;
+  card.classList.add(dir > 0 ? "slide-next" : "slide-prev");
+}
+
+function detailsHtml(w){
+  const lv = levelOf(w);
+  const strength = lv < 0 ? 0 : Math.round((Math.min(lv,7) + 1) / 8 * 100);
+  return '<div class="more">' +
+    '<div class="field"><span class="label">记忆安排 · ' + (lv < 0 ? "新词" : "第 " + (lv+1) + " 档 · 间隔 " + INTERVAL_TEXT[Math.min(lv,7)]) +
+      ' · ' + dueLabel(w) + '</span><div class="bar"><i style="width:' + strength + '%"></i></div></div>' +
+    (w.def ? '<div class="field"><span class="label">解释</span><p>' + esc(w.def) + '</p></div>' : '') +
+    (w.ex ? '<div class="field"><span class="label">例句（点「读整句」听整句，点划线词看意思）</span><p class="example" data-ex="' + esc(w.ex) + '"><button type="button" class="ex-say" data-say="' + esc(w.ex) + '" title="朗读整句" aria-label="朗读整句">读整句</button>' + exampleHtml(w.ex) + '</p>' +
+      (w.exZh ? '<p class="trans">' + esc(w.exZh) + '</p>' : '') +
+      (w.exSrc ? '<span class="ex-src" title="取自免费英英词典原句">词典原句</span>' : '') + '</div>' : '') +
+    (w.ety ? '<div class="field"><span class="label">词源</span><p>' + esc(w.ety) + '</p></div>' : '') +
+    (w.ext ? '<div class="field"><span class="label">扩展</span><p>' + esc(w.ext) + '</p></div>' : '') +
+    '</div>';
+}
+
+let cardFlipped = false;
+let meaningShown = false;
+let batchDone = false;
+function setBatchBar(ratio){
+  const fill = $("#batchBarFill");
+  if (fill) fill.style.width = Math.round(Math.max(0, Math.min(1, ratio)) * 1000) / 10 + "%";
+}
+
+function updateNavButtons(list, index){
+  const prev = document.querySelector('[data-card-nav="prev"]');
+  const next = document.querySelector('[data-card-nav="next"]');
+  if (!prev || !next) return;
+  const total = list ? list.length : 0;
+  const i = index || 0;
+  prev.disabled = !total || i <= 0;
+  next.disabled = !total || i >= total - 1;
+}
+
+function renderCard(){
+  const list = batchList();
+  updateNavButtons(list, batchDone ? -1 : state.index);
+  $("#flipCard").classList.remove("slide-next", "slide-prev");
+  if (!list.length) {
+    $("#flipCard").innerHTML = '<div class="face front"><div class="front-head"><span class="tag">没有结果</span></div>' +
+      '<div class="front-body"><p class="hint">当前筛选下没有单词</p>' +
+      '<div class="front-actions"><button class="btn" type="button" data-clear-filter>清空筛选</button></div></div>' +
+      '<div class="front-foot"></div></div>';
+    $("#cardProgress").textContent = "0 / 0";
+    setBatchBar(0);
+    return;
+  }
+  if (batchDone) {
+    $("#flipCard").innerHTML = '<div class="face front">' +
+      '<div class="front-head"><span class="tag">本轮完成</span></div>' +
+      '<div class="front-body"><div class="done-words">已背 ' + list.length + ' 词</div>' +
+      '<div class="front-actions"><button class="btn primary" type="button" data-batch="review">复习本轮</button>' +
+      '<button class="btn" type="button" data-batch="next">下一批</button></div></div>' +
+      '<div class="front-foot"><p class="tip">先复习这一轮，再进入下一批；词量可在「显示设置」里改。</p></div></div>';
+    $("#cardProgress").textContent = "本轮 " + list.length + " / " + list.length + " · 已完成";
+    setBatchBar(1);
+    $("#flipCard").classList.remove("is-flipped");
+    save();
+    return;
+  }
+  state.index = Math.max(0, Math.min(state.index, list.length - 1));
+  updateNavButtons(list, state.index);
+  cardFlipped = false;
+  meaningShown = false;
+  const w = list[state.index];
+  currentWord = w;
+  $("#flipCard").innerHTML =
+    '<div class="face front">' +
+    '<div class="front-head"><span class="tag">' + esc(w.cat) + '</span>' +
+    '<span class="level">' + dueLabel(w) + '</span></div>' +
+    '<div class="front-body">' +
+    '<div class="word">' + esc(w.word) + '</div>' +
+    '<div class="ipa">' + esc(w.ipa || "—") + '</div>' +
+    '<div class="front-actions"><button class="btn" type="button" data-say="' + esc(w.word) + '">听发音</button>' +
+    '<button class="btn primary" type="button" data-reveal id="revealBtn">显示词义</button></div>' +
+    '<div id="inlineMeaning" class="inline-meaning" hidden><div class="inline-zh">' + esc(w.zh) + '</div>' +
+    (w.def ? '<div class="inline-def">' + esc(w.def) + '</div>' : '') + '</div>' +
+    '</div>' +
+    '<div class="front-foot">' +
+    '<div class="front-rate"><span class="label">这个词记得怎么样？</span>' + rateButtons(w) + '</div>' +
+    '<p class="tip">回想词义 → 显示词义 → 评价；点卡片或空格可翻面看完整内容</p>' +
+    '</div></div><div class="face back" data-back></div>';
+  $("#flipCard").classList.toggle("is-flipped", cardFlipped);
+  $("#cardProgress").textContent = "本轮 " + (state.index + 1) + " / " + list.length + " · " + w.word;
+  setBatchBar((state.index + 1) / list.length);
+  save();
+}
+
+function renderManage(){
+  const list = filtered(true);
+  $("#manageCount").textContent = "显示 " + list.length + " / " + catalog().length + " 个单词";
+  if (!list.length) {
+    $("#manageList").innerHTML = '<div class="empty">没有符合条件的单词。</div>';
+    return;
+  }
+  const rows = list.map(w => {
+    const lv = levelOf(w);
+    const stage = lv < 0 ? "新词" : (lv >= 4 ? "已掌握" : "第 " + (lv+1) + " 档");
+    return '<div class="manage-row">' +
+      '<span class="m-word">' + esc(w.word) + '</span>' +
+      '<span class="m-muted">' + esc(w.ipa || "—") + '</span>' +
+      '<span>' + esc(w.zh) + '</span>' +
+      '<span class="m-muted">' + esc(w.cat) + '</span>' +
+      '<span class="m-muted">' + stage + ' · ' + dueLabel(w) + '</span>' +
+      '<button class="btn small danger" type="button" data-del="' + esc(w.id) + '">删除</button>' +
+      '</div>';
+  }).join("");
+  $("#manageList").innerHTML = '<div class="manage-row head"><span>单词</span><span>音标</span><span>词义</span><span>分类</span><span>记忆进度</span><span>操作</span></div>' + rows;
+}
+
+function renderStats(){
+  const list = catalog();
+  const now = Date.now();
+  let due = 0, fresh = 0, mastered = 0;
+  for (let i = 0; i < list.length; i++) {
+    const p = state.progress[list[i].id];
+    if (!p) { fresh++; due++; continue; }
+    if ((p.due || 0) <= now) due++;
+    if ((p.level || 0) >= 4) mastered++;
+  }
+  $("#statTotal").textContent = list.length;
+  $("#heroTitle").textContent = catalog().length + " 个词，听见、读懂、记得住";
+  $("#statDue").textContent = due;
+  $("#statNew").textContent = fresh;
+  $("#statMastered").textContent = mastered;
+}
+
+let chipsSig = "";
+function renderChips(){
+  const cats = ["全部"];
+  catalog().forEach(w => { if (!cats.includes(w.cat)) cats.push(w.cat); });
+  if (!cats.includes(state.category)) state.category = "全部";
+  const sig = cats.join("|") + "#" + state.category;
+  if (sig === chipsSig) return;
+  chipsSig = sig;
+  $("#chips").innerHTML = cats.map(c =>
+    '<button class="chip' + (c === state.category ? ' on' : '') + '" type="button" data-cat="' + esc(c) + '">' + esc(c) + '</button>'
+  ).join("");
+}
+
+function renderCurve(){
+  const W = 640, H = 230, x0 = 46, x1 = 618, y0 = 20, y1 = 188;
+  const px = t => x0 + t / 30 * (x1 - x0);
+  const py = r => y1 - r * (y1 - y0);
+  const series = [
+    {S:1.2, color:"var(--bad)", label:"刚学完（约 1 天衰减）"},
+    {S:5, color:"var(--warn)", label:"复习 1 次"},
+    {S:16, color:"var(--good)", label:"多次复习"}
+  ];
+  let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="遗忘曲线示意图">';
+  [0, .25, .5, .75, 1].forEach(r => {
+    const y = py(r);
+    svg += '<line x1="' + x0 + '" y1="' + y + '" x2="' + x1 + '" y2="' + y + '" stroke="var(--line)" stroke-width="1"/>';
+    svg += '<text x="' + (x0-8) + '" y="' + (y+4) + '" text-anchor="end" font-size="11" fill="var(--muted)">' + Math.round(r*100) + '%</text>';
+  });
+  [0,1,3,7,15,30].forEach(t => {
+    const x = px(t);
+    svg += '<line x1="' + x + '" y1="' + y1 + '" x2="' + x + '" y2="' + (y1+5) + '" stroke="var(--muted)"/>';
+    svg += '<text x="' + x + '" y="' + (y1+20) + '" text-anchor="middle" font-size="11" fill="var(--muted)">' + t + '天</text>';
+  });
+  series.forEach(s => {
+    let pts = [];
+    for (let t = 0; t <= 30; t += .5) pts.push(px(t).toFixed(1) + "," + py(Math.exp(-t / s.S)).toFixed(1));
+    svg += '<polyline fill="none" stroke="' + s.color + '" stroke-width="2.5" stroke-linejoin="round" points="' + pts.join(" ") + '"/>';
+  });
+  let lx = x0 + 12;
+  series.forEach(s => {
+    svg += '<line x1="' + lx + '" y1="' + (H-22) + '" x2="' + (lx+18) + '" y2="' + (H-22) + '" stroke="' + s.color + '" stroke-width="3"/>';
+    svg += '<text x="' + (lx+23) + '" y="' + (H-18) + '" font-size="11" fill="var(--muted)">' + s.label + '</text>';
+    lx += 168;
+  });
+  svg += '</svg>';
+  $("#curveChart").innerHTML = svg;
+}
+
+function applySettings(){
+  document.documentElement.dataset.theme = state.theme;
+  document.documentElement.style.setProperty("--accent", state.accent);
+  $("#themeSelect").value = state.theme;
+  $("#accentPick").value = /^#[0-9a-f]{6}$/i.test(state.accent) ? state.accent : "#2563eb";
+  $("#voiceSelect").value = state.voice;
+  $("#sortSelect").value = state.sort;
+  $("#search").value = state.query;
+  $("#studyMode").classList.toggle("on", state.mode === "study");
+  $("#manageMode").classList.toggle("on", state.mode === "manage");
+  $("#cardView").hidden = state.mode !== "study";
+  $("#manageView").hidden = state.mode !== "manage";
+  $("#onlyDue").classList.toggle("primary", state.onlyDue);
+  $("#onlyDue").setAttribute("aria-pressed", String(state.onlyDue));
+  $("#onlyDue").textContent = state.onlyDue ? "待复习中 ✓" : "只看待复习";
+  const presets = [5,10,15,20,30,0];
+  $("#batchSelect").value = state.batchMode === "custom" ? "custom" : String(state.batchSize);
+  const customOn = state.batchMode === "custom";
+  const wrap = $("#batchCustomWrap");
+  if (wrap) wrap.hidden = !customOn;
+  $("#batchCustom").value = state.batchCustom || 10;
+  const applied = $("#batchApplied");
+  if (applied) applied.textContent = customOn ? "已设置：每轮 " + (Number(state.batchSize) || 0) + " 个" : "";
+  applyFolds();
+  applyFocus();
+}
+
+function renderAll(){
+  ensureDict();
+  applySettings();
+  renderStats();
+  renderChips();
+  if (state.mode === "manage") renderManage(); else renderCard();
+  syncFocusTitle();
+}
+
+function rate(id, kind){
+  const w = catalog().find(x => x.id === id);
+  if (!w) return;
+  const p = progressOf(w) || {level:0,due:Date.now(),last:0};
+  if (kind === "forget") p.level = 0;
+  if (kind === "good") p.level = Math.min((p.level || 0) + 1, 7);
+  const minutes = INTERVALS[Math.min(p.level, 7)];
+  p.due = Date.now() + minutes * 60 * 1000;
+  p.last = Date.now();
+  state.progress[id] = p;
+  save();
+  if (state.mode === "study") {
+    const currentBatch = batchList();
+    if (state.index + 1 >= currentBatch.length) { batchDone = true; state.index = 0; }
+    else state.index++;
+    cardFlipped = false;
+  }
+  renderAll();
+  if (state.mode === "study" && !batchDone) animCardIn(1);
+  toast(kind === "forget" ? "10 分钟后再复习 " + w.word : (kind === "good" ? "记住了，下次 " + INTERVAL_TEXT[Math.min(p.level,7)] + " 后复习" : "保持进度，下次 " + INTERVAL_TEXT[Math.min(p.level,7)] + " 后复习"));
+}
+
+function showPopover(key, anchor){
+  const e = DICT[key];
+  if (!e) return;
+  const box = $("#popover");
+  box.innerHTML = '<div class="pw">' + esc(e.word) + '</div><div class="pi">' + esc(e.ipa || "") + '</div>' +
+    '<div class="pz">' + esc(e.zh) + '</div>' + (e.note ? '<div class="pn">' + esc(e.note) + '</div>' : '') +
+    '<div class="row"><button class="btn small primary" type="button" data-say="' + esc(e.word) + '">发音</button>' +
+    '<button class="btn small" type="button" id="closePop">关闭</button></div>';
+  box.hidden = false;
+  const r = anchor.getBoundingClientRect();
+  const w = box.offsetWidth, h = box.offsetHeight;
+  let left = r.left, top = r.bottom + 8;
+  if (left + w > window.innerWidth - 12) left = window.innerWidth - w - 12;
+  if (top + h > window.innerHeight - 12) top = Math.max(12, r.top - h - 8);
+  box.style.left = Math.max(12, left) + "px";
+  box.style.top = top + "px";
+  speak(e.word);
+}
+function hidePopover(){ $("#popover").hidden = true; }
+
+document.addEventListener("click", ev => {
+  const hit = ev.target.closest(".hit");
+  if (hit) { showPopover(hit.dataset.k, hit); return; }
+  if (ev.target.closest("#closePop") || !ev.target.closest("#popover")) hidePopover();
+
+  const say = ev.target.closest("[data-say]");
+  if (say) { speak(say.dataset.say); return; }
+
+  const cat = ev.target.closest("[data-cat]");
+  if (cat) { state.category = cat.dataset.cat; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); return; }
+
+  const clearF = ev.target.closest("[data-clear-filter]");
+  if (clearF) {
+    state.query = ""; state.category = "全部"; state.onlyDue = false;
+    state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll();
+    toast("已清空筛选");
+    return;
+  }
+
+  const reveal = ev.target.closest("[data-reveal]");
+  if (reveal) {
+    const box = document.getElementById("inlineMeaning");
+    if (box) {
+      box.hidden = !box.hidden;
+      meaningShown = !box.hidden;
+      reveal.textContent = box.hidden ? "显示词义" : "隐藏词义";
+    }
+    return;
+  }
+
+  const hide = ev.target.closest("[data-hide]");
+  if (hide) { cardFlipped = false; $("#flipCard").classList.remove("is-flipped"); return; }
+
+  const del = ev.target.closest("[data-del]");
+  if (del) {
+    const w = catalog().find(x => x.id === del.dataset.del);
+    if (w) {
+      state.removed.push(w.id);
+      state.custom = state.custom.filter(x => x.id !== w.id);
+      save(); renderAll(); toast("已删除 " + w.word + "，可用“恢复默认”找回");
+    }
+    return;
+  }
+
+  const batchBtn = ev.target.closest("[data-batch]");
+  if (batchBtn) {
+    if (batchBtn.dataset.batch === "review") {
+      batchDone = false; state.index = 0;
+    } else {
+      const all = filtered();
+      const size = Number(state.batchSize) || 0;
+      const use = size > 0 ? Math.min(size, all.length) : all.length;
+      const maxStart = Math.max(0, all.length - use);
+      state.batchStart = state.batchStart >= maxStart ? 0 : state.batchStart + use;
+      batchDone = false; state.index = 0;
+    }
+    save(); renderAll(); return;
+  }
+
+  const rt = ev.target.closest("[data-rate]");
+  if (rt) { rate(rt.dataset.id, rt.dataset.rate); return; }
+});
+
+$("#flipCard").addEventListener("click", ev => {
+  if (Date.now() < swipeGuard) return;
+  if (ev.target.closest("button") || ev.target.closest(".hit")) return;
+  const exLine = ev.target.closest(".example[data-ex]");
+  if (exLine) { speak(exLine.dataset.ex); return; }
+  if (!cardFlipped) ensureBack();
+  cardFlipped = !cardFlipped;
+  $("#flipCard").classList.toggle("is-flipped", cardFlipped);
+});
+
+$("#studyMode").addEventListener("click", () => { state.mode = "study"; save(); renderAll(); });
+$("#manageMode").addEventListener("click", () => { state.mode = "manage"; save(); renderAll(); });
+/* 左右滑动切换：同时支持触摸滑动和鼠标拖拽 */
+/* 左右滑动：跟手拖动，轻快一划即可切换 */
+let swipeGuard = 0;
+function slideTo(dir, animate){
+  const list = batchList();
+  if (!list.length) return;
+  if (batchDone) { batchDone = false; state.index = 0; }
+  const target = state.index + dir;
+  if (target < 0) { toast("已经是第一张"); return; }
+  if (target > list.length - 1) { toast("已经是最后一张"); return; }
+  state.index = target;
+  cardFlipped = false;
+  renderCard();
+  if (animate === false) return;
+  animCardIn(dir);
+}
+const navPrevBtn = document.querySelector('[data-card-nav="prev"]');
+const navNextBtn = document.querySelector('[data-card-nav="next"]');
+if (navPrevBtn) navPrevBtn.addEventListener("click", function(){ slideTo(-1); });
+if (navNextBtn) navNextBtn.addEventListener("click", function(){ slideTo(1); });
+(function bindSwipe(){
+  const stage = document.querySelector(".card-stage");
+  const card = $("#flipCard");
+  if (!stage || !card) return;
+  let st = null, raf = 0, lastX = 0, captured = false, settle = 0, stageW = 0;
+  function measure(){ stageW = stage.clientWidth || 320; }
+  measure();
+  window.addEventListener("resize", measure);
+
+  function clearInline(){
+    card.classList.remove("is-dragging");
+    card.style.transition = "";
+    card.style.transform = "";
+    card.style.opacity = "";
+  }
+  function paint(x){
+    lastX = x;
+    if (raf) return;
+    raf = requestAnimationFrame(function(){
+      raf = 0;
+      card.style.transform = "translate3d(" + lastX.toFixed(1) + "px,0,0)" +
+        (cardFlipped ? " rotateY(180deg)" : "");
+    });
+  }
+
+  stage.addEventListener("pointerdown", function(ev){
+    if (ev.button && ev.button > 0) return;
+    if (ev.target.closest("button, a, input, select, textarea")) return;
+    clearTimeout(settle);
+    measure();
+    st = { x: ev.clientX, y: ev.clientY, t: Date.now(), id: ev.pointerId };
+    captured = false;
+    card.classList.remove("slide-next", "slide-prev");
+    card.classList.add("is-dragging");
+    card.style.transition = "none";
+    card.style.transform = cardFlipped ? "rotateY(180deg)" : "none";
+  }, { passive: true });
+
+  stage.addEventListener("pointermove", function(ev){
+    if (!st || ev.pointerId !== st.id) return;
+    const dx = ev.clientX - st.x, dy = ev.clientY - st.y;
+    if (!captured) {
+      if (Math.abs(dy) > 14 && Math.abs(dy) > Math.abs(dx) * 1.4) { st.vertical = true; }
+      if (Math.abs(dx) > 7 && Math.abs(dx) >= Math.abs(dy)) {
+        try { if (stage.setPointerCapture) stage.setPointerCapture(ev.pointerId); } catch (e) {}
+        captured = true;
+      }
+    }
+    if (st.vertical && !captured) return;
+    if (captured && Math.abs(dy) > 18 && Math.abs(dy) > Math.abs(dx) * 1.5) {
+      st.vertical = true; clearInline(); return;
+    }
+    paint(Math.max(-stageW, Math.min(stageW, dx)));
+  }, { passive: true });
+
+  function finish(ev){
+    if (!st || ev.pointerId !== st.id) { st = null; return; }
+    const s = st; st = null;
+    if (!captured) { clearInline(); return; }
+    const dx = ev.clientX - s.x, dy = ev.clientY - s.y;
+    const dt = Math.max(1, Date.now() - s.t);
+    const w = stageW || 320;
+    const far = Math.abs(dx) > Math.max(26, Math.min(80, w * 0.12));
+    const fast = Math.abs(dx) > 20 && Math.abs(dx) / dt > 0.4;
+    clearTimeout(settle);
+    if (Math.abs(dx) > Math.abs(dy) && (far || fast)) {
+      const dir = dx < 0 ? 1 : -1;
+      swipeGuard = Date.now() + 420;
+      card.style.transition = "transform .2s cubic-bezier(.3,.8,.4,1), opacity .2s ease";
+      card.style.transform = "translate3d(" + (dir > 0 ? -w * 1.04 : w * 1.04) + "px,0,0) rotate(" +
+        (dir > 0 ? -6 : 6) + "deg)" + (cardFlipped ? " rotateY(180deg)" : "");
+      card.style.opacity = "0";
+      settle = setTimeout(function(){
+        clearInline();
+        slideTo(dir, true);
+      }, 150);
+    } else {
+      card.style.transition = "transform .26s cubic-bezier(.22,.86,.3,1), opacity .26s ease";
+      card.style.transform = cardFlipped ? "rotateY(180deg)" : "";
+      card.style.opacity = "1";
+      settle = setTimeout(clearInline, 290);
+    }
+  }
+  stage.addEventListener("pointerup", finish);
+  stage.addEventListener("pointercancel", function(ev){
+    if (st && ev.pointerId === st.id) { st = null; clearInline(); }
+  });
+})();
+$("#search").addEventListener("input", e => { state.query = e.target.value.trim(); state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
+$("#themeSelect").addEventListener("change", e => { state.theme = e.target.value; save(); applySettings(); });
+$("#accentPick").addEventListener("input", e => { state.accent = e.target.value; save(); applySettings(); });
+$("#voiceSelect").addEventListener("change", e => { state.voice = e.target.value; save(); });
+$("#sortSelect").addEventListener("change", e => { state.sort = e.target.value; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
+$("#onlyDue").addEventListener("click", () => { state.onlyDue = !state.onlyDue; state.index = 0; state.batchStart = 0; batchDone = false; save(); renderAll(); });
+function applyCustomBatch(){
+  const raw = Math.round(Number($("#batchCustom").value));
+  if (!raw || raw < 1) { toast("请输入 1–500 之间的数字"); $("#batchCustom").focus(); return; }
+  const n = Math.max(1, Math.min(500, raw));
+  state.batchMode = "custom"; state.batchCustom = n; state.batchSize = n;
+  state.batchStart = 0; state.index = 0; batchDone = false;
+  $("#batchCustom").value = n;
+  save(); renderAll();
+  toast("本轮背 " + n + " 个单词");
+}
+$("#batchSelect").addEventListener("change", e => {
+  const v = e.target.value;
+  const wrap = $("#batchCustomWrap");
+  if (v === "custom") {
+    wrap.hidden = false;
+    $("#batchCustom").value = state.batchCustom || 10;
+    $("#batchCustom").focus();
+    $("#batchCustom").select && $("#batchCustom").select();
+    return;
+  }
+  wrap.hidden = true;
+  state.batchMode = "preset"; state.batchSize = Number(v);
+  state.batchStart = 0; state.index = 0; batchDone = false; save(); renderAll();
+});
+$("#batchApply").addEventListener("click", applyCustomBatch);
+$("#batchCustom").addEventListener("keydown", e => {
+  if (e.key === "Enter") { e.preventDefault(); applyCustomBatch(); }
+});
+
+function openAddModal(){ $("#modal").hidden = false; $("#addForm").reset(); $("#addForm").elements.word.focus(); }
+$("#manageAdd").addEventListener("click", openAddModal);
+$("#cancelAdd").addEventListener("click", () => { $("#modal").hidden = true; });
+$("#modal").addEventListener("click", ev => { if (ev.target.id === "modal") $("#modal").hidden = true; });
+$("#addForm").addEventListener("submit", ev => {
+  ev.preventDefault();
+  const f = new FormData(ev.target);
+  const word = String(f.get("word") || "").trim();
+  const zh = String(f.get("zh") || "").trim();
+  if (!word || !zh) return;
+  const w = {
+    id: "c-" + Date.now() + "-" + Math.floor(Math.random()*1000),
+    word: word, ipa: String(f.get("ipa")||"").trim(), cat: String(f.get("cat")||"自定义"),
+    zh: zh, def: String(f.get("def")||"").trim(), ex: String(f.get("ex")||"").trim(),
+    exZh: String(f.get("exZh")||"").trim(), ety: String(f.get("ety")||"").trim(), ext: String(f.get("ext")||"").trim()
+  };
+  state.custom.push(w);
+  state.category = "全部";
+  save();
+  $("#modal").hidden = true;
+  renderAll();
+  toast("已添加 " + word);
+});
+
+$("#resetBtn").addEventListener("click", () => {
+  const keep = {theme:state.theme, accent:state.accent, voice:state.voice, showLead:state.showLead, showCurve:state.showCurve, showSettings:state.showSettings, focus:state.focus};
+  state = Object.assign(defaults(), keep);
+  save(); renderAll(); toast("已恢复默认 " + BASE_WORDS.length + " 词");
+});
+
+document.addEventListener("keydown", ev => {
+  if (ev.key === "Escape") { hidePopover(); $("#modal").hidden = true; }
+  if (state.mode !== "study" || ev.target.matches("input,select,textarea")) return;
+  if (ev.key === "ArrowRight") { slideTo(1, false); }
+  if (ev.key === "ArrowLeft") { slideTo(-1, false); }
+  if (ev.key === " ") { ev.preventDefault(); if (!cardFlipped) ensureBack(); cardFlipped = !cardFlipped; $("#flipCard").classList.toggle("is-flipped", cardFlipped); }
+});
+document.addEventListener("click", ev => {
+  const hit = ev.target.closest(".hit");
+  if (hit && ev.type === "click") return;
+});
+
+
+/* ===== 折叠说明 / 曲线 / 设置 ===== */
+function setFold(btn, panel, hidden){
+  btn.setAttribute("aria-pressed", String(!hidden));
+  btn.textContent = (hidden ? "显示" : "隐藏") + (btn.dataset.label || "");
+  $(panel).hidden = hidden;
+}
+$("#foldLead").addEventListener("click", () => {
+  state.showLead = !state.showLead; saveAppState();
+  setFold($("#foldLead"), "#leadBox", !state.showLead);
+});
+$("#foldCurve").addEventListener("click", () => {
+  state.showCurve = !state.showCurve; saveAppState();
+  setFold($("#foldCurve"), "#curveBox", !state.showCurve);
+});
+$("#foldSettings").addEventListener("click", () => {
+  state.showSettings = !state.showSettings; saveAppState();
+  setFold($("#foldSettings"), "#settingsBox", !state.showSettings);
+});
+function applyFolds(){
+  setFold($("#foldLead"), "#leadBox", !state.showLead);
+  setFold($("#foldCurve"), "#curveBox", !state.showCurve);
+  setFold($("#foldSettings"), "#settingsBox", !state.showSettings);
+}
+
+/* ===== 专注模式：一屏只有卡片，不出现页面级滚动 ===== */
+function syncFocusTitle(){
+  const p = document.getElementById("cardProgress");
+  const t = document.getElementById("focusTitle");
+  if (p && t) t.textContent = p.textContent || "专注背单词";
+}
+function applyFocus(){
+  const on = !!state.focus && state.mode === "study";
+  document.body.classList.toggle("focus", on);
+  const bar = document.getElementById("focusBar");
+  if (bar) bar.hidden = !on;
+  const tg = document.getElementById("focusToggle");
+  if (tg) {
+    tg.textContent = on ? "退出专注" : "专注模式";
+    tg.setAttribute("aria-pressed", String(on));
+  }
+  if (on) syncFocusTitle();
+}
+const focusToggleBtn = document.getElementById("focusToggle");
+if (focusToggleBtn) focusToggleBtn.addEventListener("click", () => {
+  const next = !(state.focus && state.mode === "study");
+  state.focus = next;
+  if (next) state.mode = "study";
+  saveAppState(); renderAll();
+  toast(next ? "专注中：只显示卡片，左右滑动换词" : "已退出专注");
+});
+const focusExitBtn = document.getElementById("focusExit");
+if (focusExitBtn) focusExitBtn.addEventListener("click", () => {
+  state.focus = false; saveAppState(); applyFocus();
+});
+
+
+window.addEventListener("error", function(ev){
+  try { console.error("[wordcards]", ev.message); } catch(e) {}
+});
+
+renderCurve();
+
+/* 初始化用户会话：必须放在所有 let/const 声明之后，否则会触发暂时性死区报错 */
+if (!sessionUser() || !getUserByName(sessionUser())) {
+  try { localStorage.removeItem(SESSION_KEY); } catch(e) {}
+  state = defaults();
+  updateUserBar();
+  renderAll();
+  openAuth("login");
+} else {
+  applySession();
+}
+
+if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
+/* ===== 性能探针：地址后加 ?perf=1 查看帧率 / 切卡耗时 / 节点数 ===== */
+(function perfProbe(){
+  if (!/[?&]perf=1/.test(location.search)) return;
+  const box = document.createElement("div");
+  box.style.cssText = "position:fixed;left:8px;bottom:8px;z-index:9999;font:11px/1.45 ui-monospace,Menlo,monospace;background:rgba(0,0,0,.72);color:#fff;padding:6px 9px;border-radius:8px;pointer-events:none;white-space:pre;letter-spacing:.02em";
+  document.body.appendChild(box);
+  let frames = 0, t0 = performance.now(), prev = t0, gapMax = 0, cardMs = 0;
+  const orig = renderCard;
+  renderCard = function(){
+    const s = performance.now();
+    const r = orig.apply(null, arguments);
+    cardMs = performance.now() - s;
+    return r;
+  };
+  (function loop(now){
+    frames++;
+    const gap = now - prev; prev = now;
+    if (gap < 600 && gap > gapMax) gapMax = gap;
+    if (now - t0 >= 500) {
+      const fps = Math.round(frames * 1000 / (now - t0));
+      const nodes = document.querySelectorAll("#flipCard *").length;
+      box.textContent = "FPS " + fps + "  最大帧间隔 " + gapMax.toFixed(0) + "ms\n切卡 " + cardMs.toFixed(1) + "ms  节点 " + nodes;
+      frames = 0; t0 = now; gapMax = 0;
+    }
+    requestAnimationFrame(loop);
+  })(performance.now());
+})();
+</script>
+</body>
+</html>
