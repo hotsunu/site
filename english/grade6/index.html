@@ -1583,7 +1583,6 @@ document.addEventListener("click", ev => {
   const del = ev.target.closest("[data-user-del]");
   if (del) {
     const name = del.dataset.userDel;
-    if (!confirm("确定删除用户 " + name + " 及其全部记忆数据吗？")) return;
     writeUsers(readUsers().filter(u => u.name !== name));
     try { localStorage.removeItem(KEY + "::" + name); } catch(e) {}
     if (sessionUser() === name) doLogout(); else renderUserList();
@@ -2042,7 +2041,7 @@ document.addEventListener("click", ev => {
   const del = ev.target.closest("[data-del]");
   if (del) {
     const w = catalog().find(x => x.id === del.dataset.del);
-    if (w && confirm('确定删除单词 "' + w.word + '" 吗？')) {
+    if (w) {
       state.removed.push(w.id);
       state.custom = state.custom.filter(x => x.id !== w.id);
       save(); renderAll(); toast("已删除 " + w.word + "，可用“恢复默认”找回");
@@ -2249,7 +2248,6 @@ $("#addForm").addEventListener("submit", ev => {
 });
 
 $("#resetBtn").addEventListener("click", () => {
-  if (!confirm("恢复默认会清除你添加、删除的单词以及全部记忆进度，确定继续吗？")) return;
   const keep = {theme:state.theme, accent:state.accent, voice:state.voice, showLead:state.showLead, showCurve:state.showCurve, showSettings:state.showSettings, focus:state.focus};
   state = Object.assign(defaults(), keep);
   save(); renderAll(); toast("已恢复默认 " + BASE_WORDS.length + " 词");
